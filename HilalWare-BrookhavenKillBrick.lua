@@ -4,66 +4,79 @@ local plr = Players.LocalPlayer
 local char = plr.Character or plr.CharacterAdded:Wait()
 local hrp = char:WaitForChild("HumanoidRootPart")
 
--- 🎒 Couch Tool'u bul
-local function getCouch()
-	return plr.Character:FindFirstChild("Couch") or plr.Backpack:FindFirstChild("Couch")
-end
+-- 💣 Tüm tuzak araçlarının isimleri
+local toolNames = {
+	"Couch",
+	"ShoppingCart",
+	"Stretcher",
+	"Wagon",
+	"LawnMower"
+}
 
 local teleported = false
 local returned = false
+local activeTool = nil
 
--- 🔁 SeatWeld kontrolü
-local function checkSeats()
-	local couchTool = getCouch()
-	if not couchTool or teleported then return end
+-- 🔍 Tool'u karakterde veya backpack'te bul
+local function getTool(name)
+	return plr.Character:FindFirstChild(name) or plr.Backpack:FindFirstChild(name)
+end
 
-	for _, seat in pairs(couchTool:GetDescendants()) do
-		if seat:IsA("Seat") and (seat.Name == "Seat1" or seat.Name == "Seat2") then
-			if seat:FindFirstChild("SeatWeld") then
-				teleported = true
-				print("🎯 SeatWeld tespit edildi! SEN uçuyorsun.")
-				hrp.Position = Vector3.new(0, 9999999999999999999999999999, 0)
+-- 🎯 Trap kontrolü: Her araç, her koltuk
+local function checkAllTools()
+	if teleported then return end
+
+	for _, toolName in pairs(toolNames) do
+		local tool = getTool(toolName)
+		if tool then
+			for _, part in pairs(tool:GetDescendants()) do
+				if part:IsA("Seat") then
+					if part:FindFirstChild("SeatWeld") then
+						teleported = true
+						activeTool = tool
+						print("🚨 SeatWeld bulundu! Tool: "..toolName)
+						hrp.Position = Vector3.new(0, 100000000, 0)
+						return
+					end
+				end
 			end
 		end
 	end
 end
 
--- 🧠 Couch silinirse geri getir
-local function monitorCouchRemoval()
-	local couchTool = getCouch()
-	if not couchTool then return end
-
-	couchTool.AncestryChanged:Connect(function(_, parent)
-		if not parent and teleported and not returned then
+-- 🧹 Araç silinirse geri dön
+local function monitorToolRemoval()
+	RunService.Heartbeat:Connect(function()
+		if activeTool and not activeTool:IsDescendantOf(game) and teleported and not returned then
 			returned = true
 			wait(0.5)
-			print("↩️ Couch yok oldu. SEN geri gidiyorsun.")
+			print("↩️ Tool silindi: "..activeTool.Name)
 			hrp.Position = Vector3.new(0, -100000000, 0)
 		end
 	end)
 end
 
--- 🔁 Sürekli kontrol
+-- ⏱️ Sürekli çalış
 RunService.Heartbeat:Connect(function()
 	if not teleported then
-		checkSeats()
+		checkAllTools()
 	end
 end)
 
-monitorCouchRemoval()
+monitorToolRemoval()
 
--- 📺 GUI (sadece görünüm, aç/kapa yok)
+-- 📺 GUI Oluştur
 local gui = Instance.new("ScreenGui")
-gui.Name = "TuzakBilgi"
+gui.Name = "TrapSystemUI"
 gui.ResetOnSpawn = false
 gui.Parent = game.CoreGui
 
 local label = Instance.new("TextLabel")
-label.Size = UDim2.new(0, 220, 0, 30)
-label.Position = UDim2.new(0, 20, 0, 100)
-label.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-label.TextColor3 = Color3.fromRGB(255, 80, 80)
-label.Text = "☠️ Koltuk tuzağı aktif!"
+label.Size = UDim2.new(0, 420, 0, 30)
+label.Position = UDim2.new(0, 20, 0, 60)
+label.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
+label.TextColor3 = Color3.fromRGB(255, 255, 180)
+label.Text = "⚠️ Koltuk tuzakları aktif! Araçlar: Couch, Cart, Stretcher, Wagon, LawnMower"
 label.Font = Enum.Font.SourceSansBold
-label.TextSize = 18
+label.TextSize = 16
 label.Parent = gui
