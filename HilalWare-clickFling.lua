@@ -1,46 +1,66 @@
--- RootPart Fling v1.0 by ChatGPT
 local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
 local player = Players.LocalPlayer
 local mouse = player:GetMouse()
-local RunService = game:GetService("RunService")
 
--- Kendi karakterin
 local character = player.Character or player.CharacterAdded:Wait()
-local root = character:WaitForChild("HumanoidRootPart")
+local realRoot = character:WaitForChild("HumanoidRootPart")
 
--- Ayarlar
-local flingSpeed = 100 -- Daha yüksek = daha güçlü
-local flingTime = 0.2   -- Saniye olarak fling süresi
+-- ✅ Sahte root part oluştur
+local fakeRoot = Instance.new("Part")
+fakeRoot.Size = Vector3.new(2, 2, 1)
+fakeRoot.Name = "FakeRoot"
+fakeRoot.Anchored = false
+fakeRoot.CanCollide = true
+fakeRoot.Position = realRoot.Position + Vector3.new(3, 0, 0)
+fakeRoot.Material = Enum.Material.Neon
+fakeRoot.BrickColor = BrickColor.new("White")
+fakeRoot.Parent = workspace
+
+-- 🌈 RGB ESP kutusu
+local espBox = Instance.new("BoxHandleAdornment")
+espBox.Name = "RGB_ESP"
+espBox.Adornee = fakeRoot
+espBox.Size = fakeRoot.Size + Vector3.new(0.1, 0.1, 0.1)
+espBox.AlwaysOnTop = true
+espBox.ZIndex = 10
+espBox.Transparency = 0.2
+espBox.Parent = game:GetService("CoreGui")
+
+-- 🔁 RGB animasyonu
+local hue = 0
+RunService.RenderStepped:Connect(function()
+	hue = (hue + 0.01) % 1
+	espBox.Color3 = Color3.fromHSV(hue, 1, 1)
+end)
+
+-- 🚀 Click Fling mekanizması
+local flingPower = 150 -- ne kadar hızlı fırlasın
+local flingTime = 0.2  -- saniye cinsinden
 
 mouse.Button1Down:Connect(function()
 	local target = mouse.Target
 	if not target then return end
 
-	-- Tıklanan karakteri bul
 	local targetChar = target:FindFirstAncestorOfClass("Model")
 	if not targetChar or targetChar == character then return end
 
 	local targetRoot = targetChar:FindFirstChild("HumanoidRootPart")
 	if not targetRoot then return end
 
-	-- Karakterin rootpart'ını hedefe doğru fırlat
-	local direction = (targetRoot.Position - root.Position).Unit
-	local velocity = direction * flingSpeed
+	-- Fırlatma yönünü hesapla
+	local direction = (targetRoot.Position - fakeRoot.Position).Unit
+	local velocity = direction * flingPower
 
-	-- RootPart'ı fiziksel olarak fırlat
-	local originalCFrame = root.CFrame
-	local conn
-
-	-- Sabit velocity uygula birkaç frame boyunca
+	-- Fling başlat
 	local startTime = tick()
-	conn = RunService.Heartbeat:Connect(function()
+	local flingConn
+	flingConn = RunService.Heartbeat:Connect(function()
 		if tick() - startTime > flingTime then
-			conn:Disconnect()
-			-- RootPart geri alınabilir (isteğe bağlı)
-			root.Velocity = Vector3.zero
-			root.CFrame = originalCFrame
+			flingConn:Disconnect()
+			fakeRoot.Velocity = Vector3.zero
 			return
 		end
-		root.Velocity = velocity
+		fakeRoot.Velocity = velocity
 	end)
 end)
