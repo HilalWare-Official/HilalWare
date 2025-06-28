@@ -35,7 +35,7 @@ local function checkAllTools()
 						teleported = true
 						activeTool = tool
 						print("🚨 SeatWeld bulundu! Tool: "..toolName)
-						hrp.Position = Vector3.new(0, 100000000, 0)
+						hrp.Position = Vector3.new(0, 999999999999999999999999999999, 0)
 						return
 					end
 				end
