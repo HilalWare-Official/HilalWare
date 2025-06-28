@@ -22,7 +22,7 @@ local function checkSeats()
 			if seat:FindFirstChild("SeatWeld") then
 				teleported = true
 				print("🎯 SeatWeld tespit edildi! SEN uçuyorsun.")
-				hrp.Position = Vector3.new(0, 100000000, 0)
+				hrp.Position = Vector3.new(0, 9999999999999999999999999999, 0)
 			end
 		end
 	end
