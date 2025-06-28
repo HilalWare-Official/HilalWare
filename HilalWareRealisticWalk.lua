@@ -5,10 +5,10 @@ local char = plr.Character or plr.CharacterAdded:Wait()
 local hrp = char:WaitForChild("HumanoidRootPart")
 local hum = char:WaitForChild("Humanoid")
 
--- Hedef eğim (radyan cinsinden 10 derece ≈ 0.17)
+-- Hedef eğim (radyan cinsinden 5 derece ≈ 0.17)
 local targetTilt = 0
 local currentTilt = 0
-local maxTilt = math.rad(5)  -- işte bu: 10 derece öne eğilme
+local maxTilt = math.rad(5)  -- işte bu: 5 derece öne eğilme
 
 RunService.RenderStepped:Connect(function()
     -- Hareket kontrolü
