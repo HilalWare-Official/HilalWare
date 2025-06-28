@@ -1,75 +1,74 @@
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
-local plr = Players.LocalPlayer
-local char = plr.Character or plr.CharacterAdded:Wait()
-local hrp = char:WaitForChild("HumanoidRootPart")
+local player = Players.LocalPlayer
 
--- 💣 Tüm tuzak araçlarının isimleri
+local character = player.Character or player.CharacterAdded:Wait()
+local hrp = character:WaitForChild("HumanoidRootPart")
+
+-- 🔧 Takip edilecek araç isimleri
 local toolNames = {
-	"Couch",
-	"ShoppingCart",
-	"Stretcher",
-	"Wagon",
-	"LawnMower"
+    "Couch",
+    "ShoppingCart",
+    "Stretcher",
+    "Wagon",
+    "LawnMower"
 }
 
 local teleported = false
 local returned = false
 local activeTool = nil
 
--- 🔍 Tool'u karakterde veya backpack'te bul
+-- 🔍 Tool'u karakterde veya çantada bul
 local function getTool(name)
-	return plr.Character:FindFirstChild(name) or plr.Backpack:FindFirstChild(name)
+    return player.Character:FindFirstChild(name) or player.Backpack:FindFirstChild(name)
 end
 
--- 🎯 Trap kontrolü: Her araç, her koltuk
+-- 🎯 Koltuk kontrolü: Seat + SeatWeld
 local function checkAllTools()
-	if teleported then return end
+    if teleported then return end
 
-	for _, toolName in pairs(toolNames) do
-		local tool = getTool(toolName)
-		if tool then
-			for _, part in pairs(tool:GetDescendants()) do
-				if part:IsA("Seat") then
-					if part:FindFirstChild("SeatWeld") then
-						teleported = true
-						activeTool = tool
-						print("🚨 SeatWeld bulundu! Tool: "..toolName)
-						hrp.Position = Vector3.new(0, 999999999999999999999999999999, 0)
-						return
-					end
-				end
-			end
-		end
-	end
+    for _, toolName in ipairs(toolNames) do
+        local tool = getTool(toolName)
+        if tool then
+            for _, part in ipairs(tool:GetDescendants()) do
+                if part:IsA("Seat") and part:FindFirstChild("SeatWeld") then
+                    teleported = true
+                    activeTool = tool
+                    warn("🚨 SeatWeld bulundu! Tool:", toolName)
+                    hrp.CFrame = CFrame.new(0, 100000000, 0)
+                    return
+                end
+            end
+        end
+    end
 end
 
--- 🧹 Araç silinirse geri dön
+-- 🧹 Tool silinirse geri dön
 local function monitorToolRemoval()
-	RunService.Heartbeat:Connect(function()
-		if activeTool and not activeTool:IsDescendantOf(game) and teleported and not returned then
-			returned = true
-			wait(0.5)
-			print("↩️ Tool silindi: "..activeTool.Name)
-			hrp.Position = Vector3.new(0, -100000000, 0)
-		end
-	end)
+    RunService.Heartbeat:Connect(function()
+        if activeTool and not activeTool:IsDescendantOf(game) and teleported and not returned then
+            returned = true
+            task.wait(0.5)
+            warn("↩️ Tool silindi: "..activeTool.Name)
+            hrp.CFrame = CFrame.new(0, -100000000, 0)
+        end
+    end)
 end
 
--- ⏱️ Sürekli çalış
+-- 🔁 Ana döngü
 RunService.Heartbeat:Connect(function()
-	if not teleported then
-		checkAllTools()
-	end
+    if not teleported then
+        checkAllTools()
+    end
 end)
 
 monitorToolRemoval()
 
--- 📺 GUI Oluştur
+-- 🖥️ GUI oluştur (PlayerGui içine, kalıcı)
 local gui = Instance.new("ScreenGui")
 gui.Name = "TrapSystemUI"
 gui.ResetOnSpawn = false
-gui.Parent = game.CoreGui
+gui.Parent = player:WaitForChild("PlayerGui")
 
 local label = Instance.new("TextLabel")
 label.Size = UDim2.new(0, 420, 0, 30)
@@ -79,4 +78,5 @@ label.TextColor3 = Color3.fromRGB(255, 255, 180)
 label.Text = "⚠️ Koltuk tuzakları aktif! Araçlar: Couch, Cart, Stretcher, Wagon, LawnMower"
 label.Font = Enum.Font.SourceSansBold
 label.TextSize = 16
+label.TextStrokeTransparency = 0.8
 label.Parent = gui
