@@ -7,7 +7,7 @@ local humanoid = char:WaitForChild("Humanoid")
 
 -- Animasyon setup
 local animation = Instance.new("Animation")
-animation.AnimationId = "rbxassetid://13721445907" -- Kollar arkaya havalı animasyon
+animation.AnimationId = "rbxassetid://132305166420818" -- Kollar arkaya havalı animasyon
 
 local animTrack = nil
 local animPlaying = false
