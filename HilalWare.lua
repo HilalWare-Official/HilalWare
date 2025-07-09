@@ -5,7 +5,7 @@ local player = Players.LocalPlayer
 local char = player.Character or player.CharacterAdded:Wait()
 local humanoid = char:WaitForChild("Humanoid")
 
--- 🔥 Yeni animasyon ID (kollar arkaya poz)
+--  Yeni animasyon ID (kollar arkaya poz)
 local animation = Instance.new("Animation")
 animation.AnimationId = "rbxassetid://132305166420818"
 
@@ -13,7 +13,7 @@ local animTrack = nil
 local animPlaying = false
 local toolEquipped = false
 
--- 🧰 Tool oluştur
+--  Tool oluştur
 local tool = Instance.new("Tool")
 tool.Name = "HilalPose"
 tool.RequiresHandle = false
@@ -36,7 +36,7 @@ local function toggleAnimation()
 	end
 end
 
--- 🖱️ Mouse kontrolü
+--  Mouse kontrolü
 tool.Equipped:Connect(function()
 	toolEquipped = true
 
