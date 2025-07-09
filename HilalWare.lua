@@ -5,31 +5,29 @@ local player = Players.LocalPlayer
 local char = player.Character or player.CharacterAdded:Wait()
 local humanoid = char:WaitForChild("Humanoid")
 
--- Animasyon setup
+-- 🔥 Yeni animasyon ID (kollar arkaya poz)
 local animation = Instance.new("Animation")
-animation.AnimationId = "rbxassetid://132305166420818" -- Kollar arkaya havalı animasyon
+animation.AnimationId = "rbxassetid://132305166420818"
 
 local animTrack = nil
 local animPlaying = false
 local toolEquipped = false
 
--- Tool oluştur
+-- 🧰 Tool oluştur
 local tool = Instance.new("Tool")
 tool.Name = "HilalPose"
 tool.RequiresHandle = false
 tool.CanBeDropped = false
 tool.Parent = player.Backpack
 
--- Toggle fonksiyonu
+-- 🎮 Toggle fonksiyonu
 local function toggleAnimation()
 	if not animPlaying then
-		-- Animasyon başlat
 		animTrack = humanoid:LoadAnimation(animation)
 		animTrack.Priority = Enum.AnimationPriority.Action
 		animTrack:Play()
 		animPlaying = true
 	else
-		-- Animasyonu durdur
 		if animTrack then
 			animTrack:Stop()
 			animTrack = nil
@@ -38,17 +36,16 @@ local function toggleAnimation()
 	end
 end
 
--- Giriş kontrol
-UserInputService.InputBegan:Connect(function(input, processed)
-	if processed then return end
-	if toolEquipped and input.UserInputType == Enum.UserInputType.Keyboard then
-		toggleAnimation()
-	end
-end)
-
--- Tool eldeyken flag aktif
+-- 🖱️ Mouse kontrolü
 tool.Equipped:Connect(function()
 	toolEquipped = true
+
+	local mouse = player:GetMouse()
+	mouse.Button1Down:Connect(function()
+		if toolEquipped then
+			toggleAnimation()
+		end
+	end)
 end)
 
 tool.Unequipped:Connect(function()
