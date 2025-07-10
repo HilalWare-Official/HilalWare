@@ -1,0 +1,74 @@
+local player = game.Players.LocalPlayer
+
+local function createFlyHelpGui()
+	local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+	gui.Name = "FlyHelpGui"
+	gui.ResetOnSpawn = false
+
+	local frame = Instance.new("Frame", gui)
+	frame.Size = UDim2.new(0, 300, 0, 200)
+	frame.Position = UDim2.new(0.5, -150, 0.5, -100)
+	frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+	frame.BorderSizePixel = 0
+	frame.Active = true
+	frame.Draggable = true
+
+	local topBar = Instance.new("Frame", frame)
+	topBar.Size = UDim2.new(1, 0, 0, 30)
+	topBar.BackgroundColor3 = Color3.fromRGB(150, 0, 0)
+
+	local title = Instance.new("TextLabel", topBar)
+	title.Size = UDim2.new(1, -60, 1, 0)
+	title.Position = UDim2.new(0, 10, 0, 0)
+	title.Text = "FLY"
+	title.TextColor3 = Color3.new(1, 1, 1)
+	title.Font = Enum.Font.GothamBold
+	title.TextSize = 18
+	title.BackgroundTransparency = 1
+	title.TextXAlignment = Enum.TextXAlignment.Left
+
+	local close = Instance.new("TextButton", topBar)
+	close.Size = UDim2.new(0, 30, 0, 30)
+	close.Position = UDim2.new(1, -30, 0, 0)
+	close.Text = "X"
+	close.TextColor3 = Color3.new(1, 1, 1)
+	close.BackgroundTransparency = 1
+	close.Font = Enum.Font.GothamBold
+	close.TextSize = 16
+
+	-- İçerik
+	local instruction = Instance.new("TextLabel", frame)
+	instruction.Size = UDim2.new(1, -20, 0, 90)
+	instruction.Position = UDim2.new(0, 10, 0, 40)
+	instruction.Text = "Movement: WASD\nToggle flight: E\nUp & Down: R & F"
+	instruction.TextColor3 = Color3.fromRGB(255, 255, 160)
+	instruction.Font = Enum.Font.Gotham
+	instruction.TextSize = 16
+	instruction.TextWrapped = true
+	instruction.TextYAlignment = Enum.TextYAlignment.Top
+	instruction.BackgroundTransparency = 1
+
+	local okayBtn = Instance.new("TextButton", frame)
+	okayBtn.Size = UDim2.new(0.6, 0, 0, 30)
+	okayBtn.Position = UDim2.new(0.2, 0, 1, -40)
+	okayBtn.Text = "OKAY"
+	okayBtn.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
+	okayBtn.TextColor3 = Color3.new(1, 1, 1)
+	okayBtn.Font = Enum.Font.GothamBold
+	okayBtn.TextSize = 16
+
+	-- Kapatma
+	local function closeGui()
+		gui:Destroy()
+	end
+
+	close.MouseButton1Click:Connect(closeGui)
+	okayBtn.MouseButton1Click:Connect(closeGui)
+end
+
+-- Sohbet dinleyici
+player.Chatted:Connect(function(msg)
+	if msg:lower() == ":fly" then
+		createFlyHelpGui()
+	end
+end)
