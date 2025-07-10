@@ -30,7 +30,7 @@ local function showAdminScreen()
     label.TextStrokeColor3 = Color3.new(0,0,0)
     label.Font = Enum.Font.GothamBold
     label.TextSize = 40
-    label.Text = "Admin geldi " .. player.Name .. " yarram!"
+    label.Text = "Admin geldi " .. player.Name .. "!"
     label.ZIndex = 11
     label.Parent = gui
 
