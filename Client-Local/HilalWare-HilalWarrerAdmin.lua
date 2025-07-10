@@ -1,6 +1,7 @@
 local player = game.Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
+
 local function showAdminScreen()
     -- Eğer zaten varsa yok et
     if playerGui:FindFirstChild("AdminScreenGui") then
