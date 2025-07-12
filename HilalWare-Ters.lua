@@ -1,6 +1,5 @@
 local player = game.Players.LocalPlayer
 local RunService = game:GetService("RunService")
-
 local function setupCharacter(char)
 	local humanoid = char:WaitForChild("Humanoid")
 	local hrp = char:WaitForChild("HumanoidRootPart")
