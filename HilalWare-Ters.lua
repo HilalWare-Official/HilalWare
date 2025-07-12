@@ -1,32 +1,40 @@
-local player = game.Players.LocalPlayer
+local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+
 local function setupCharacter(char)
 	local humanoid = char:WaitForChild("Humanoid")
 	local hrp = char:WaitForChild("HumanoidRootPart")
 
-	-- AutoRotate kapatılıyor çünkü yönü biz kontrol edeceğiz
+	-- Otomatik rotasyon kapatılıyor, yönü biz kontrol edeceğiz
 	humanoid.AutoRotate = false
 
 	RunService.RenderStepped:Connect(function()
+		-- Hareket yönü alınıyor
 		local moveDir = humanoid.MoveDirection
-
 		if moveDir.Magnitude > 0 then
-			-- Normal yön (ileri yön)
-			local moveDirection = moveDir.Unit
+			-- Yürüyüş yönü belirleniyor
+			local walkDirection = moveDir.Unit
 
-			-- 180 derece TERS yön = -MoveDirection
-			local backwardDirection = -moveDirection
+			-- Pozisyon korunarak 180 derece ters yöne bakılıyor
+			local newLookVector = -walkDirection
+			local newCF = CFrame.new(hrp.Position, hrp.Position + Vector3.new(newLookVector.X, 0, newLookVector.Z))
 
-			-- HumanoidRootPart pozisyonu ve yönü
-			local pos = hrp.Position
-			local newLook = pos + Vector3.new(backwardDirection.X, 0, backwardDirection.Z)
-			hrp.CFrame = CFrame.lookAt(pos, newLook)
+			-- CFrame'i ayarla (aynı konum, ters yön)
+			hrp.CFrame = newCF
 		end
 	end)
 end
 
--- Karakter yüklenince çalıştır
+-- Karakter ilk yüklendiğinde
 if player.Character then
 	setupCharacter(player.Character)
 end
-player.CharacterAdded:Connect(setupCharacter)
+
+-- Karakter yeniden doğduğunda
+player.CharacterAdded:Connect(function(char)
+	char:WaitForChild("HumanoidRootPart")
+	char:WaitForChild("Humanoid")
+	setupCharacter(char)
+end)
