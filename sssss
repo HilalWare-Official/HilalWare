@@ -1,0 +1,89 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local LocalPlayer = Players.LocalPlayer
+
+RunService.RenderStepped:Connect(function()
+    local sword = workspace:FindFirstChild("ClassicSword")
+    if sword and sword:FindFirstChild("Handle") then
+        local handle = sword.Handle
+        local char = LocalPlayer.Character
+        if char and char:FindFirstChild("HumanoidRootPart") then
+            -- Işınla ama biraz yukarıya
+            local targetCFrame = char.HumanoidRootPart.CFrame * CFrame.new(0, 2, 0)
+            handle.CFrame = targetCFrame
+
+            -- İçinden geçilebilsin, fiziksel etkileşim olmasın
+            handle.CanCollide = false
+            handle.Massless = true
+            handle.Anchored = false -- Eğer sabit kalmasın istiyorsan
+            handle.Transparency = 0 -- İstersen görünmez de yaparız 1 yapınca
+        end
+    end
+end)
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local RunService = game:GetService("RunService")
+
+-- GUI Oluştur
+local ScreenGui = Instance.new("ScreenGui", LocalPlayer:WaitForChild("PlayerGui"))
+local Button = Instance.new("TextButton", ScreenGui)
+
+ScreenGui.Name = "TPRightGui"
+Button.Size = UDim2.new(0, 200, 0, 50)
+Button.Position = UDim2.new(0, 20, 0, 160)
+Button.Text = "Tüm Oyuncuları Sağıma Çek"
+Button.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+Button.Font = Enum.Font.SourceSansBold
+Button.TextSize = 20
+Button.BorderSizePixel = 0
+
+-- Değişkenler
+local aktif = false
+local loopConnection
+
+local function teleportAllPlayersRight()
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            local root = LocalPlayer.Character.HumanoidRootPart
+            -- Sağa doğru (RightVector * +3)
+            player.Character.HumanoidRootPart.CFrame = root.CFrame + (root.CFrame.RightVector * 3)
+        end
+    end
+end
+
+-- Yeni oyuncular gelince bağlan
+local function onPlayerAdded(player)
+    player.CharacterAdded:Connect(function()
+        wait(1)
+        if aktif then
+            teleportAllPlayersRight()
+        end
+    end)
+end
+
+-- Butona tıklanınca
+Button.MouseButton1Click:Connect(function()
+    aktif = not aktif
+    Button.Text = aktif and "Durdur" or "Tüm Oyuncuları Sağıma Çek"
+
+    if aktif then
+        loopConnection = RunService.Heartbeat:Connect(function()
+            pcall(teleportAllPlayersRight)
+        end)
+    else
+        if loopConnection then
+            loopConnection:Disconnect()
+            loopConnection = nil
+        end
+    end
+end)
+
+-- Mevcut oyuncular
+for _, player in pairs(Players:GetPlayers()) do
+    if player ~= LocalPlayer then
+        onPlayerAdded(player)
+    end
+end
+Players.PlayerAdded:Connect(onPlayerAdded)
