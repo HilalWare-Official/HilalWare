@@ -75,27 +75,33 @@ local function stopFlying()
     if bodyGyro then bodyGyro:Destroy() end
 end
 
+---
 -- GUI BAŞLANGIÇ
+---
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "FlyControlPanel"
 screenGui.Parent = CoreGui
 screenGui.ResetOnSpawn = false
 
 local panel = Instance.new("Frame")
-panel.Size = UDim2.new(0, 200, 0, 150)
-panel.Position = UDim2.new(0.5, -150, 0.5, -75)
-panel.BackgroundColor3 = Color3.fromRGB(150, 0, 0) -- Kırmızı tema
+panel.Size = UDim2.new(0, 200, 0, 125)
+panel.Position = UDim2.new(0.5, -100, 0.5, -62.5) -- Panel konumunu ortalama
+panel.BackgroundColor3 = Color3.fromRGB(45,45,45)
 panel.BackgroundTransparency = 0.05
 panel.BorderSizePixel = 0
 panel.Parent = screenGui
+Instance.new("UICorner", panel).CornerRadius = UDim.new(0, 8) -- Kenar yumuşatma
 
--- GUI drag özelliği
+-- GUI drag özelliği (başlık hariç tüm panel sürüklenmeli)
 local dragging, dragStart, startPos
 panel.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-        dragging = true
-        dragStart = input.Position
-        startPos = panel.Position
+        -- Eğer başlık butonlarından birine tıklanmadıysa sürüklemeyi başlat
+        if input.Target ~= closeButton and input.Target ~= m then
+            dragging = true
+            dragStart = input.Position
+            startPos = panel.Position
+        end
     end
 end)
 
@@ -112,43 +118,27 @@ panel.InputEnded:Connect(function(input)
     end
 end)
 
--- Minimize butonu
-local k = Instance.new("TextButton")
-k.Parent = screenGui
-k.Size = UDim2.new(0.1, 0, 0.15, 0)
-k.Position = UDim2.new(0.5, 0, 0.1, 0)
-k.BackgroundColor3 = Color3.fromRGB(120, 0, 0)
-k.TextColor3 = Color3.fromRGB(255, 255, 255)
-k.BackgroundTransparency = 0.5
-k.Text = "S"
-k.Font = Enum.Font.Bangers
-k.TextScaled = true
-k.Active = true
-k.Draggable = true
-k.Visible = false
-Instance.new("UICorner", k).CornerRadius = UDim.new(1, 0)
+-- Minimize butonu (k) kaldırıldı, artık m her şeyi yapacak
 
 -- Başlık ve Kapatma
-local header = Instance.new("Frame")
-header.Size = UDim2.new(1, 0, 0.2, 0)
-header.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
+local header = Instance.new("TextLabel")
+header.Size = UDim2.new(1,0,0.2)
+header.BackgroundColor3 = Color3.fromRGB(175, 0, 0) -- Kırmızı renk
+header.Text = "FLY"
+header.TextColor3 = Color3.new(1, 1, 1)
 header.BorderSizePixel = 0
+header.Font = Enum.Font.Highway
+header.TextXAlignment = Enum.TextXAlignment.Center -- Merkezlendi
+header.TextSize = 18
 header.Parent = panel
-
-local headerLabel = Instance.new("TextLabel")
-headerLabel.Size = UDim2.new(0.8, 0, 1, 0)
-headerLabel.BackgroundTransparency = 1
-headerLabel.Text = " FLY"
-headerLabel.TextColor3 = Color3.new(1, 1, 1)
-headerLabel.Font = Enum.Font.Highway
-headerLabel.TextXAlignment = Enum.TextXAlignment.Left
-headerLabel.TextSize = 18
-headerLabel.Parent = header
+-- Başlığın üst köşeleri panelinkine uyacak şekilde yuvarlanabilir
+Instance.new("UICorner", header).CornerRadius = UDim.new(0, 8) -- Köşeler yuvarlandı (sadece üst kısım)
+Instance.new("UIPadding", header).PaddingTop = UDim.new(0, 2) -- Hafif boşluk
 
 local closeButton = Instance.new("TextButton")
-closeButton.Size = UDim2.new(0.2, 0, 1, 0)
-closeButton.Position = UDim2.new(0.8, 0, 0, 0)
-closeButton.BackgroundColor3 = Color3.fromRGB(70, 0, 0)
+closeButton.Size = UDim2.new(0.15,0,0.9) -- Boyut biraz büyüdü
+closeButton.Position = UDim2.new(0.85,0,0.05) -- Konum değişti
+closeButton.BackgroundColor3 = Color3.fromRGB(0,0,0)
 closeButton.BackgroundTransparency = 0.5
 closeButton.Text = "X"
 closeButton.TextColor3 = Color3.new(1, 1, 1)
@@ -156,47 +146,56 @@ closeButton.BorderSizePixel = 0
 closeButton.Font = Enum.Font.SourceSans
 closeButton.TextSize = 18
 closeButton.Parent = header
+Instance.new("UICorner", closeButton).CornerRadius = UDim.new(0, 4) -- Kenar yumuşatma eklendi
 closeButton.MouseButton1Click:Connect(function()
     screenGui:Destroy()
 end)
 
 local m = Instance.new("TextButton")
 m.Parent = header
-m.Size = UDim2.new(0.1, 0, 1, 0)
-m.Position = UDim2.new(0.7, 0, 0, 0)
-m.BackgroundColor3 = Color3.fromRGB(70, 0, 0)
+m.Size = UDim2.new(0.15,0,0.9) -- Boyut biraz büyüdü
+m.Position = UDim2.new(0.7,0,0.05) -- Konum değişti
+m.BackgroundColor3 = Color3.fromRGB(0,0,0)
 m.BorderSizePixel = 0
-m.TextColor3 = Color3.fromRGB(255, 255, 255)
+m.TextColor3 = Color3.fromRGB(255,255,255)
 m.BackgroundTransparency = 0.5
-m.Text = "-"
-m.Font = Enum.Font.Highway
-m.TextSize = 22
+m.Text = "-" -- Başlangıçta minimize durumunda
+Instance.new("UICorner", m).CornerRadius = UDim.new(0, 4) -- Kenar yumuşatma eklendi
+
+-- Durum Göstergesi
+local statusLabel = Instance.new("TextLabel")
+statusLabel.Size = UDim2.new(0.9, 0, 0.25)
+statusLabel.Position = UDim2.new(0.05, 0, 0.3) -- Konum ayarlandı
+statusLabel.BackgroundColor3 = Color3.fromRGB(50,50,50)
+statusLabel.TextColor3 = Color3.new(1, 1, 1)
+statusLabel.BorderSizePixel = 0
+statusLabel.Font = Enum.Font.SourceSans
+statusLabel.TextSize = 20
+statusLabel.Text = "Status: Off" -- Başlangıçta kapalı
+statusLabel.TextXAlignment = Enum.TextXAlignment.Left
+statusLabel.Parent = panel
+Instance.new("UICorner", statusLabel).CornerRadius = UDim.new(0, 5) -- Kenar yumuşatma
 
 -- Hız kutusu
-local Box = Instance.new("Frame")
-Box.Size = UDim2.new(0.9, 0, 0.25, 0)
-Box.Position = UDim2.new(0.05, 0, 0.65, 0)
-Box.BackgroundColor3 = Color3.fromRGB(100, 0, 0)
+local Box = Instance.new("TextLabel")
+Box.Size = UDim2.new(0.9,0,0.25)
+Box.Position = UDim2.new(0.05,0,0.7) -- Konumu kaydırıldı
+Box.BackgroundColor3 = Color3.fromRGB(50,50,50)
+Box.TextColor3 = Color3.new(1, 1, 1)
 Box.BorderSizePixel = 0
+Box.Font = Enum.Font.SourceSans
+Box.TextSize = 20
+Box.Text = "ㅤㅤㅤㅤSpeed:"
 Box.Parent = panel
-
-local speedLabel = Instance.new("TextLabel")
-speedLabel.Size = UDim2.new(0.6, 0, 1, 0)
-speedLabel.Position = UDim2.new(0, 0, 0, 0)
-speedLabel.BackgroundTransparency = 1
-speedLabel.TextColor3 = Color3.new(1, 1, 1)
-speedLabel.Font = Enum.Font.SourceSans
-speedLabel.TextSize = 20
-speedLabel.Text = "Speed:"
-speedLabel.TextXAlignment = Enum.TextXAlignment.Left
-speedLabel.Parent = Box
+Box.TextXAlignment = Enum.TextXAlignment.Left
+Instance.new("UICorner", Box).CornerRadius = UDim.new(0, 5) -- Kenar yumuşatma
 
 local speedBox = Instance.new("TextBox")
-speedBox.Size = UDim2.new(0.4, 0, 1, 0)
-speedBox.Position = UDim2.new(0.6, 0, 0, 0)
-speedBox.BackgroundColor3 = Color3.fromRGB(70, 0, 0)
+speedBox.Size = UDim2.new(0.4,0,0.9)
+speedBox.Position = UDim2.new(0.55,0,0.05)
+speedBox.BackgroundColor3 = Color3.fromRGB(30,30,30)
 speedBox.PlaceholderText = "Enter Speed"
-speedBox.Text = tostring(flySpeed)
+speedBox.Text = " " .. tostring(flySpeed)
 speedBox.TextColor3 = Color3.new(1, 1, 1)
 speedBox.BorderSizePixel = 0
 speedBox.Font = Enum.Font.SourceSans
@@ -204,69 +203,36 @@ speedBox.TextSize = 20
 speedBox.TextXAlignment = Enum.TextXAlignment.Left
 speedBox.ClearTextOnFocus = false
 speedBox.Parent = Box
+Instance.new("UICorner", speedBox).CornerRadius = UDim.new(0, 4) -- Kenar yumuşatma
 
 -- Uçuş butonu
 local flyButton = Instance.new("TextButton")
-flyButton.Size = UDim2.new(0.9, 0, 0.25, 0)
-flyButton.Position = UDim2.new(0.05, 0, 0.37, 0)
-flyButton.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
+flyButton.Size = UDim2.new(0.9,0,0.25)
+flyButton.Position = UDim2.new(0.05, 0, 0.49) -- Konumu kaydırıldı
+flyButton.BackgroundColor3 = Color3.fromRGB(175, 0, 0) -- Kırmızı renk
 flyButton.Text = "ENABLE"
 flyButton.TextColor3 = Color3.new(1, 1, 1)
 flyButton.BorderSizePixel = 0
 flyButton.Font = Enum.Font.Highway
 flyButton.TextSize = 20
 flyButton.Parent = panel
+Instance.new("UICorner", flyButton).CornerRadius = UDim.new(0, 8) -- Kenar yumuşatma
 
--- Status Label ekle
-local statusLabel = Instance.new("TextLabel")
-statusLabel.Size = UDim2.new(0.3, 0, 0.2, 0)
-statusLabel.Position = UDim2.new(0.65, 0, 0.1, 0)
-statusLabel.BackgroundColor3 = Color3.fromRGB(100, 0, 0)
-statusLabel.TextColor3 = Color3.new(1, 1, 1)
-statusLabel.Font = Enum.Font.Highway
-statusLabel.TextSize = 20
-statusLabel.Text = "Status: OFF"
-statusLabel.BorderSizePixel = 0
-statusLabel.Parent = panel
-
--- Status On-Off Toggle Butonu
-local statusToggle = Instance.new("TextButton")
-statusToggle.Size = UDim2.new(0.3, 0, 0.2, 0)
-statusToggle.Position = UDim2.new(0.65, 0, 0.3, 0)
-statusToggle.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
-statusToggle.TextColor3 = Color3.new(1, 1, 1)
-statusToggle.Font = Enum.Font.Highway
-statusToggle.TextSize = 20
-statusToggle.Text = "Turn ON"
-statusToggle.BorderSizePixel = 0
-statusToggle.Parent = panel
-
-local statusOn = false
-
-statusToggle.MouseButton1Click:Connect(function()
-    statusOn = not statusOn
-    if statusOn then
-        statusLabel.Text = "Status: ON"
-        statusLabel.BackgroundColor3 = Color3.fromRGB(0, 150, 0)
-        statusToggle.Text = "Turn OFF"
-        statusToggle.BackgroundColor3 = Color3.fromRGB(0, 200, 0)
-    else
-        statusLabel.Text = "Status: OFF"
-        statusLabel.BackgroundColor3 = Color3.fromRGB(100, 0, 0)
-        statusToggle.Text = "Turn ON"
-        statusToggle.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
-    end
-end)
-
--- Minimize işlemi
-k.MouseButton1Click:Connect(function()
-    panel.Visible = true
-    k.Visible = false
-end)
-
+-- Minimize/Genişletme işlemi
 m.MouseButton1Click:Connect(function()
-    panel.Visible = false
-    k.Visible = true
+    if panel.Size.Y.Offset == 125 then -- Tam boyutta ise küçült
+        panel:TweenSize(UDim2.new(0, 200, 0, 25), "Out", "Quad", 0.2) -- Sadece başlık yüksekliği kadar
+        m.Text = "+" -- Butonu "+" yap
+        header.TextXAlignment = Enum.TextXAlignment.Center -- Başlığı ortala
+        closeButton.Visible = false -- Kapatma düğmesini gizle
+        m.Position = UDim2.new(0.7,0,0.05) -- Konumunu ayarla (eski yerinden sağa doğru)
+    else -- Küçültülmüş ise büyüt
+        panel:TweenSize(UDim2.new(0, 200, 0, 125), "Out", "Quad", 0.2) -- Orijinal boyuta geri getir
+        m.Text = "-" -- Butonu "-" yap
+        header.TextXAlignment = Enum.TextXAlignment.Center -- Başlığı ortala
+        closeButton.Visible = true -- Kapatma düğmesini göster
+        m.Position = UDim2.new(0.7,0,0.05) -- Konumunu ayarla
+    end
 end)
 
 flyButton.MouseButton1Click:Connect(function()
@@ -278,12 +244,31 @@ flyButton.MouseButton1Click:Connect(function()
     if flying then
         stopFlying()
         flyButton.Text = "ENABLE"
+        flyButton.BackgroundColor3 = Color3.fromRGB(175, 0, 0) -- Kırmızı
+        statusLabel.Text = "Status: Off"
+        statusLabel.TextColor3 = Color3.fromRGB(255, 0, 0) -- Kırmızı
     else
         startFlying()
         flyButton.Text = "Loading..."
         wait(0.5)
         flyButton.Text = "DISABLE"
+        flyButton.BackgroundColor3 = Color3.fromRGB(0, 175, 0) -- Yeşil
+        statusLabel.Text = "Status: On"
+        statusLabel.TextColor3 = Color3.fromRGB(0, 255, 0) -- Yeşil
     end
 
-    speedBox.Text = tostring(flySpeed)
+    speedBox.Text = " " .. tostring(flySpeed)
 end)
+
+-- İlk başlangıçta durum metnini ayarla
+if flying then
+    statusLabel.Text = "Status: On"
+    statusLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+    flyButton.BackgroundColor3 = Color3.fromRGB(0, 175, 0)
+    flyButton.Text = "DISABLE"
+else
+    statusLabel.Text = "Status: Off"
+    statusLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+    flyButton.BackgroundColor3 = Color3.fromRGB(175, 0, 0)
+    flyButton.Text = "ENABLE"
+end
