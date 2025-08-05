@@ -1,65 +1,34 @@
--- new update
+--v2 new update
+
+
 local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
 local LocalPlayer = Players.LocalPlayer
-local Mouse = LocalPlayer:GetMouse()
+local RunService = game:GetService("RunService")
 
 local whitelist = {}
 
--- Önce varsa eski GUI'yi temizle
+-- GUI temizle
 pcall(function()
-    LocalPlayer.PlayerGui:FindFirstChild("TeleportGUI"):Destroy()
+    LocalPlayer.PlayerGui:FindFirstChild("TeleportGui"):Destroy()
 end)
 
 -- GUI kur
-local gui = Instance.new("ScreenGui", LocalPlayer:WaitForChild("PlayerGui"))
-gui.Name = "TeleportGUI"
+local gui = Instance.new("ScreenGui", game.CoreGui)
+gui.Name = "TeleportGui"
 gui.ResetOnSpawn = false
 
--- Ana Frame
 local main = Instance.new("Frame", gui)
-main.Size = UDim2.new(0, 250, 0, 300)
-main.Position = UDim2.new(0, 50, 0.5, -150)
+main.Size = UDim2.new(0, 250, 0, 320)
+main.Position = UDim2.new(0, 10, 0.5, -160)
 main.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 main.BorderSizePixel = 0
+main.Active = true
+main.Draggable = true
 
-local corner = Instance.new("UICorner", main)
-corner.CornerRadius = UDim.new(0, 10)
+Instance.new("UICorner", main).CornerRadius = UDim.new(0, 10)
 
--- Sürüklenebilirlik
-local dragging, dragInput, dragStart, startPos
-
-main.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        dragging = true
-        dragStart = input.Position
-        startPos = main.Position
-
-        input.Changed:Connect(function()
-            if input.UserInputState == Enum.UserInputState.End then
-                dragging = false
-            end
-        end)
-    end
-end)
-
-main.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-        dragInput = input
-    end
-end)
-
-RunService.RenderStepped:Connect(function()
-    if dragging and dragInput then
-        local delta = dragInput.Position - dragStart
-        main.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
-                                  startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-    end
-end)
-
--- Scroll alanı
 local scroll = Instance.new("ScrollingFrame", main)
-scroll.Size = UDim2.new(1, 0, 1, -40)
+scroll.Size = UDim2.new(1, 0, 1, -50)
 scroll.Position = UDim2.new(0, 0, 0, 0)
 scroll.BackgroundTransparency = 1
 scroll.BorderSizePixel = 0
@@ -67,40 +36,34 @@ scroll.CanvasSize = UDim2.new(0, 0, 0, 0)
 scroll.ScrollBarThickness = 6
 
 local layout = Instance.new("UIListLayout", scroll)
-layout.Padding = UDim.new(0, 4)
 layout.SortOrder = Enum.SortOrder.LayoutOrder
+layout.Padding = UDim.new(0, 4)
 
 -- Getir butonu
 local getir = Instance.new("TextButton", main)
-getir.Size = UDim2.new(1, -10, 0, 30)
-getir.Position = UDim2.new(0, 5, 1, -35)
+getir.Size = UDim2.new(1, -20, 0, 35)
+getir.Position = UDim2.new(0, 10, 1, -40)
 getir.Text = "GETİR"
-getir.BackgroundColor3 = Color3.fromRGB(60, 120, 60)
-getir.TextColor3 = Color3.fromRGB(255, 255, 255)
+getir.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
+getir.TextColor3 = Color3.new(1, 1, 1)
 getir.BorderSizePixel = 0
+Instance.new("UICorner", getir).CornerRadius = UDim.new(0, 6)
 
-local getirCorner = Instance.new("UICorner", getir)
-getirCorner.CornerRadius = UDim.new(0, 6)
-
--- Oyuncu butonlarını oluştur
-function updatePlayerList()
-    for _, child in pairs(scroll:GetChildren()) do
-        if child:IsA("TextButton") then
-            child:Destroy()
-        end
+-- Oyuncu listesi güncelleme
+local function updateList()
+    for _, v in pairs(scroll:GetChildren()) do
+        if v:IsA("TextButton") then v:Destroy() end
     end
 
     for _, player in pairs(Players:GetPlayers()) do
         if player ~= LocalPlayer then
             local btn = Instance.new("TextButton", scroll)
-            btn.Size = UDim2.new(1, -10, 0, 28)
+            btn.Size = UDim2.new(1, -20, 0, 30)
             btn.Text = player.Name
-            btn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-            btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+            btn.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+            btn.TextColor3 = Color3.new(1,1,1)
             btn.BorderSizePixel = 0
-
-            local corner = Instance.new("UICorner", btn)
-            corner.CornerRadius = UDim.new(0, 6)
+            Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 6)
 
             btn.MouseButton1Click:Connect(function()
                 whitelist[player.Name] = not whitelist[player.Name]
@@ -113,18 +76,21 @@ function updatePlayerList()
     scroll.CanvasSize = UDim2.new(0, 0, 0, layout.AbsoluteContentSize.Y + 10)
 end
 
-Players.PlayerAdded:Connect(updatePlayerList)
-Players.PlayerRemoving:Connect(updatePlayerList)
+-- Dinamik güncelleme
+Players.PlayerAdded:Connect(updateList)
+Players.PlayerRemoving:Connect(updateList)
 
-updatePlayerList()
+-- Başlangıçta çalıştır
+updateList()
 
--- GETİR Butonu işlevi
+-- GETİR işlevi
 getir.MouseButton1Click:Connect(function()
     local myChar = LocalPlayer.Character
     if not myChar or not myChar:FindFirstChild("HumanoidRootPart") then return end
-
-    local myHRP = myChar.HumanoidRootPart
-    local targetPos = myHRP.Position + (myHRP.CFrame.RightVector * 2) + (myHRP.CFrame.LookVector * -2)
+    local pos = myChar.HumanoidRootPart.CFrame.Position
+    local right = myChar.HumanoidRootPart.CFrame.RightVector * 2
+    local forward = myChar.HumanoidRootPart.CFrame.LookVector * -2
+    local targetPos = pos + right + forward
 
     for _, player in pairs(Players:GetPlayers()) do
         if player ~= LocalPlayer and not whitelist[player.Name] then
