@@ -1,15 +1,5 @@
---[=[
- d888b  db    db d888888b      .d888b.      db      db    db  .d8b.  
-88' Y8b 88    88   `88'        VP  `8D      88      88    88 d8' `8b 
-88      88    88    88            odD'      88      88    88 88ooo88 
-88  ooo 88    88    88          .88'        88      88    88 88~~~88 
-88. ~8~ 88b  d88   .88.        j88.         88booo. 88b  d88 88   88    @uniquadev
- Y888P  ~Y8888P' Y888888P      888888D      Y88888P ~Y8888P' YP   YP  CONVERTER 
 
-designed using localmaze gui creator
-]=]
-
--- Instances: 40 | Scripts: 5 | Modules: 0 | Tags: 1
+-- Instances: 48 | Scripts: 12 | Modules: 0 | Tags: 1
 local CollectionService = game:GetService("CollectionService");
 local G2L = {};
 
@@ -21,109 +11,110 @@ G2L["Hilal Ware Hub_1"]["ZIndexBehavior"] = Enum.ZIndexBehavior.Sibling;
 -- Tags
 CollectionService:AddTag(G2L["Hilal Ware Hub_1"], [[main]]);
 
+-- Players.q692q.PlayerGui.Hilal Ware Hub.LocalScript
+G2L["LocalScript_2"] = Instance.new("LocalScript", G2L["Hilal Ware Hub_1"]);
+
+
+
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame
-G2L["HilalWare_Frame_2"] = Instance.new("Frame", G2L["Hilal Ware Hub_1"]);
-G2L["HilalWare_Frame_2"]["BorderSizePixel"] = 0;
-G2L["HilalWare_Frame_2"]["BackgroundColor3"] = Color3.fromRGB(44, 46, 44);
-G2L["HilalWare_Frame_2"]["Size"] = UDim2.new(0.36765, 0, 0.46368, 0);
-G2L["HilalWare_Frame_2"]["Position"] = UDim2.new(0.31471, 0, 0.27202, 0);
-G2L["HilalWare_Frame_2"]["Name"] = [[HilalWare_Frame]];
+G2L["HilalWare_Frame_3"] = Instance.new("Frame", G2L["Hilal Ware Hub_1"]);
+G2L["HilalWare_Frame_3"]["BorderSizePixel"] = 0;
+G2L["HilalWare_Frame_3"]["BackgroundColor3"] = Color3.fromRGB(44, 46, 44);
+G2L["HilalWare_Frame_3"]["Size"] = UDim2.new(0.36765, 0, 0.46368, 0);
+G2L["HilalWare_Frame_3"]["Position"] = UDim2.new(0.31471, 0, 0.27202, 0);
+G2L["HilalWare_Frame_3"]["Name"] = [[HilalWare_Frame]];
 
 
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.HilalWare.Lua
-G2L["HilalWare.Lua_3"] = Instance.new("TextLabel", G2L["HilalWare_Frame_2"]);
-G2L["HilalWare.Lua_3"]["TextWrapped"] = true;
-G2L["HilalWare.Lua_3"]["BorderSizePixel"] = 0;
-G2L["HilalWare.Lua_3"]["TextSize"] = 10;
-G2L["HilalWare.Lua_3"]["TextStrokeColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["HilalWare.Lua_3"]["TextScaled"] = true;
-G2L["HilalWare.Lua_3"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["HilalWare.Lua_3"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
-G2L["HilalWare.Lua_3"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["HilalWare.Lua_3"]["BackgroundTransparency"] = 1;
-G2L["HilalWare.Lua_3"]["Size"] = UDim2.new(0.264, 0, 0.1, 0);
-G2L["HilalWare.Lua_3"]["Text"] = [[HilalWare.Lua]];
-G2L["HilalWare.Lua_3"]["Name"] = [[HilalWare.Lua]];
-G2L["HilalWare.Lua_3"]["Position"] = UDim2.new(0.008, 0, 0.01333, 0);
+G2L["HilalWare.Lua_4"] = Instance.new("TextLabel", G2L["HilalWare_Frame_3"]);
+G2L["HilalWare.Lua_4"]["TextWrapped"] = true;
+G2L["HilalWare.Lua_4"]["BorderSizePixel"] = 0;
+G2L["HilalWare.Lua_4"]["TextSize"] = 10;
+G2L["HilalWare.Lua_4"]["TextStrokeColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["HilalWare.Lua_4"]["TextScaled"] = true;
+G2L["HilalWare.Lua_4"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["HilalWare.Lua_4"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
+G2L["HilalWare.Lua_4"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["HilalWare.Lua_4"]["BackgroundTransparency"] = 1;
+G2L["HilalWare.Lua_4"]["Size"] = UDim2.new(0.264, 0, 0.1, 0);
+G2L["HilalWare.Lua_4"]["Text"] = [[HilalWare.Lua]];
+G2L["HilalWare.Lua_4"]["Name"] = [[HilalWare.Lua]];
+G2L["HilalWare.Lua_4"]["Position"] = UDim2.new(0.008, 0, 0.01333, 0);
 
 
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.HilalWare.Lua.RGB
-G2L["RGB_4"] = Instance.new("LocalScript", G2L["HilalWare.Lua_3"]);
-G2L["RGB_4"]["Name"] = [[RGB]];
+G2L["RGB_5"] = Instance.new("LocalScript", G2L["HilalWare.Lua_4"]);
+G2L["RGB_5"]["Name"] = [[RGB]];
 
 
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.kapat
-G2L["kapat_5"] = Instance.new("TextButton", G2L["HilalWare_Frame_2"]);
-G2L["kapat_5"]["TextWrapped"] = true;
-G2L["kapat_5"]["BorderSizePixel"] = 0;
-G2L["kapat_5"]["TextScaled"] = true;
-G2L["kapat_5"]["BackgroundColor3"] = Color3.fromRGB(255, 0, 0);
-G2L["kapat_5"]["Size"] = UDim2.new(0.056, 0, 0.09333, 0);
-G2L["kapat_5"]["Text"] = [[X]];
-G2L["kapat_5"]["Name"] = [[kapat]];
-G2L["kapat_5"]["Position"] = UDim2.new(0.924, 0, 0.02, 0);
+G2L["kapat_6"] = Instance.new("TextButton", G2L["HilalWare_Frame_3"]);
+G2L["kapat_6"]["TextWrapped"] = true;
+G2L["kapat_6"]["BorderSizePixel"] = 0;
+G2L["kapat_6"]["TextScaled"] = true;
+G2L["kapat_6"]["BackgroundColor3"] = Color3.fromRGB(255, 0, 0);
+G2L["kapat_6"]["Size"] = UDim2.new(0.056, 0, 0.09333, 0);
+G2L["kapat_6"]["Text"] = [[X]];
+G2L["kapat_6"]["Name"] = [[kapat]];
+G2L["kapat_6"]["Position"] = UDim2.new(0.924, 0, 0.02, 0);
 
 
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.kapat.UICorner
-G2L["UICorner_6"] = Instance.new("UICorner", G2L["kapat_5"]);
+G2L["UICorner_7"] = Instance.new("UICorner", G2L["kapat_6"]);
 
 
 
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.kapat.LocalScript
-G2L["LocalScript_7"] = Instance.new("LocalScript", G2L["kapat_5"]);
+G2L["LocalScript_8"] = Instance.new("LocalScript", G2L["kapat_6"]);
 
 
 
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.kapat.UIStroke
-G2L["UIStroke_8"] = Instance.new("UIStroke", G2L["kapat_5"]);
-G2L["UIStroke_8"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
-G2L["UIStroke_8"]["Color"] = Color3.fromRGB(255, 255, 255);
+G2L["UIStroke_9"] = Instance.new("UIStroke", G2L["kapat_6"]);
+G2L["UIStroke_9"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
+G2L["UIStroke_9"]["Color"] = Color3.fromRGB(255, 255, 255);
 
 
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.UICorner
-G2L["UICorner_9"] = Instance.new("UICorner", G2L["HilalWare_Frame_2"]);
+G2L["UICorner_a"] = Instance.new("UICorner", G2L["HilalWare_Frame_3"]);
 
 
 
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.TAŞI
-G2L["TAŞI_a"] = Instance.new("LocalScript", G2L["HilalWare_Frame_2"]);
-G2L["TAŞI_a"]["Name"] = [[TAŞI]];
+G2L["TAŞI_b"] = Instance.new("LocalScript", G2L["HilalWare_Frame_3"]);
+G2L["TAŞI_b"]["Name"] = [[TAŞI]];
 
 
--- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.ScrollingFrame
-G2L["ScrollingFrame_b"] = Instance.new("ScrollingFrame", G2L["HilalWare_Frame_2"]);
-G2L["ScrollingFrame_b"]["BorderSizePixel"] = 0;
-G2L["ScrollingFrame_b"]["BackgroundColor3"] = Color3.fromRGB(61, 61, 61);
-G2L["ScrollingFrame_b"]["Size"] = UDim2.new(0.236, 0, 0.82, 0);
-G2L["ScrollingFrame_b"]["Position"] = UDim2.new(0.02, 0, 0.14, 0);
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.Butonlar
+G2L["Butonlar_c"] = Instance.new("ScrollingFrame", G2L["HilalWare_Frame_3"]);
+G2L["Butonlar_c"]["BorderSizePixel"] = 0;
+G2L["Butonlar_c"]["BackgroundColor3"] = Color3.fromRGB(61, 61, 61);
+G2L["Butonlar_c"]["Name"] = [[Butonlar]];
+G2L["Butonlar_c"]["Size"] = UDim2.new(0.236, 0, 0.82, 0);
+G2L["Butonlar_c"]["Position"] = UDim2.new(0.02, 0, 0.14, 0);
 
 
--- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.ScrollingFrame.UICorner
-G2L["UICorner_c"] = Instance.new("UICorner", G2L["ScrollingFrame_b"]);
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.Butonlar.3. buton
+G2L["3. buton_d"] = Instance.new("TextButton", G2L["Butonlar_c"]);
+G2L["3. buton_d"]["TextWrapped"] = true;
+G2L["3. buton_d"]["BorderSizePixel"] = 0;
+G2L["3. buton_d"]["TextStrokeColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["3. buton_d"]["TextScaled"] = true;
+G2L["3. buton_d"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["3. buton_d"]["BackgroundColor3"] = Color3.fromRGB(100, 100, 100);
+G2L["3. buton_d"]["Size"] = UDim2.new(0, 104, 0, 28);
+G2L["3. buton_d"]["Text"] = [[bitmedi]];
+G2L["3. buton_d"]["Name"] = [[3. buton]];
+G2L["3. buton_d"]["Position"] = UDim2.new(0, 0, 0.25203, -78);
 
 
-
--- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.ScrollingFrame.2. buton
-G2L["2. buton_d"] = Instance.new("TextButton", G2L["ScrollingFrame_b"]);
-G2L["2. buton_d"]["TextWrapped"] = true;
-G2L["2. buton_d"]["BorderSizePixel"] = 0;
-G2L["2. buton_d"]["TextStrokeColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["2. buton_d"]["TextScaled"] = true;
-G2L["2. buton_d"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["2. buton_d"]["BackgroundColor3"] = Color3.fromRGB(100, 100, 100);
-G2L["2. buton_d"]["Size"] = UDim2.new(0, 104, 0, 28);
-G2L["2. buton_d"]["Text"] = [[Oyuncu]];
-G2L["2. buton_d"]["Name"] = [[2. buton]];
-G2L["2. buton_d"]["Position"] = UDim2.new(0, 0, 0.13008, 0);
-
-
--- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.ScrollingFrame.2. buton.UICorner
-G2L["UICorner_e"] = Instance.new("UICorner", G2L["2. buton_d"]);
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.Butonlar.3. buton.UICorner
+G2L["UICorner_e"] = Instance.new("UICorner", G2L["3. buton_d"]);
 
 
 
--- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.ScrollingFrame.1. buton
-G2L["1. buton_f"] = Instance.new("TextButton", G2L["ScrollingFrame_b"]);
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.Butonlar.1. buton
+G2L["1. buton_f"] = Instance.new("TextButton", G2L["Butonlar_c"]);
 G2L["1. buton_f"]["TextWrapped"] = true;
 G2L["1. buton_f"]["BorderSizePixel"] = 0;
 G2L["1. buton_f"]["TextStrokeColor3"] = Color3.fromRGB(255, 255, 255);
@@ -136,224 +127,327 @@ G2L["1. buton_f"]["Name"] = [[1. buton]];
 G2L["1. buton_f"]["Position"] = UDim2.new(0, 0, 0.00813, 0);
 
 
--- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.ScrollingFrame.1. buton.UICorner
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.Butonlar.1. buton.UICorner
 G2L["UICorner_10"] = Instance.new("UICorner", G2L["1. buton_f"]);
 
 
 
--- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.ScrollingFrame.1. buton.LocalScript
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.Butonlar.1. buton.LocalScript
 G2L["LocalScript_11"] = Instance.new("LocalScript", G2L["1. buton_f"]);
 
 
 
--- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.ScrollingFrame.UIStroke
-G2L["UIStroke_12"] = Instance.new("UIStroke", G2L["ScrollingFrame_b"]);
-G2L["UIStroke_12"]["Color"] = Color3.fromRGB(255, 255, 255);
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.Butonlar.2. buton
+G2L["2. buton_12"] = Instance.new("TextButton", G2L["Butonlar_c"]);
+G2L["2. buton_12"]["TextWrapped"] = true;
+G2L["2. buton_12"]["BorderSizePixel"] = 0;
+G2L["2. buton_12"]["TextStrokeColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["2. buton_12"]["TextScaled"] = true;
+G2L["2. buton_12"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["2. buton_12"]["BackgroundColor3"] = Color3.fromRGB(100, 100, 100);
+G2L["2. buton_12"]["Size"] = UDim2.new(0, 104, 0, 28);
+G2L["2. buton_12"]["Text"] = [[Oyuncu]];
+G2L["2. buton_12"]["Name"] = [[2. buton]];
+G2L["2. buton_12"]["Position"] = UDim2.new(0, 0, 0.13008, -40);
 
 
--- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.ScrollingFrame.3. buton
-G2L["3. buton_13"] = Instance.new("TextButton", G2L["ScrollingFrame_b"]);
-G2L["3. buton_13"]["TextWrapped"] = true;
-G2L["3. buton_13"]["BorderSizePixel"] = 0;
-G2L["3. buton_13"]["TextStrokeColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["3. buton_13"]["TextScaled"] = true;
-G2L["3. buton_13"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["3. buton_13"]["BackgroundColor3"] = Color3.fromRGB(100, 100, 100);
-G2L["3. buton_13"]["Size"] = UDim2.new(0, 104, 0, 28);
-G2L["3. buton_13"]["Text"] = [[bitmedi]];
-G2L["3. buton_13"]["Name"] = [[3. buton]];
-G2L["3. buton_13"]["Position"] = UDim2.new(0, 0, 0.25203, 0);
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.Butonlar.2. buton.UICorner
+G2L["UICorner_13"] = Instance.new("UICorner", G2L["2. buton_12"]);
 
 
--- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.ScrollingFrame.3. buton.UICorner
-G2L["UICorner_14"] = Instance.new("UICorner", G2L["3. buton_13"]);
 
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.Butonlar.UICorner
+G2L["UICorner_14"] = Instance.new("UICorner", G2L["Butonlar_c"]);
+
+
+
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.Butonlar.UIStroke
+G2L["UIStroke_15"] = Instance.new("UIStroke", G2L["Butonlar_c"]);
+G2L["UIStroke_15"]["Color"] = Color3.fromRGB(255, 255, 255);
 
 
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area 
-G2L["script area _15"] = Instance.new("Frame", G2L["HilalWare_Frame_2"]);
-G2L["script area _15"]["BorderSizePixel"] = 0;
-G2L["script area _15"]["BackgroundColor3"] = Color3.fromRGB(70, 70, 70);
-G2L["script area _15"]["Size"] = UDim2.new(0.7, 0, 0.82, 0);
-G2L["script area _15"]["Position"] = UDim2.new(0.28, 0, 0.14, 0);
-G2L["script area _15"]["Name"] = [[script area ]];
+G2L["script area _16"] = Instance.new("Frame", G2L["HilalWare_Frame_3"]);
+G2L["script area _16"]["BorderSizePixel"] = 0;
+G2L["script area _16"]["BackgroundColor3"] = Color3.fromRGB(70, 70, 70);
+G2L["script area _16"]["Size"] = UDim2.new(0.7, 0, 0.82, 0);
+G2L["script area _16"]["Position"] = UDim2.new(0.28, 0, 0.14, 0);
+G2L["script area _16"]["Name"] = [[script area ]];
 
 
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .UICorner
-G2L["UICorner_16"] = Instance.new("UICorner", G2L["script area _15"]);
+G2L["UICorner_17"] = Instance.new("UICorner", G2L["script area _16"]);
 
 
 
--- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .UIStroke
-G2L["UIStroke_17"] = Instance.new("UIStroke", G2L["script area _15"]);
-G2L["UIStroke_17"]["Color"] = Color3.fromRGB(255, 255, 255);
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Oyuncu
+G2L["Oyuncu_18"] = Instance.new("Folder", G2L["script area _16"]);
+G2L["Oyuncu_18"]["Name"] = [[Oyuncu]];
 
 
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü
-G2L["Menü_18"] = Instance.new("Folder", G2L["script area _15"]);
-G2L["Menü_18"]["Name"] = [[Menü]];
+G2L["Menü_19"] = Instance.new("Folder", G2L["script area _16"]);
+G2L["Menü_19"]["Name"] = [[Menü]];
 
 
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Profil
-G2L["Profil_19"] = Instance.new("Folder", G2L["Menü_18"]);
-G2L["Profil_19"]["Name"] = [[Profil]];
+G2L["Profil_1a"] = Instance.new("Folder", G2L["Menü_19"]);
+G2L["Profil_1a"]["Name"] = [[Profil]];
+
+
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Profil.User Name
+G2L["User Name_1b"] = Instance.new("TextLabel", G2L["Profil_1a"]);
+G2L["User Name_1b"]["TextWrapped"] = true;
+G2L["User Name_1b"]["BorderSizePixel"] = 0;
+G2L["User Name_1b"]["TextSize"] = 12;
+G2L["User Name_1b"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["User Name_1b"]["TextScaled"] = true;
+G2L["User Name_1b"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["User Name_1b"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
+G2L["User Name_1b"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["User Name_1b"]["BackgroundTransparency"] = 1;
+G2L["User Name_1b"]["Size"] = UDim2.new(0.49714, 0, 0.06504, 0);
+G2L["User Name_1b"]["Text"] = [[User :]];
+G2L["User Name_1b"]["Name"] = [[User Name]];
+G2L["User Name_1b"]["Position"] = UDim2.new(0, 88, 0, 38);
+
+
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Profil.User Name.Oyuncu İsimi Alma
+G2L["Oyuncu İsimi Alma_1c"] = Instance.new("LocalScript", G2L["User Name_1b"]);
+G2L["Oyuncu İsimi Alma_1c"]["Name"] = [[Oyuncu İsimi Alma]];
 
 
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Profil.Profil
-G2L["Profil_1a"] = Instance.new("ImageLabel", G2L["Profil_19"]);
-G2L["Profil_1a"]["BorderSizePixel"] = 0;
-G2L["Profil_1a"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["Profil_1a"]["Size"] = UDim2.new(0.2, 0, 0.28455, 0);
-G2L["Profil_1a"]["BackgroundTransparency"] = 0.7;
-G2L["Profil_1a"]["Name"] = [[Profil]];
-G2L["Profil_1a"]["Position"] = UDim2.new(0, 12, 0, 10);
+G2L["Profil_1d"] = Instance.new("ImageLabel", G2L["Profil_1a"]);
+G2L["Profil_1d"]["BorderSizePixel"] = 0;
+G2L["Profil_1d"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["Profil_1d"]["Size"] = UDim2.new(0.2, 0, 0.28455, 0);
+G2L["Profil_1d"]["BackgroundTransparency"] = 0.7;
+G2L["Profil_1d"]["Name"] = [[Profil]];
+G2L["Profil_1d"]["Position"] = UDim2.new(0, 12, 0, 10);
 
 
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Profil.Profil.UICorner
-G2L["UICorner_1b"] = Instance.new("UICorner", G2L["Profil_1a"]);
+G2L["UICorner_1e"] = Instance.new("UICorner", G2L["Profil_1d"]);
 
 
 
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Profil.Profil.UIStroke
-G2L["UIStroke_1c"] = Instance.new("UIStroke", G2L["Profil_1a"]);
-G2L["UIStroke_1c"]["Color"] = Color3.fromRGB(255, 255, 255);
+G2L["UIStroke_1f"] = Instance.new("UIStroke", G2L["Profil_1d"]);
+G2L["UIStroke_1f"]["Color"] = Color3.fromRGB(255, 255, 255);
 
 
--- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Profil.Display Name
-G2L["Display Name_1d"] = Instance.new("TextLabel", G2L["Profil_19"]);
-G2L["Display Name_1d"]["TextWrapped"] = true;
-G2L["Display Name_1d"]["BorderSizePixel"] = 0;
-G2L["Display Name_1d"]["TextXAlignment"] = Enum.TextXAlignment.Left;
-G2L["Display Name_1d"]["TextScaled"] = true;
-G2L["Display Name_1d"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["Display Name_1d"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
-G2L["Display Name_1d"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["Display Name_1d"]["BackgroundTransparency"] = 1;
-G2L["Display Name_1d"]["Size"] = UDim2.new(0.49714, 0, 0.06504, 0);
-G2L["Display Name_1d"]["Text"] = [[display :]];
-G2L["Display Name_1d"]["Name"] = [[Display Name]];
-G2L["Display Name_1d"]["Position"] = UDim2.new(0, 88, 0, 20);
-
-
--- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Profil.User Name
-G2L["User Name_1e"] = Instance.new("TextLabel", G2L["Profil_19"]);
-G2L["User Name_1e"]["TextWrapped"] = true;
-G2L["User Name_1e"]["BorderSizePixel"] = 0;
-G2L["User Name_1e"]["TextSize"] = 12;
-G2L["User Name_1e"]["TextXAlignment"] = Enum.TextXAlignment.Left;
-G2L["User Name_1e"]["TextScaled"] = true;
-G2L["User Name_1e"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["User Name_1e"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
-G2L["User Name_1e"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["User Name_1e"]["BackgroundTransparency"] = 1;
-G2L["User Name_1e"]["Size"] = UDim2.new(0.49714, 0, 0.06504, 0);
-G2L["User Name_1e"]["Text"] = [[User :]];
-G2L["User Name_1e"]["Name"] = [[User Name]];
-G2L["User Name_1e"]["Position"] = UDim2.new(0, 88, 0, 38);
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Profil.Profil.Oyuncu Profil Alma
+G2L["Oyuncu Profil Alma_20"] = Instance.new("LocalScript", G2L["Profil_1d"]);
+G2L["Oyuncu Profil Alma_20"]["Name"] = [[Oyuncu Profil Alma]];
 
 
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Profil.Oyuncu iD
-G2L["Oyuncu iD_1f"] = Instance.new("TextLabel", G2L["Profil_19"]);
-G2L["Oyuncu iD_1f"]["TextWrapped"] = true;
-G2L["Oyuncu iD_1f"]["BorderSizePixel"] = 0;
-G2L["Oyuncu iD_1f"]["TextSize"] = 12;
-G2L["Oyuncu iD_1f"]["TextXAlignment"] = Enum.TextXAlignment.Left;
-G2L["Oyuncu iD_1f"]["TextScaled"] = true;
-G2L["Oyuncu iD_1f"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["Oyuncu iD_1f"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
-G2L["Oyuncu iD_1f"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["Oyuncu iD_1f"]["BackgroundTransparency"] = 1;
-G2L["Oyuncu iD_1f"]["Size"] = UDim2.new(0.49714, 0, 0.06504, 0);
-G2L["Oyuncu iD_1f"]["Text"] = [[Oyuncu iD :]];
-G2L["Oyuncu iD_1f"]["Name"] = [[Oyuncu iD]];
-G2L["Oyuncu iD_1f"]["Position"] = UDim2.new(0, 88, 0, 58);
+G2L["Oyuncu iD_21"] = Instance.new("TextLabel", G2L["Profil_1a"]);
+G2L["Oyuncu iD_21"]["TextWrapped"] = true;
+G2L["Oyuncu iD_21"]["BorderSizePixel"] = 0;
+G2L["Oyuncu iD_21"]["TextSize"] = 12;
+G2L["Oyuncu iD_21"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["Oyuncu iD_21"]["TextScaled"] = true;
+G2L["Oyuncu iD_21"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["Oyuncu iD_21"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
+G2L["Oyuncu iD_21"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["Oyuncu iD_21"]["BackgroundTransparency"] = 1;
+G2L["Oyuncu iD_21"]["Size"] = UDim2.new(0.49714, 0, 0.06504, 0);
+G2L["Oyuncu iD_21"]["Text"] = [[Oyuncu iD :]];
+G2L["Oyuncu iD_21"]["Name"] = [[Oyuncu iD]];
+G2L["Oyuncu iD_21"]["Position"] = UDim2.new(0, 88, 0, 58);
+
+
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Profil.Oyuncu iD.Oyuncu ID alma
+G2L["Oyuncu ID alma_22"] = Instance.new("LocalScript", G2L["Oyuncu iD_21"]);
+G2L["Oyuncu ID alma_22"]["Name"] = [[Oyuncu ID alma]];
+
+
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Profil.Display Name
+G2L["Display Name_23"] = Instance.new("TextLabel", G2L["Profil_1a"]);
+G2L["Display Name_23"]["TextWrapped"] = true;
+G2L["Display Name_23"]["BorderSizePixel"] = 0;
+G2L["Display Name_23"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["Display Name_23"]["TextScaled"] = true;
+G2L["Display Name_23"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["Display Name_23"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
+G2L["Display Name_23"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["Display Name_23"]["BackgroundTransparency"] = 1;
+G2L["Display Name_23"]["Size"] = UDim2.new(0.49714, 0, 0.06504, 0);
+G2L["Display Name_23"]["Text"] = [[display :]];
+G2L["Display Name_23"]["Name"] = [[Display Name]];
+G2L["Display Name_23"]["Position"] = UDim2.new(0, 88, 0, 20);
+
+
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Profil.Display Name.Display Name Alma
+G2L["Display Name Alma_24"] = Instance.new("LocalScript", G2L["Display Name_23"]);
+G2L["Display Name Alma_24"]["Name"] = [[Display Name Alma]];
 
 
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Oyun Bilgileri
-G2L["Oyun Bilgileri_20"] = Instance.new("Folder", G2L["Menü_18"]);
-G2L["Oyun Bilgileri_20"]["Name"] = [[Oyun Bilgileri]];
+G2L["Oyun Bilgileri_25"] = Instance.new("Folder", G2L["Menü_19"]);
+G2L["Oyun Bilgileri_25"]["Name"] = [[Oyun Bilgileri]];
+
+
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Oyun Bilgileri.Oyun iSimi
+G2L["Oyun iSimi_26"] = Instance.new("TextLabel", G2L["Oyun Bilgileri_25"]);
+G2L["Oyun iSimi_26"]["TextWrapped"] = true;
+G2L["Oyun iSimi_26"]["BorderSizePixel"] = 0;
+G2L["Oyun iSimi_26"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["Oyun iSimi_26"]["TextScaled"] = true;
+G2L["Oyun iSimi_26"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["Oyun iSimi_26"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
+G2L["Oyun iSimi_26"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["Oyun iSimi_26"]["BackgroundTransparency"] = 1;
+G2L["Oyun iSimi_26"]["Size"] = UDim2.new(0.49714, 0, 0.06504, 0);
+G2L["Oyun iSimi_26"]["Text"] = [[Game Name :]];
+G2L["Oyun iSimi_26"]["Name"] = [[Oyun iSimi]];
+G2L["Oyun iSimi_26"]["Position"] = UDim2.new(0, 92, 0, 128);
+
+
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Oyun Bilgileri.Oyun iSimi.Oyun ADı alma
+G2L["Oyun ADı alma_27"] = Instance.new("LocalScript", G2L["Oyun iSimi_26"]);
+G2L["Oyun ADı alma_27"]["Name"] = [[Oyun ADı alma]];
 
 
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Oyun Bilgileri.Oyun Kısımı
-G2L["Oyun Kısımı_21"] = Instance.new("TextLabel", G2L["Oyun Bilgileri_20"]);
-G2L["Oyun Kısımı_21"]["TextWrapped"] = true;
-G2L["Oyun Kısımı_21"]["BorderSizePixel"] = 0;
-G2L["Oyun Kısımı_21"]["TextScaled"] = true;
-G2L["Oyun Kısımı_21"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["Oyun Kısımı_21"]["FontFace"] = Font.new([[rbxasset://fonts/families/FredokaOne.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
-G2L["Oyun Kısımı_21"]["TextColor3"] = Color3.fromRGB(255, 0, 0);
-G2L["Oyun Kısımı_21"]["BackgroundTransparency"] = 1;
-G2L["Oyun Kısımı_21"]["Size"] = UDim2.new(0.36571, 0, 0.08943, 0);
-G2L["Oyun Kısımı_21"]["Text"] = [[Oyun Kısımı]];
-G2L["Oyun Kısımı_21"]["Name"] = [[Oyun Kısımı]];
-G2L["Oyun Kısımı_21"]["Position"] = UDim2.new(0, 94, 0, 86);
+G2L["Oyun Kısımı_28"] = Instance.new("TextLabel", G2L["Oyun Bilgileri_25"]);
+G2L["Oyun Kısımı_28"]["TextWrapped"] = true;
+G2L["Oyun Kısımı_28"]["BorderSizePixel"] = 0;
+G2L["Oyun Kısımı_28"]["TextScaled"] = true;
+G2L["Oyun Kısımı_28"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["Oyun Kısımı_28"]["FontFace"] = Font.new([[rbxasset://fonts/families/FredokaOne.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["Oyun Kısımı_28"]["TextColor3"] = Color3.fromRGB(255, 0, 0);
+G2L["Oyun Kısımı_28"]["BackgroundTransparency"] = 1;
+G2L["Oyun Kısımı_28"]["Size"] = UDim2.new(0.36571, 0, 0.08943, 0);
+G2L["Oyun Kısımı_28"]["Text"] = [[Oyun Kısımı]];
+G2L["Oyun Kısımı_28"]["Name"] = [[Oyun Kısımı]];
+G2L["Oyun Kısımı_28"]["Position"] = UDim2.new(0, 94, 0, 86);
+
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Oyun Bilgileri.Oyun iD
+G2L["Oyun iD_29"] = Instance.new("TextLabel", G2L["Oyun Bilgileri_25"]);
+G2L["Oyun iD_29"]["TextWrapped"] = true;
+G2L["Oyun iD_29"]["BorderSizePixel"] = 0;
+G2L["Oyun iD_29"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["Oyun iD_29"]["TextScaled"] = true;
+G2L["Oyun iD_29"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["Oyun iD_29"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
+G2L["Oyun iD_29"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["Oyun iD_29"]["BackgroundTransparency"] = 1;
+G2L["Oyun iD_29"]["Size"] = UDim2.new(0.49714, 0, 0.06504, 0);
+G2L["Oyun iD_29"]["Text"] = [[Game iD :]];
+G2L["Oyun iD_29"]["Name"] = [[Oyun iD]];
+G2L["Oyun iD_29"]["Position"] = UDim2.new(0, 90, 0, 146);
+
+
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Oyun Bilgileri.Oyun iD.Oyun İd alma
+G2L["Oyun İd alma_2a"] = Instance.new("LocalScript", G2L["Oyun iD_29"]);
+G2L["Oyun İd alma_2a"]["Name"] = [[Oyun İd alma]];
 
 
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Oyun Bilgileri.Oyun Profil
-G2L["Oyun Profil_22"] = Instance.new("ImageLabel", G2L["Oyun Bilgileri_20"]);
-G2L["Oyun Profil_22"]["BorderSizePixel"] = 0;
-G2L["Oyun Profil_22"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["Oyun Profil_22"]["Size"] = UDim2.new(0.2, 0, 0.28455, 0);
-G2L["Oyun Profil_22"]["BackgroundTransparency"] = 0.7;
-G2L["Oyun Profil_22"]["Name"] = [[Oyun Profil]];
-G2L["Oyun Profil_22"]["Position"] = UDim2.new(0, 12, 0, 114);
+G2L["Oyun Profil_2b"] = Instance.new("ImageLabel", G2L["Oyun Bilgileri_25"]);
+G2L["Oyun Profil_2b"]["BorderSizePixel"] = 0;
+G2L["Oyun Profil_2b"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["Oyun Profil_2b"]["Size"] = UDim2.new(0.2, 0, 0.28455, 0);
+G2L["Oyun Profil_2b"]["BackgroundTransparency"] = 0.7;
+G2L["Oyun Profil_2b"]["Name"] = [[Oyun Profil]];
+G2L["Oyun Profil_2b"]["Position"] = UDim2.new(0, 12, 0, 114);
 
 
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Oyun Bilgileri.Oyun Profil.UICorner
-G2L["UICorner_23"] = Instance.new("UICorner", G2L["Oyun Profil_22"]);
+G2L["UICorner_2c"] = Instance.new("UICorner", G2L["Oyun Profil_2b"]);
 
 
 
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Oyun Bilgileri.Oyun Profil.UIStroke
-G2L["UIStroke_24"] = Instance.new("UIStroke", G2L["Oyun Profil_22"]);
-G2L["UIStroke_24"]["Color"] = Color3.fromRGB(255, 255, 255);
+G2L["UIStroke_2d"] = Instance.new("UIStroke", G2L["Oyun Profil_2b"]);
+G2L["UIStroke_2d"]["Color"] = Color3.fromRGB(255, 255, 255);
 
 
--- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Oyun Bilgileri.Oyun iSimi
-G2L["Oyun iSimi_25"] = Instance.new("TextLabel", G2L["Oyun Bilgileri_20"]);
-G2L["Oyun iSimi_25"]["TextWrapped"] = true;
-G2L["Oyun iSimi_25"]["BorderSizePixel"] = 0;
-G2L["Oyun iSimi_25"]["TextXAlignment"] = Enum.TextXAlignment.Left;
-G2L["Oyun iSimi_25"]["TextScaled"] = true;
-G2L["Oyun iSimi_25"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["Oyun iSimi_25"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
-G2L["Oyun iSimi_25"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["Oyun iSimi_25"]["BackgroundTransparency"] = 1;
-G2L["Oyun iSimi_25"]["Size"] = UDim2.new(0.49714, 0, 0.06504, 0);
-G2L["Oyun iSimi_25"]["Text"] = [[Game Name :]];
-G2L["Oyun iSimi_25"]["Name"] = [[Oyun iSimi]];
-G2L["Oyun iSimi_25"]["Position"] = UDim2.new(0, 92, 0, 128);
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Oyun Bilgileri.Oyun Profil.Oyun Profil alma
+G2L["Oyun Profil alma_2e"] = Instance.new("LocalScript", G2L["Oyun Profil_2b"]);
+G2L["Oyun Profil alma_2e"]["Name"] = [[Oyun Profil alma]];
 
 
--- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Oyun Bilgileri.Oyun iD
-G2L["Oyun iD_26"] = Instance.new("TextLabel", G2L["Oyun Bilgileri_20"]);
-G2L["Oyun iD_26"]["TextWrapped"] = true;
-G2L["Oyun iD_26"]["BorderSizePixel"] = 0;
-G2L["Oyun iD_26"]["TextXAlignment"] = Enum.TextXAlignment.Left;
-G2L["Oyun iD_26"]["TextScaled"] = true;
-G2L["Oyun iD_26"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["Oyun iD_26"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
-G2L["Oyun iD_26"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["Oyun iD_26"]["BackgroundTransparency"] = 1;
-G2L["Oyun iD_26"]["Size"] = UDim2.new(0.49714, 0, 0.06504, 0);
-G2L["Oyun iD_26"]["Text"] = [[Game iD :]];
-G2L["Oyun iD_26"]["Name"] = [[Oyun iD]];
-G2L["Oyun iD_26"]["Position"] = UDim2.new(0, 90, 0, 146);
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .UIStroke
+G2L["UIStroke_2f"] = Instance.new("UIStroke", G2L["script area _16"]);
+G2L["UIStroke_2f"]["Color"] = Color3.fromRGB(255, 255, 255);
 
 
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.UIStroke
-G2L["UIStroke_27"] = Instance.new("UIStroke", G2L["HilalWare_Frame_2"]);
-G2L["UIStroke_27"]["Color"] = Color3.fromRGB(255, 255, 255);
+G2L["UIStroke_30"] = Instance.new("UIStroke", G2L["HilalWare_Frame_3"]);
+G2L["UIStroke_30"]["Color"] = Color3.fromRGB(255, 255, 255);
 
 
 -- Players.q692q.PlayerGui.Hilal Ware Hub.LocalScript
-G2L["LocalScript_28"] = Instance.new("LocalScript", G2L["Hilal Ware Hub_1"]);
-
-
-
+local function C_2()
+	local script = G2L["LocalScript_2"];
+	local RunService = game:GetService("RunService")
+	
+	
+	
+	
+	local t = 0
+	
+	
+	local function getAllUIStrokes(parent)
+	
+	    local strokes = {}
+	
+	    for _, desc in pairs(parent:GetDescendants()) do
+	
+	        if desc:IsA("UIStroke") then
+	
+	            table.insert(strokes, desc)
+	
+	        end
+	
+	    end
+	
+	    return strokes
+	
+	end
+	
+	
+	
+	-- GUI'nin içindeki tüm UIStroke'ları al
+	
+	local strokes = getAllUIStrokes(script.Parent)
+	
+	
+	
+	-- Render loop ile RGB animasyon uygula
+	
+	RunService.RenderStepped:Connect(function()
+	
+	    t += 0.01
+	
+	    local r = math.sin(t) * 0.5 + 0.5
+	
+	    local g = math.sin(t + 2) * 0.5 + 0.5
+	
+	    local b = math.sin(t + 4) * 0.5 + 0.5
+	
+	    local color = Color3.new(r, g, b)
+	
+	
+	
+	    for _, stroke in pairs(strokes) do
+	
+	        stroke.Color = color
+	
+	    end
+	
+	end)
+	
+	
+end;
+task.spawn(C_2);
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.HilalWare.Lua.RGB
-local function C_4()
-	local script = G2L["RGB_4"];
+local function C_5()
+	local script = G2L["RGB_5"];
 	local textLabel = script.Parent
 	
 	
@@ -379,10 +473,10 @@ local function C_4()
 	
 	
 end;
-task.spawn(C_4);
+task.spawn(C_5);
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.kapat.LocalScript
-local function C_7()
-	local script = G2L["LocalScript_7"];
+local function C_8()
+	local script = G2L["LocalScript_8"];
 	local button = script.Parent
 	
 	local screenGui = button:FindFirstAncestorOfClass("ScreenGui")
@@ -401,10 +495,10 @@ local function C_7()
 	
 	
 end;
-task.spawn(C_7);
+task.spawn(C_8);
 -- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.TAŞI
-local function C_a()
-	local script = G2L["TAŞI_a"];
+local function C_b()
+	local script = G2L["TAŞI_b"];
 	-- Buton (kapat)
 	
 	local button = script.Parent
@@ -513,8 +607,8 @@ local function C_a()
 	
 	
 end;
-task.spawn(C_a);
--- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.ScrollingFrame.1. buton.LocalScript
+task.spawn(C_b);
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.Butonlar.1. buton.LocalScript
 local function C_11()
 	local script = G2L["LocalScript_11"];
 	
@@ -539,69 +633,197 @@ local function C_11()
 	end)	
 end;
 task.spawn(C_11);
--- Players.q692q.PlayerGui.Hilal Ware Hub.LocalScript
-local function C_28()
-	local script = G2L["LocalScript_28"];
-	local RunService = game:GetService("RunService")
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Profil.User Name.Oyuncu İsimi Alma
+local function C_1c()
+	local script = G2L["Oyuncu İsimi Alma_1c"];
+	
+	local Players = game:GetService("Players")
 	
 	
 	
 	
-	local t = 0
+	local LocalPlayer = Players.LocalPlayer
 	
 	
-	local function getAllUIStrokes(parent)
 	
-	    local strokes = {}
+	-- Betiğin ebeveyni, yani metni değiştireceğimiz TextLabel elemanı.
 	
-	    for _, desc in pairs(parent:GetDescendants()) do
+	local textLabel = script.Parent
 	
-	        if desc:IsA("UIStroke") then
 	
-	            table.insert(strokes, desc)
+	
+	
+	
+	if LocalPlayer then
+	
+	    -- TextLabel'ın Text özelliğini, oyuncunun kullanıcı adı olarak ayarla.
+	
+	    textLabel.Text = "User :, " .. LocalPlayer.Name	
+	end	
+end;
+task.spawn(C_1c);
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Profil.Profil.Oyuncu Profil Alma
+local function C_20()
+	local script = G2L["Oyuncu Profil Alma_20"];
+	
+	local Players = game:GetService("Players")
+	
+	
+	
+	
+	local LocalPlayer = Players.LocalPlayer
+	
+	
+	
+	
+	local imageLabel = script.Parent
+	
+	
+	
+	
+	if LocalPlayer then	
+	    local userId = LocalPlayer.UserId
+	
+	    	
+	    local thumbnailType = Enum.ThumbnailType.HeadShot
+	
+	    local thumbnailSize = Enum.ThumbnailSize.Size150x150
+	
+	    
+	
+	
+	    local content, isReady = Players:GetUserThumbnailAsync(userId, thumbnailType, thumbnailSize)
+	
+	    
+	
+	
+	    if isReady then
+	
+	
+	        imageLabel.Image = content
+	
+	    end
+	
+	end	
+end;
+task.spawn(C_20);
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Profil.Oyuncu iD.Oyuncu ID alma
+local function C_22()
+	local script = G2L["Oyuncu ID alma_22"];
+	
+	local Players = game:GetService("Players")
+	
+	
+	
+	local LocalPlayer = Players.LocalPlayer
+	
+	
+	
+	local textLabel = script.Parent
+	
+	
+	
+	if LocalPlayer then	
+	    textLabel.Text = "Oyuncu ID: " .. tostring(LocalPlayer.UserId)
+	
+	end	
+end;
+task.spawn(C_22);
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Profil.Display Name.Display Name Alma
+local function C_24()
+	local script = G2L["Display Name Alma_24"];
+	
+	local Players = game:GetService("Players")
+	
+	
+	
+	
+	local LocalPlayer = Players.LocalPlayer
+	
+	
+	
+	
+	local textLabel = script.Parent
+	
+	
+	
+	
+	if LocalPlayer then	
+	    textLabel.Text = "Display Name: " .. LocalPlayer.DisplayName
+	
+	end	
+end;
+task.spawn(C_24);
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Oyun Bilgileri.Oyun iSimi.Oyun ADı alma
+local function C_27()
+	local script = G2L["Oyun ADı alma_27"];
+	
+	
+	local textLabel = script.Parent
+	
+	
+	
+	
+	local gameName = game.Name
+	
+	
+	
+	textLabel.Text = "Game Name: " .. gameName	
+end;
+task.spawn(C_27);
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Oyun Bilgileri.Oyun iD.Oyun İd alma
+local function C_2a()
+	local script = G2L["Oyun İd alma_2a"];
+	local textLabel = script.Parent	
+	local gameId = game.PlaceId	
+	textLabel.Text = "Game ID: " .. tostring(gameId)	
+end;
+task.spawn(C_2a);
+-- Players.q692q.PlayerGui.Hilal Ware Hub.HilalWare_Frame.script area .Menü.Oyun Bilgileri.Oyun Profil.Oyun Profil alma
+local function C_2e()
+	local script = G2L["Oyun Profil alma_2e"];
+	local imageLabel = script.Parent
+	
+	local gameId = game.GameId
+	
+	
+	
+	local url = "https://thumbnails.roblox.com/v1/games/icons?universeIds=" .. gameId .. "&size=150x150&format=Png"
+	
+	
+	
+	local http = game:GetService("HttpService")
+	
+	
+	
+	local function getGameThumbnail()
+	
+	    local success, result = pcall(function()
+	
+	        return http:GetAsync(url)
+	
+	    end)
+	
+	    
+	
+	    if success and result then
+	
+	        local data = http:JSONDecode(result)
+	
+	        if data.data and #data.data > 0 then
+	
+	            imageLabel.Image = data.data[1].imageUrl
 	
 	        end
 	
 	    end
 	
-	    return strokes
-	
 	end
 	
 	
 	
-	-- GUI'nin içindeki tüm UIStroke'ları al
-	
-	local strokes = getAllUIStrokes(script.Parent)
-	
-	
-	
-	-- Render loop ile RGB animasyon uygula
-	
-	RunService.RenderStepped:Connect(function()
-	
-	    t += 0.01
-	
-	    local r = math.sin(t) * 0.5 + 0.5
-	
-	    local g = math.sin(t + 2) * 0.5 + 0.5
-	
-	    local b = math.sin(t + 4) * 0.5 + 0.5
-	
-	    local color = Color3.new(r, g, b)
-	
-	
-	
-	    for _, stroke in pairs(strokes) do
-	
-	        stroke.Color = color
-	
-	    end
-	
-	end)
-	
-	
+	getGameThumbnail()	
 end;
-task.spawn(C_28);
+task.spawn(C_2e);
 
 return G2L["Hilal Ware Hub_1"], require;
