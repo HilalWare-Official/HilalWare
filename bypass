@@ -1,43 +1,23 @@
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
-local RunService = game:GetService("RunService")
 local StarterGui = game:GetService("StarterGui")
-local TeleportService = game:GetService("TeleportService")
+local RunService = game:GetService("RunService")
 
 local PLACE_ID_TO_CHECK = 7267631004
 
--- Yetkililer
-local allowedUsers = {
-    ["q692q"] = true,
-    ["muhammet_bekir2004"] = true,
-    ["HilalWare_Lua"] = true,
-    ["Muhammet_bekir2003"] = true
-}
+if game.PlaceId == PLACE_ID_TO_CHECK then
+    -- Admin script burada
+    local allowedUsers = {
+        ["q692q"] = true,
+        ["muhammet_bekir2004"] = true,
+        ["HilalWare_Lua"] = true,
+        ["Muhammet_bekir2003"] = true
+    }
 
--- İlk script (uyarı ekranı) fonksiyonunu modüler yapalım
-local function loadWarningGui()
-    -- Buraya senin gönderdiğin uyarı ekranı GUI kodunu koyabilirsin,
-    -- veya modüler olarak require ile çağırabilirsin.
-    -- Örnek olarak direkt require yaparsan şöyle olabilir:
-    local success, screenGui = pcall(function()
-        return require(script:WaitForChild("WarningGuiModule")) -- uyarı ekranını modül yaptığını varsayıyorum
-    end)
-    if not success then
-        warn("Warning GUI yüklenemedi.")
-    end
-end
-
--- İkinci scriptin tamamı (admin sistemi, RGB vs.)
-local function loadAdminScript()
-    -- Buraya senin verdiğin admin kodunu komple koyacaksın,
-    -- aşağıda kısaltarak ekliyorum, tam kodu buraya yapıştırabilirsin:
-    
-    -- Her harfe ayrı RGB sağdan sola efekti
     local function applyRGBRightToLeft(textLabel)
         local hue = 0
         local text = textLabel.Text
         local letters = {}
-
         textLabel.Text = ""
         for i = 1, #text do
             local char = string.sub(text, i, i)
@@ -165,11 +145,52 @@ local function loadAdminScript()
             TextSize = 20
         })
     end)
-end
 
--- Kontrol ve yükleme
-if game.PlaceId == PLACE_ID_TO_CHECK then
-    loadAdminScript()
 else
-    loadWarningGui()
+    -- Uyarı GUI si basit hali
+    local ScreenGui = Instance.new("ScreenGui", LocalPlayer:WaitForChild("PlayerGui"))
+    ScreenGui.Name = "WarningGui"
+
+    local Frame = Instance.new("Frame", ScreenGui)
+    Frame.Size = UDim2.new(0, 460, 0, 304)
+    Frame.Position = UDim2.new(0, 410, 0, 158)
+    Frame.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
+    Frame.BorderSizePixel = 0
+
+    local UICorner = Instance.new("UICorner", Frame)
+
+    local TextLabel = Instance.new("TextLabel", Frame)
+    TextLabel.Text = "Eğer tamam a basılır ise Carry People simulator 3 adlı oyuna ışınlanacaksınız."
+    TextLabel.Size = UDim2.new(0, 434, 0, 194)
+    TextLabel.Position = UDim2.new(0, 12, 0, 34)
+    TextLabel.BackgroundColor3 = Color3.fromRGB(56, 56, 56)
+    TextLabel.TextColor3 = Color3.new(1, 1, 1)
+    TextLabel.Font = Enum.Font.ArialBold
+    TextLabel.TextWrapped = true
+
+    local YesButton = Instance.new("TextButton", Frame)
+    YesButton.Text = "Tamam"
+    YesButton.Size = UDim2.new(0, 150, 0, 60)
+    YesButton.Position = UDim2.new(0, 298, 0, 236)
+    YesButton.BackgroundColor3 = Color3.fromRGB(21, 67, 0)
+    YesButton.TextColor3 = Color3.fromRGB(67, 149, 21)
+    YesButton.Font = Enum.Font.ArialBold
+
+    local NoButton = Instance.new("TextButton", Frame)
+    NoButton.Text = "Hayır"
+    NoButton.Size = UDim2.new(0, 150, 0, 60)
+    NoButton.Position = UDim2.new(0, 10, 0, 236)
+    NoButton.BackgroundColor3 = Color3.fromRGB(74, 0, 0)
+    NoButton.TextColor3 = Color3.fromRGB(255, 0, 0)
+    NoButton.Font = Enum.Font.ArialBold
+
+    -- Buton tıklamaları
+    YesButton.MouseButton1Click:Connect(function()
+        local placeId = 7267631004
+        game:GetService("TeleportService"):Teleport(placeId)
+    end)
+
+    NoButton.MouseButton1Click:Connect(function()
+        ScreenGui:Destroy()
+    end)
 end
