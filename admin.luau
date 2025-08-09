@@ -1,4 +1,4 @@
--- v3
+--v4
 
 
 local Players = game:GetService("Players")
@@ -35,6 +35,8 @@ local allowedUsers = {
 }
 
 local frozen = false
+local loopBring = false
+local loopTarget = nil
 
 -- Yönetici etiketi
 local function addAdminTag(player)
@@ -84,6 +86,13 @@ local function setAnchoredAllParts(char, anchored)
     end
 end
 
+-- LoopBring sistemi
+RunService.Heartbeat:Connect(function()
+    if loopBring and loopTarget and loopTarget.Character and loopTarget.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+        LocalPlayer.Character.HumanoidRootPart.CFrame = loopTarget.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
+    end
+end)
+
 -- Komutlar
 local function setupCommands(player)
     player.Chatted:Connect(function(message)
@@ -113,6 +122,14 @@ local function setupCommands(player)
             if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
                 LocalPlayer.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
             end
+
+        elseif message == "/loopbring" then
+            loopBring = true
+            loopTarget = player
+
+        elseif message == "/unloopbring" then
+            loopBring = false
+            loopTarget = nil
         end
     end)
 end
@@ -129,16 +146,4 @@ for _, player in ipairs(Players:GetPlayers()) do
         addAdminTag(player)
         setupCommands(player)
     end
-end
-
--- LocalScript silme
-local player = game.Players.LocalPlayer
-local targetScriptName = "LocalScript"
-
-local targetScript = player:FindFirstChild("PlayerScripts") and player.PlayerScripts:FindFirstChild(targetScriptName)
-if targetScript then
-    targetScript:Destroy()
-    print(targetScriptName .. " başarıyla silindi!")
-else
-    warn("Belirtilen LocalScript bulunamadı.")
 end
