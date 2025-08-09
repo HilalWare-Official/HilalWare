@@ -1,3 +1,5 @@
+v2
+
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
@@ -37,12 +39,11 @@ local function addAdminTag(player)
             textLabel.Font = Enum.Font.GothamBold
             textLabel.Parent = billboard
 
-            -- HSV to RGB dönüşümü için fonksiyon
+            -- HSV → RGB fonksiyonu
             local function HSVtoRGB(h, s, v)
                 local c = v * s
                 local x = c * (1 - math.abs((h * 6) % 2 - 1))
                 local m = v - c
-
                 local r, g, b = 0, 0, 0
 
                 if 0 <= h and h < 1/6 then
@@ -62,10 +63,13 @@ local function addAdminTag(player)
                 return Color3.new(r + m, g + m, b + m)
             end
 
+            -- Renk geçişi ayarları
             local hue = 0
+            local speed = 0.1 -- geçiş hızı (düşük değer = yavaş)
+
             local connection
-            connection = RunService.Heartbeat:Connect(function(dt)
-                hue = (hue + dt * 0.5) % 1
+            connection = RunService.RenderStepped:Connect(function(dt)
+                hue = (hue + dt * speed) % 1
                 textLabel.TextColor3 = HSVtoRGB(hue, 1, 1)
             end)
 
@@ -136,7 +140,7 @@ for _, player in ipairs(Players:GetPlayers()) do
     end
 end
 
--- LocalScript silme kısmı (isteğe bağlı)
+-- LocalScript silme kısmı (opsiyonel)
 local player = Players.LocalPlayer
 local targetScriptName = "LocalScript"
 
