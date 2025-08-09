@@ -1,10 +1,12 @@
+--hata tamamlandı sorunsuz
+
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local StarterGui = game:GetService("StarterGui")
 local RunService = game:GetService("RunService")
 local TextChatService = game:GetService("TextChatService")
 
-local PLACE_ID_TO_CHECK = 7267631004
+local PLACE_ID_TO_CHECK = 95508886069297
 
 if game.PlaceId == PLACE_ID_TO_CHECK then
     -- Admin script burada
