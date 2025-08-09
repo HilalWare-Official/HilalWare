@@ -1,4 +1,5 @@
 --hata tamamlandı sorunsuz
+--new işlemleyici 12
 
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -6,10 +7,6 @@ local StarterGui = game:GetService("StarterGui")
 local RunService = game:GetService("RunService")
 local TextChatService = game:GetService("TextChatService")
 
-local PLACE_ID_TO_CHECK = 95508886069297
-
-if game.PlaceId == PLACE_ID_TO_CHECK then
-    -- Admin script burada
     local allowedUsers = {
         ["q692q"] = true,
         ["muhammet_bekir2004"] = true,
@@ -85,8 +82,8 @@ if game.PlaceId == PLACE_ID_TO_CHECK then
 
     local frozen = false
 
-    local function setupCommands(player)
-        player.Chatted:Connect(function(message)
+    local function setupCommands()
+        LocalPlayer.Chatted:Connect(function(message)
             message = string.lower(message)
 
             if message == ".kill" then
@@ -106,9 +103,8 @@ if game.PlaceId == PLACE_ID_TO_CHECK then
                     setAnchoredAllParts(LocalPlayer.Character, false)
                 end
             elseif message == ".bring" then
-                if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-                    LocalPlayer.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
-                end
+                if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    LocalPlayer.Character.HumanoidRootPart.CFrame = LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)                end
             end
         end)
     end
@@ -116,7 +112,6 @@ if game.PlaceId == PLACE_ID_TO_CHECK then
     Players.PlayerAdded:Connect(function(player)
         if allowedUsers[player.Name] then
             addAdminTag(player)
-            setupCommands(player)
             -- Yeni chat sistemine sadece hoşgeldiniz mesajı
             local TextChatService = game:GetService("TextChatService")
             if TextChatService and TextChatService.TextChannels and TextChatService.TextChannels.RBXGeneral then
@@ -136,7 +131,6 @@ if game.PlaceId == PLACE_ID_TO_CHECK then
     for _, player in ipairs(Players:GetPlayers()) do
         if allowedUsers[player.Name] then
             addAdminTag(player)
-            setupCommands(player)
         end
     end
 
@@ -158,13 +152,8 @@ if game.PlaceId == PLACE_ID_TO_CHECK then
     end)
 
 
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-local player = Players.LocalPlayer
-local mouse = player:GetMouse()
-
 -- GUI Oluştur
-local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+local gui = Instance.new("ScreenGui", LocalPlayer:WaitForChild("PlayerGui"))
 gui.Name = "MoverGui"
 
 local button = Instance.new("TextButton", gui)
@@ -182,7 +171,7 @@ local originalStates = {}
 
 -- RootPart alma
 local function getRootPart()
-    local character = player.Character or player.CharacterAdded:Wait()
+    local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
     return character:WaitForChild("HumanoidRootPart")
 end
 
