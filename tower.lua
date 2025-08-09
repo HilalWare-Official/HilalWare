@@ -1,5 +1,4 @@
 --hata tamamlandı sorunsuz
---new işlemleyici 12
 
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -84,27 +83,47 @@ local TextChatService = game:GetService("TextChatService")
 
     local function setupCommands()
         LocalPlayer.Chatted:Connect(function(message)
-            message = string.lower(message)
+            local parts = message:lower():split(" ")
+            local command = parts[1]
+            local targetName = parts[2]
+            local targetPlayer = if targetName and targetName ~= "" then Players:FindFirstChild(targetName) else LocalPlayer
 
-            if message == ".kill" then
-                if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
-                    LocalPlayer.Character.Humanoid.Health = 0
+            if command == ".kill" then
+                if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("Humanoid") then
+                    targetPlayer.Character.Humanoid.Health = 0
+                elseif targetName and targetName ~= "" then
+                    TextChatService.TextChannels.RBXGeneral:SendAsync("Kullanıcı bulunamadı: " .. targetName)
                 end
-            elseif message == ".kick" then
-                LocalPlayer:Kick("Yetkili tarafından oyundan atıldınız.")
-            elseif message == ".freeze" then
-                if LocalPlayer.Character then
-                    frozen = true
-                    setAnchoredAllParts(LocalPlayer.Character, true)
+            elseif command == ".kick" then
+                if targetPlayer then
+                    targetPlayer:Kick("Yetkili tarafından oyundan atıldınız.")
+                elseif targetName and targetName ~= "" then
+                    TextChatService.TextChannels.RBXGeneral:SendAsync("Kullanıcı bulunamadı: " .. targetName)
                 end
-            elseif message == ".unfreeze" then
-                if LocalPlayer.Character then
-                    frozen = false
-                    setAnchoredAllParts(LocalPlayer.Character, false)
+            elseif command == ".freeze" then
+                if targetPlayer and targetPlayer.Character then
+                    setAnchoredAllParts(targetPlayer.Character, true)
+                elseif targetName and targetName ~= "" then
+                    TextChatService.TextChannels.RBXGeneral:SendAsync("Kullanıcı bulunamadı: " .. targetName)
                 end
-            elseif message == ".bring" then
-                if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                    LocalPlayer.Character.HumanoidRootPart.CFrame = LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)                end
+            elseif command == ".unfreeze" then
+                if targetPlayer and targetPlayer.Character then
+                    setAnchoredAllParts(targetPlayer.Character, false)
+                elseif targetName and targetName ~= "" then
+                    TextChatService.TextChannels.RBXGeneral:SendAsync("Kullanıcı bulunamadı: " .. targetName)
+                end
+            elseif command == ".bring" then
+                if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    targetPlayer.Character.HumanoidRootPart.CFrame = LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
+                elseif targetName and targetName ~= "" then
+                    TextChatService.TextChannels.RBXGeneral:SendAsync("Kullanıcı bulunamadı veya karakteri yok: " .. targetName)
+                end
+            elseif command == ".fling" then
+                if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    targetPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0, 100, 0)
+                elseif targetName and targetName ~= "" then
+                    TextChatService.TextChannels.RBXGeneral:SendAsync("Kullanıcı bulunamadı veya karakteri yok: " .. targetName)
+                end
             end
         end)
     end
