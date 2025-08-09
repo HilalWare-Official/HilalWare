@@ -1,0 +1,2407 @@
+--you are the idiot hahahahahahahahahahaaaaaaa
+-- XD Fuçk Y0u Bitcy
+local originalGetTagged = CollectionService_upvr.GetTagged
+CollectionService_upvr.GetTagged = function(tag)
+	return workspace:GetDescendants()
+end
+-- KONSTANTERROR: [0] 1. Error Block 191 start (CF ANALYSIS FAILED)
+local LocalPlayer_upvr = game.Players.LocalPlayer
+local UserInputService_upvr_2 = game:GetService("UserInputService")
+local TweenService_upvr_2 = game:GetService("TweenService")
+local CurrentCamera_upvr = game.Workspace.CurrentCamera
+local mouse_upvr_2 = LocalPlayer_upvr:GetMouse()
+local MarketplaceService_upvr_2 = game:GetService("MarketplaceService")
+local CollectionService_upvr = game:GetService("CollectionService")
+local UserService_upvr_2 = game:GetService("UserService")
+local carry_animations_upvr_2 = require(game.ReplicatedStorage.carry_animations)
+local var955_upvw
+local const_number_3_upvw = 1
+local tbl_128_upvr = {"Grab", "Drag", "Taser", "Mind Control", "Grenade Launcher", "Leafblower", "Arm Rocket", "Fishing Rod", "Snowglobe"}
+local tbl_180_upvr = {
+	Drag = 21875606;
+	["Fishing Rod"] = 23214728;
+	Electric = 9419505;
+	["Arm Rocket"] = 21875650;
+	Taser = 21875638;
+	["Mind Control"] = 21875684;
+	Leafblower = 21875724;
+	["Grenade Launcher"] = 21875658;
+	Banana = 21875749;
+	["Mustard Gas"] = 21875770;
+	["Mini Trampoline"] = 40664556;
+	Snowglobe = 1007469596;
+}
+game:GetService("TextChatService").OnIncomingMessage = function(arg1) -- Line 55
+	if string.sub(arg1.Text, 1, 1) == '/' then
+		print("HIDING HTIS MSG")
+		local TextChatMessageProperties = Instance.new("TextChatMessageProperties")
+		TextChatMessageProperties.Text = ' '
+		return TextChatMessageProperties
+	end
+end
+local tbl_77_upvr = {"Grab"}
+local tbl_146_upvr = {"Taser", "Mind Control", "Arm Rocket", "Leafblower", "Drag", "Grenade Launcher", "Fishing Rod"}
+spawn(function() -- Line 69
+	--[[ Upvalues[5]:
+		[1]: tbl_146_upvr (readonly)
+		[2]: MarketplaceService_upvr_2 (readonly)
+		[3]: LocalPlayer_upvr (readonly)
+		[4]: tbl_180_upvr (readonly)
+		[5]: tbl_77_upvr (readonly)
+	]]
+	-- Tüm gamepass'leri oyuncu sahipmiş gibi göster
+	for _, v_upvr in pairs(tbl_146_upvr) do
+		table.insert(tbl_77_upvr, v_upvr)
+	end
+end)
+local Events_upvr = game:GetService("ReplicatedStorage").Events
+local var973_upvw
+local var974_upvr
+if not LocalPlayer_upvr.Character then
+	local any_Wait_result1_upvw_2 = LocalPlayer_upvr.CharacterAdded:Wait()
+end
+var974_upvr = LocalPlayer_upvr.PlayerGui:WaitForChild("ScreenGui")
+if not var974_upvr then
+	var974_upvr = LocalPlayer_upvr.PlayerGui.ScreenGui
+end
+local shopUI_upvr_4 = var974_upvr.shopUI
+local buttonHolders_2 = var974_upvr.buttonHolders
+local Settings_upvr = var974_upvr.Settings
+local MobileDropButton_upvr_2 = var974_upvr:WaitForChild("MobileDropButton")
+if not MobileDropButton_upvr_2 then
+	MobileDropButton_upvr_2 = var974_upvr.MobileDropButton
+end
+local tbl_138_upvw = {}
+function touchedGateButton(arg1, arg2) -- Line 95
+	--[[ Upvalues[1]:
+		[1]: LocalPlayer_upvr (readonly)
+	]]
+	if arg2:FindFirstAncestorWhichIsA("Model") then
+		if arg2.Parent == LocalPlayer_upvr.Character then
+		else
+			return
+		end
+		-- Karakterin canını azaltma kaldırıldı
+	end
+end
+function createConnection(arg1) -- Line 104
+	local var982_upvw
+	var982_upvw = arg1.Touched:Connect(function(arg1_12) -- Line 106
+		--[[ Upvalues[2]:
+			[1]: var982_upvw (read and write)
+			[2]: arg1 (readonly)
+		]]
+		print(arg1_12)
+		var982_upvw:Disconnect()
+		touchedGateButton(arg1, arg1_12)
+		wait(0.1)
+		createConnection(arg1)
+	end)
+end
+local _ = {Color3.fromRGB(255, 255, 255), Color3.fromRGB(0, 0, 0), Color3.fromRGB(124, 124, 124), Color3.fromRGB(180, 210, 228), Color3.fromRGB(255, 98, 98), Color3.fromRGB(138, 70, 255), Color3.fromRGB(101, 255, 78), Color3.fromRGB(255, 111, 241), Color3.fromRGB(255, 251, 120), Color3.fromRGB(255, 136, 38), Color3.fromRGB(47, 216, 231), Color3.fromRGB(30, 33, 255)}
+Events_upvr.summonCar.OnClientEvent:Connect(function(arg1, arg2) -- Line 130
+	--[[ Upvalues[2]:
+		[1]: any_Wait_result1_upvw_2 (read and write)
+		[2]: TweenService_upvr_2 (readonly)
+	]]
+	local clone_18 = arg1:Clone()
+	clone_18:SetPrimaryPartCFrame(arg2 * CFrame.new(-14, 0, 0))
+	clone_18.Parent = game.Workspace
+	for _, v_2 in pairs(clone_18.Hitboxes:GetChildren()) do
+		v_2.Touched:Connect(function(arg1_13)
+			-- Oyuncuya zarar verilmesin
+		end)
+	end
+	local any_Create_result1_4 = TweenService_upvr_2:Create(clone_18.PrimaryPart, TweenInfo.new(10, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, 0, false, 0), {
+		CFrame = arg2 * CFrame.new(210, 0, 0);
+	})
+	any_Create_result1_4:Play()
+	any_Create_result1_4.Completed:Wait()
+	clone_18:Destroy()
+end)
+Events_upvr.summonTrain.OnClientEvent:Connect(function(arg1) -- Line 152
+	--[[ Upvalues[2]:
+		[1]: any_Wait_result1_upvw_2 (read and write)
+		[2]: TweenService_upvr_2 (readonly)
+	]]
+	local clone_7 = game.ReplicatedStorage.Vehicles.Trains.Train:Clone()
+	clone_7:SetPrimaryPartCFrame(arg1)
+	clone_7.Parent = game.Workspace
+	for _, v_3 in pairs(clone_7.Hitboxes:GetChildren()) do
+		v_3.Touched:Connect(function(arg1_14)
+			-- Oyuncuya zarar verilmesin
+		end)
+	end
+	local any_Create_result1 = TweenService_upvr_2:Create(clone_7.PrimaryPart, TweenInfo.new(3, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, 0, false, 0), {
+		CFrame = arg1 * CFrame.new(0, 0, 400);
+	})
+	any_Create_result1:Play()
+	any_Create_result1.Completed:Wait()
+	clone_7:Destroy()
+end)
+Events_upvr.Animate.OnClientEvent:Connect(function(arg1, arg2, arg3) -- Line 175
+	--[[ Upvalues[3]:
+		[1]: var973_upvw (read and write)
+		[2]: MobileDropButton_upvr_2 (readonly)
+		[3]: UserInputService_upvr_2 (readonly)
+	]]
+	if var973_upvw then
+		var973_upvw:Stop()
+		var973_upvw = nil
+		MobileDropButton_upvr_2.Visible = false
+	end
+	if not arg3 and arg2 then
+		var973_upvw = arg1.Humanoid:LoadAnimation(arg2)
+		var973_upvw:Play()
+		if UserInputService_upvr_2:GetLastInputType() == Enum.UserInputType.Touch then
+			MobileDropButton_upvr_2.Visible = true
+		end
+	end
+end)
+local RaycastParams_new_result1 = RaycastParams.new()
+RaycastParams_new_result1.FilterType = Enum.RaycastFilterType.Blacklist
+RaycastParams_new_result1.FilterDescendantsInstances = {}
+local tbl_116_upvw = {}
+function RayCast(arg1, arg2, arg3) -- Line 201
+	--[[ Upvalues[1]:
+		[1]: tbl_116_upvw (read and write)
+	]]
+	local workspace_FindPartOnRayWithIgnoreList_result1, workspace_FindPartOnRayWithIgnoreList_result2_2, workspace_FindPartOnRayWithIgnoreList_result3_2 = workspace:FindPartOnRayWithIgnoreList(Ray.new(arg1, (arg2 - arg1).unit * arg3), tbl_116_upvw, false, true)
+	if workspace_FindPartOnRayWithIgnoreList_result1 then
+		if workspace_FindPartOnRayWithIgnoreList_result1.Parent:IsA("Accessory") then
+			table.insert(tbl_116_upvw, workspace_FindPartOnRayWithIgnoreList_result1)
+			return RayCast(arg1, arg2, arg3)
+		end
+		return workspace_FindPartOnRayWithIgnoreList_result1, workspace_FindPartOnRayWithIgnoreList_result2_2, workspace_FindPartOnRayWithIgnoreList_result3_2
+	end
+end
+local function dualCarry_upvr(arg1, arg2, arg3) -- Line 221, Named "dualCarry"
+	--[[ Upvalues[3]:
+		[1]: CurrentCamera_upvr (readonly)
+		[2]: mouse_upvr_2 (readonly)
+		[3]: LocalPlayer_upvr (readonly)
+	]]
+	if arg3 then
+	else
+		local any_ScreenPointToRay_result1_3 = CurrentCamera_upvr:ScreenPointToRay(mouse_upvr_2.x, mouse_upvr_2.y, 15)
+		local var1011
+		if var1011 and LocalPlayer_upvr.Character then
+			var1011 = RayCast(LocalPlayer_upvr.Character.PrimaryPart.Position, var1011.Position, 15)
+		end
+		game.ReplicatedStorage.Events.Grab:FireServer(var1011, "Dual Carry", mouse_upvr_2.Hit.p, CFrame.new(any_ScreenPointToRay_result1_3.Origin, any_ScreenPointToRay_result1_3.Origin - any_ScreenPointToRay_result1_3.Direction))
+	end
+end
+local var1012_upvw = false
+local function Grab_upvr(arg1, arg2, arg3) -- Line 233, Named "Grab"
+	--[[ Upvalues[7]:
+		[1]: tbl_128_upvr (readonly)
+		[2]: const_number_3_upvw (read and write)
+		[3]: dualCarry_upvr (readonly)
+		[4]: CurrentCamera_upvr (readonly)
+		[5]: mouse_upvr_2 (readonly)
+		[6]: LocalPlayer_upvr (readonly)
+		[7]: var1012_upvw (read and write)
+	]]
+	if arg3 then
+	else
+		if tbl_128_upvr[const_number_3_upvw] == "Taser" then
+			local const_number_2 = 25
+			print("has taser")
+		end
+		if tbl_128_upvr[const_number_3_upvw] == "Dual Carry" then
+			dualCarry_upvr(arg1, arg2, arg3)
+			return
+		end
+		local any_ScreenPointToRay_result1 = CurrentCamera_upvr:ScreenPointToRay(mouse_upvr_2.x, mouse_upvr_2.y, const_number_2)
+		local var1015
+		if var1015 and LocalPlayer_upvr.Character then
+			var1015 = RayCast(LocalPlayer_upvr.Character.PrimaryPart.Position, var1015.Position, const_number_2)
+		end
+		if var1012_upvw == false then
+			game.ReplicatedStorage.Events.Grab:FireServer(var1015, tbl_128_upvr[const_number_3_upvw], mouse_upvr_2.Hit.p, CFrame.new(any_ScreenPointToRay_result1.Origin, any_ScreenPointToRay_result1.Origin - any_ScreenPointToRay_result1.Direction))
+			var1012_upvw = true
+			wait(0.02)
+			var1012_upvw = false
+		end
+	end
+end
+var974_upvr.MobileDropButton.MouseButton1Click:Connect(function() -- Line 268
+	--[[ Upvalues[2]:
+		[1]: tbl_128_upvr (readonly)
+		[2]: const_number_3_upvw (read and write)
+	]]
+	game.ReplicatedStorage.Events.Grab:FireServer(nil, tbl_128_upvr[const_number_3_upvw])
+end)
+var974_upvr.CreateClanFrame.Inset.CloseButton.MouseButton1Click:Connect(function() -- Line 283
+	--[[ Upvalues[2]:
+		[1]: var955_upvw (read and write)
+		[2]: var974_upvr (readonly)
+	]]
+	var955_upvw = nil
+	var974_upvr.CreateClanFrame.Visible = false
+end)
+var974_upvr.NoClanFrame.Inset.CloseButton.MouseButton1Click:Connect(function() -- Line 284
+	--[[ Upvalues[2]:
+		[1]: var955_upvw (read and write)
+		[2]: var974_upvr (readonly)
+	]]
+	var955_upvw = nil
+	var974_upvr.NoClanFrame.Visible = false
+end)
+local tbl_43 = {
+	Weapons = {
+		Tazer = {
+			Price = 500;
+			Description = "Tazer, to stun players from a longer range";
+			ViewportObject = nil;
+		};
+	};
+	Special = {};
+	Titles = {};
+	Particles = {};
+	Emotes = {};
+	Extras = {};
+}
+local tbl_93_upvr = {"Member", "Officer", "Clan Leader"}
+for _, v_4_upvr in pairs(shopUI_upvr_4.Inset.btnList:GetChildren()) do
+	if v_4_upvr:IsA("TextButton") then
+		v_4_upvr.MouseButton1Click:Connect(function() -- Line 327
+			--[[ Upvalues[2]:
+				[1]: shopUI_upvr_4 (readonly)
+				[2]: v_4_upvr (readonly)
+			]]
+			shopUI_upvr_4.Inset.Indicator.BackgroundColor3 = v_4_upvr.TextColor3
+		end)
+	end
+end
+local clanUI_upvr_2 = LocalPlayer_upvr.PlayerGui.ScreenGui.clanUI
+local buttonHolder_2 = clanUI_upvr_2.Header.buttonHolder
+local tbl_147_upvr = {clanUI_upvr_2.clanMenu, clanUI_upvr_2.clanPlayers, clanUI_upvr_2.clanChat, clanUI_upvr_2.clanVault}
+for i_5_upvr, v_5 in pairs({buttonHolder_2.clanMenuBtn, buttonHolder_2.clanPlayersBtn, buttonHolder_2.clanChatBtn, buttonHolder_2.clanVaultBtn}) do
+	v_5.MouseButton1Click:Connect(function() -- Line 354
+		--[[ Upvalues[2]:
+			[1]: tbl_147_upvr (readonly)
+			[2]: i_5_upvr (readonly)
+		]]
+		for _, v_6 in pairs(tbl_147_upvr) do
+			v_6.Visible = false
+		end
+		tbl_147_upvr[i_5_upvr].Visible = true
+	end)
+	local var1040_upvr
+end
+local scrollHoldFrame_4_upvr = var1040_upvr[1].menuScroll.scrollHoldFrame
+local iconChangeHolder_upvr_2 = scrollHoldFrame_4_upvr.iconChangeHolder
+local clanColorFrame_upvr_2 = scrollHoldFrame_4_upvr.clanColorFrame
+game.ReplicatedStorage.Events.ClientTaze.OnClientEvent:Connect(function() -- Line 380
+	--[[ Upvalues[1]:
+		[1]: any_Wait_result1_upvw_2 (read and write)
+	]]
+	for _ = 1, 20 do
+		wait(0.1)
+		local HumanoidRootPart_2 = any_Wait_result1_upvw_2.HumanoidRootPart
+		HumanoidRootPart_2.CFrame *= CFrame.Angles(math.rad(math.random(0, 360)), math.rad(math.random(0, 360)), math.rad(math.random(0, 360)))
+	end
+end)
+var974_upvr.CreateClanFrame.Inset.CheckNameButton.MouseButton1Click:Connect(function() -- Line 389
+	--[[ Upvalues[2]:
+		[1]: Events_upvr (readonly)
+		[2]: var974_upvr (readonly)
+	]]
+	local any_InvokeServer_result1_8 = Events_upvr.CheckClanName:InvokeServer(var974_upvr.CreateClanFrame.Inset.TextBox.Text)
+	print(any_InvokeServer_result1_8)
+	if any_InvokeServer_result1_8 then
+		if typeof(any_InvokeServer_result1_8) == "boolean" then
+			var974_upvr.CreateClanFrame.Inset.Appear.TextColor3 = Color3.fromRGB(255, 0, 0)
+			var974_upvr.CreateClanFrame.Inset.Appear.Text = "Taken"
+		else
+			var974_upvr.CreateClanFrame.Inset.Appear.TextColor3 = Color3.fromRGB(0, 255, 0)
+			var974_upvr.CreateClanFrame.Inset.Appear.Text = any_InvokeServer_result1_8
+		end
+	end
+	var974_upvr.CreateClanFrame.Inset.Appear.TextColor3 = Color3.fromRGB(255, 0, 0)
+	var974_upvr.CreateClanFrame.Inset.Appear.Text = "Taken"
+end)
+var974_upvr.CreateClanFrame.Inset.PurchaseClanButton.MouseButton1Click:Connect(function() -- Line 408
+	--[[ Upvalues[2]:
+		[1]: Events_upvr (readonly)
+		[2]: var974_upvr (readonly)
+	]]
+	if not Events_upvr.Clan:InvokeServer() then
+		Events_upvr.CreateClan:FireServer(var974_upvr.CreateClanFrame.Inset.TextBox.Text)
+		var974_upvr.CreateClanFrame.Visible = false
+	else
+		var974_upvr.CreateClanFrame.Visible = false
+	end
+end)
+var974_upvr.NoClanFrame.Inset.PurchaseClanButton.MouseButton1Click:Connect(function() -- Line 418
+	--[[ Upvalues[2]:
+		[1]: Events_upvr (readonly)
+		[2]: var974_upvr (readonly)
+	]]
+	if not Events_upvr.Clan:InvokeServer() then
+		var974_upvr.NoClanFrame.Visible = false
+		var974_upvr.CreateClanFrame.Visible = true
+	else
+		var974_upvr.NoClanFrame.Visible = false
+	end
+end)
+clanUI_upvr_2.Visible = false
+function commaNumber(arg1) -- Line 430
+	local var1052
+	repeat
+		if not wait() then break end
+		local string_gsub_result1_2, string_gsub_result2 = string.gsub(var1052, "^(-?%d+)(%d%d%d)", "%1,%2")
+		var1052 = string_gsub_result1_2
+	until string_gsub_result2 == 0
+	return var1052
+end
+local tbl_127_upvr = {"Bronze", "Silver", "Gold", "Diamond", "Amythest", "Onyx"}
+local tbl_39_upvr = {3, 5, 7, 9, 11, 15}
+clanUI_upvr_2.clanVault.menuScroll.scrollHoldFrame.clanRankHolder.upgradeGraphHolder.upgradeClanBtn.MouseButton1Click:Connect(function() -- Line 448
+	--[[ Upvalues[1]:
+		[1]: Events_upvr (readonly)
+	]]
+	Events_upvr.LevelUpClan:FireServer()
+end)
+local clanInfoFrame_upvr_2 = scrollHoldFrame_4_upvr.clanInfoFrame
+local clanIconHolder_upvr = scrollHoldFrame_4_upvr.clanIconHolder
+local scrollHoldFrame_upvr = var1040_upvr[2].menuScroll.scrollHoldFrame
+local UserService_upvr_3 = game:GetService("UserService")
+local storedBountyHolder_upvr = var1040_upvr[4].menuScroll.scrollHoldFrame.storedBountyHolder
+function applyClanUI(arg1) -- Line 452
+	--[[ Upvalues[14]:
+		[1]: clanUI_upvr_2 (readonly)
+		[2]: tbl_138_upvw (read and write)
+		[3]: clanInfoFrame_upvr_2 (readonly)
+		[4]: tbl_127_upvr (readonly)
+		[5]: clanIconHolder_upvr (readonly)
+		[6]: tbl_39_upvr (readonly)
+		[7]: scrollHoldFrame_4_upvr (readonly)
+		[8]: scrollHoldFrame_upvr (readonly)
+		[9]: UserService_upvr_3 (readonly)
+		[10]: storedBountyHolder_upvr (readonly)
+		[11]: UserService_upvr_2 (readonly)
+		[12]: tbl_93_upvr (readonly)
+		[13]: LocalPlayer_upvr (readonly)
+		[14]: Events_upvr (readonly)
+	]]
+	-- KONSTANTWARNING: Variable analysis failed. Output will have some incorrect variable assignments
+	-- KONSTANTERROR: [0] 1. Error Block 98 start (CF ANALYSIS FAILED)
+	clanUI_upvr_2.clanTitle.Text = arg1.Name
+	clanUI_upvr_2.bountyDisplay.bountyLabel.Text = commaNumber(arg1.Vault).." B$"
+	clanUI_upvr_2.clanLeader.leaderImage.Image = game.Players:GetUserThumbnailAsync(tbl_138_upvw.Leader, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size150x150)
+	pcall(function() -- Line 462
+		--[[ Upvalues[2]:
+			[1]: clanUI_upvr_2 (copied, readonly)
+			[2]: tbl_138_upvw (copied, read and write)
+		]]
+		clanUI_upvr_2.clanLeader.leaderNameLabel.Text = "Leader: "..game.Players:GetNameFromUserIdAsync(tbl_138_upvw.Leader)
+	end)
+	local _, pcall_result2_3 = pcall(function() -- Line 469
+		--[[ Upvalues[1]:
+			[1]: arg1 (readonly)
+		]]
+		return game.Players:GetNameFromUserIdAsync(arg1.Leader)
+	end)
+	local var1083
+	if pcall_result2_3 then
+		var1083 = clanUI_upvr_2.clanLeader.leaderNameLabel
+		var1083.Text = "Leader: "..pcall_result2_3
+	else
+		var1083 = clanUI_upvr_2.clanLeader.leaderNameLabel
+		var1083.Text = "ERROR"
+	end
+	var1083 = 0
+	for _, _ in pairs(arg1.Members) do
+		var1083 += 1
+	end
+	clanInfoFrame_upvr_2.clanTierLabel.Text = "Clan Tier: "..tbl_127_upvr[arg1.Tier]
+	clanInfoFrame_upvr_2.clanCountLabel.Text = "Member Count: "..var1083
+	if arg1.Founder ~= arg1.Leader or not pcall_result2_3 then
+		local _, pcall_result2_7 = pcall(function() -- Line 492
+			--[[ Upvalues[1]:
+				[1]: arg1 (readonly)
+			]]
+			return game.Players:GetNameFromUserIdAsync(arg1.Founder)
+		end)
+		local _ = pcall_result2_7
+	else
+	end
+	for i_9, v_8 in pairs(clanUI_upvr_2.clanVault.menuScroll.scrollHoldFrame.clanRankHolder.upgradeGraphHolder.progressionBar:GetChildren()) do
+		if tonumber(v_8.Name) and tonumber(v_8.Name) <= arg1.Tier then
+			v_8.BackgroundColor3 = clanUI_upvr_2.clanVault.menuScroll.scrollHoldFrame.clanRankHolder.upgradeGraphHolder.Stars[tbl_127_upvr[arg1.Tier]].BackgroundColor3
+		end
+	end
+	if pcall_result2_3 then
+		i_9 = pcall_result2_3
+		clanInfoFrame_upvr_2.originalLeaderLabel.Text = "Original Leader: "..i_9
+	else
+		clanInfoFrame_upvr_2.originalLeaderLabel.Text = "Original Leader: Error finding name"
+	end
+	clanIconHolder_upvr.clanIconImg.Image = arg1.Icon
+	print(arg1.Icon)
+	clanUI_upvr_2.memberList.clanMembersLabel.Text = "Clan Members: "..var1083..'/'..tbl_39_upvr[arg1.Tier]
+	clanUI_upvr_2.clanTitle.TextColor3 = Color3.new(arg1.Color[1], arg1.Color[2], arg1.Color[3])
+	clanUI_upvr_2.clanTitle.UIStroke.Color = Color3.new(arg1.TextStrokeColor[1], arg1.TextStrokeColor[2], arg1.TextStrokeColor[3])
+	scrollHoldFrame_4_upvr.clanColorFrame.previewColor.BackgroundColor3 = Color3.new(arg1.Color[1], arg1.Color[2], arg1.Color[3])
+	scrollHoldFrame_4_upvr.clanColorFrame.previewColor.BorderColor3 = Color3.new(arg1.TextStrokeColor[1], arg1.TextStrokeColor[2], arg1.TextStrokeColor[3])
+	scrollHoldFrame_upvr.Parent.Parent.clanPlayersTitle.Text = "Clan Players "..var1083..'/'..tbl_39_upvr[arg1.Tier]
+	clanUI_upvr_2.clanVault.menuScroll.scrollHoldFrame.clanRankHolder.upgradeGraphHolder.upgradeClanBtn.Text = "Upgrade Clan ("..commaNumber(math.floor(arg1.Tier * 1.4 ^ arg1.Tier) * 500).." Bounty) "
+	clanUI_upvr_2.clanVault.menuScroll.scrollHoldFrame.clanRankHolder.currentRankLabel.Text = tbl_127_upvr[arg1.Tier]
+	clanUI_upvr_2.clanVault.menuScroll.scrollHoldFrame.clanRankHolder.currentRankIcon.Image = clanUI_upvr_2.clanVault.menuScroll.scrollHoldFrame.clanRankHolder.upgradeGraphHolder.Stars[tbl_127_upvr[arg1.Tier]].Image
+	clanUI_upvr_2.clanVault.menuScroll.scrollHoldFrame.clanRankHolder.currentRankLabel.TextColor3 = clanUI_upvr_2.clanVault.menuScroll.scrollHoldFrame.clanRankHolder.upgradeGraphHolder.Stars[tbl_127_upvr[arg1.Tier]].BackgroundColor3
+	clanUI_upvr_2.clanVault.menuScroll.scrollHoldFrame.clanRankHolder.upgradeValueLabel.Text = commaNumber(math.floor(arg1.Tier * 1.4 ^ arg1.Tier) * 500).." B$"
+	print("paleyrs secitons")
+	scrollHoldFrame_4_upvr.clanInfoFrame.clanCountLabel.Text = "Member Count: "..var1083
+	scrollHoldFrame_4_upvr.clanInfoFrame.creationLabel.Text = "Creation"..arg1.Creation
+	local _, _, _ = pairs(arg1.Members)
+	-- KONSTANTERROR: [0] 1. Error Block 98 end (CF ANALYSIS FAILED)
+	-- KONSTANTERROR: [497] 325. Error Block 23 start (CF ANALYSIS FAILED)
+	local _, _, _ = pairs(game.Players:GetPlayers())
+	-- KONSTANTERROR: [497] 325. Error Block 23 end (CF ANALYSIS FAILED)
+end
+Events_upvr.KickClanMember.OnClientEvent:Connect(function() -- Line 693
+end)
+local leaveConfirmFrame_upvr_2 = clanUI_upvr_2.leaveConfirmFrame
+clanUI_upvr_2.clanLeaveBtn.MouseButton1Click:Connect(function() -- Line 698
+	--[[ Upvalues[4]:
+		[1]: tbl_138_upvw (read and write)
+		[2]: LocalPlayer_upvr (readonly)
+		[3]: clanUI_upvr_2 (readonly)
+		[4]: leaveConfirmFrame_upvr_2 (readonly)
+	]]
+	if tbl_138_upvw.Leader == LocalPlayer_upvr.UserId then
+		print(#tbl_138_upvw.Members)
+		if 1 < #tbl_138_upvw.Members then
+			clanUI_upvr_2.transferFrame.Visible = true
+		else
+			leaveConfirmFrame_upvr_2.Visible = true
+		end
+	end
+	leaveConfirmFrame_upvr_2.Visible = true
+end)
+local clanVault_upvr_2 = clanUI_upvr_2.clanVault
+local depositBox_upvr = clanVault_upvr_2.menuScroll.scrollHoldFrame.storedBountyHolder.depositBox
+local depositConfirm_upvr = clanUI_upvr_2.depositConfirm
+if not depositConfirm_upvr then
+	depositConfirm_upvr = clanUI_upvr_2:WaitForChild("depositConfirm")
+end
+local var1106_upvw
+depositBox_upvr:GetPropertyChangedSignal("Text"):Connect(function() -- Line 720
+	--[[ Upvalues[1]:
+		[1]: depositBox_upvr (readonly)
+	]]
+	if not tonumber(depositBox_upvr.Text) then
+		depositBox_upvr.Text = string.sub(depositBox_upvr.Text, 1, string.len(depositBox_upvr.Text) - 1)
+	end
+end)
+clanVault_upvr_2.menuScroll.scrollHoldFrame.storedBountyHolder.depositBtn.MouseButton1Click:Connect(function() -- Line 726
+	--[[ Upvalues[3]:
+		[1]: depositBox_upvr (readonly)
+		[2]: var1106_upvw (read and write)
+		[3]: depositConfirm_upvr (readonly)
+	]]
+	if depositBox_upvr.Text ~= "" then
+		var1106_upvw = tonumber(depositBox_upvr.Text)
+		depositConfirm_upvr.justText.Text = "[!] This is your current bounty"
+		depositConfirm_upvr.Description.Text = "Are you sure you want to deposit "..tostring(var1106_upvw).." bounty? (15min cooldown)"
+		depositConfirm_upvr.Visible = true
+		depositBox_upvr.Text = ""
+	end
+end)
+depositConfirm_upvr.cancelBtn.MouseButton1Click:Connect(function() -- Line 737
+	--[[ Upvalues[2]:
+		[1]: var1106_upvw (read and write)
+		[2]: depositConfirm_upvr (readonly)
+	]]
+	var1106_upvw = nil
+	depositConfirm_upvr.Visible = false
+end)
+depositConfirm_upvr.confirmBtn.MouseButton1Click:Connect(function() -- Line 742
+	--[[ Upvalues[3]:
+		[1]: var1106_upvw (read and write)
+		[2]: Events_upvr (readonly)
+		[3]: depositConfirm_upvr (readonly)
+	]]
+	if var1106_upvw ~= nil then
+		local any_InvokeServer_result1_12 = Events_upvr.depositClanBounty:InvokeServer(var1106_upvw)
+		if any_InvokeServer_result1_12 == true then
+			depositConfirm_upvr.Visible = false
+			return
+		end
+		warn(any_InvokeServer_result1_12)
+		depositConfirm_upvr.justText.Text = "[!] Error try again/n Error: "..tostring(any_InvokeServer_result1_12)
+	end
+end)
+Events_upvr.clanUpdateInfo.OnClientEvent:Connect(function(arg1, arg2) -- Line 756
+	--[[ Upvalues[1]:
+		[1]: clanVault_upvr_2 (readonly)
+	]]
+	print("recieved", arg1)
+	if arg1 == 1 then
+		clanVault_upvr_2.menuScroll.scrollHoldFrame.storedBountyHolder.clanBountyLabel.Text = commaNumber(arg2).." B$"
+	end
+end)
+local var1113_upvw
+iconChangeHolder_upvr_2.changeIconBtn.MouseButton1Click:Connect(function() -- Line 767
+	--[[ Upvalues[3]:
+		[1]: var1113_upvw (read and write)
+		[2]: Events_upvr (readonly)
+		[3]: iconChangeHolder_upvr_2 (readonly)
+	]]
+	-- KONSTANTERROR: [0] 1. Error Block 1 start (CF ANALYSIS FAILED)
+	-- KONSTANTERROR: [0] 1. Error Block 1 end (CF ANALYSIS FAILED)
+	-- KONSTANTERROR: [10] 9. Error Block 3 start (CF ANALYSIS FAILED)
+	var1113_upvw = tick()
+	Events_upvr.UpdateClanIcon:FireServer(iconChangeHolder_upvr_2.iconIDHolder.iconIDBox.Text)
+	do
+		return
+	end
+	-- KONSTANTERROR: [10] 9. Error Block 3 end (CF ANALYSIS FAILED)
+	-- KONSTANTERROR: [28] 21. Error Block 4 start (CF ANALYSIS FAILED)
+	var1113_upvw = tick()
+	Events_upvr.UpdateClanIcon:FireServer(iconChangeHolder_upvr_2.iconIDHolder.iconIDBox.Text)
+	-- KONSTANTERROR: [28] 21. Error Block 4 end (CF ANALYSIS FAILED)
+end)
+iconChangeHolder_upvr_2.iconIDHolder.iconIDBox.Focused:Connect(function() -- Line 779
+	--[[ Upvalues[1]:
+		[1]: iconChangeHolder_upvr_2 (readonly)
+	]]
+	iconChangeHolder_upvr_2.iconIDHolder.iconIDBox.Text = ""
+end)
+iconChangeHolder_upvr_2.iconIDHolder.iconIDBox.FocusLost:Connect(function() -- Line 783
+	--[[ Upvalues[1]:
+		[1]: iconChangeHolder_upvr_2 (readonly)
+	]]
+	local Text = iconChangeHolder_upvr_2.iconIDHolder.iconIDBox.Text
+	if Text ~= "" then
+		if string.sub(Text, 1, 13) ~= "rbxassetid://" then
+			iconChangeHolder_upvr_2.iconIDHolder.iconIDBox.Text = "rbxassetid://"..Text
+		end
+	end
+end)
+function getColor(arg1, arg2) -- Line 819
+	-- KONSTANTERROR: [0] 1. Error Block 1 start (CF ANALYSIS FAILED)
+	local var1120
+	-- KONSTANTERROR: [0] 1. Error Block 1 end (CF ANALYSIS FAILED)
+	-- KONSTANTERROR: [3] 3. Error Block 17 start (CF ANALYSIS FAILED)
+	if 1 < arg1 then
+		-- KONSTANTERROR: [6] 5. Error Block 13 start (CF ANALYSIS FAILED)
+		warn("getColor got out of bounds percentage (less than 0 or greater than 1")
+		-- KONSTANTERROR: [6] 5. Error Block 13 end (CF ANALYSIS FAILED)
+	end
+	var1120 = arg2[1].Value
+	for i_10 = 1, #arg2 - 1 do
+		if arg2[i_10].Time <= arg1 and arg1 <= arg2[i_10 + 1].Time then
+			local var1121 = arg2[i_10]
+			local var1122 = arg2[i_10 + 1]
+			var1120 = var1121.Value:lerp(var1122.Value, (arg1 - var1121.Time) / (var1122.Time - var1121.Time))
+			return var1120
+		end
+	end
+	warn("Color not found!")
+	do
+		return var1120
+	end
+	-- KONSTANTERROR: [3] 3. Error Block 17 end (CF ANALYSIS FAILED)
+end
+local Color3_new_result1_upvw = Color3.new(1, 0, 0)
+local var1124_upvw = 1
+clanColorFrame_upvr_2.lightPicker.pickerBtn.MouseButton1Click:Connect(function() -- Line 849
+	--[[ Upvalues[4]:
+		[1]: var1124_upvw (read and write)
+		[2]: mouse_upvr_2 (readonly)
+		[3]: clanColorFrame_upvr_2 (readonly)
+		[4]: Color3_new_result1_upvw (read and write)
+	]]
+	var1124_upvw = (mouse_upvr_2.X - clanColorFrame_upvr_2.lightPicker.pickerBtn.AbsolutePosition.X) / clanColorFrame_upvr_2.lightPicker.pickerBtn.AbsoluteSize.X
+	local tbl_108 = {Color3_new_result1_upvw.R, Color3_new_result1_upvw.G, Color3_new_result1_upvw.B}
+	clanColorFrame_upvr_2.previewColor.BackgroundColor3 = Color3.new(tbl_108[1] * var1124_upvw, tbl_108[2] * var1124_upvw, tbl_108[3] * var1124_upvw)
+	clanColorFrame_upvr_2.lightPicker.Slider.BackgroundColor3 = Color3.fromRGB(255 - var1124_upvw * 255, 255 - var1124_upvw * 255, 255 - var1124_upvw * 255)
+	clanColorFrame_upvr_2.lightPicker.Slider.Position = UDim2.new((mouse_upvr_2.X - clanColorFrame_upvr_2.lightPicker.pickerBtn.AbsolutePosition.X) / clanColorFrame_upvr_2.lightPicker.pickerBtn.AbsoluteSize.X, clanColorFrame_upvr_2.lightPicker.Grey.Color.Keypoints, 0, 0, 0)
+end)
+clanColorFrame_upvr_2.colorPicker.pickerBtn.MouseButton1Click:Connect(function() -- Line 870
+	--[[ Upvalues[4]:
+		[1]: mouse_upvr_2 (readonly)
+		[2]: clanColorFrame_upvr_2 (readonly)
+		[3]: Color3_new_result1_upvw (read and write)
+		[4]: var1124_upvw (read and write)
+	]]
+	local any_split_result1_2 = tostring(getColor((mouse_upvr_2.X - clanColorFrame_upvr_2.colorPicker.pickerBtn.AbsolutePosition.X) / clanColorFrame_upvr_2.colorPicker.pickerBtn.AbsoluteSize.X, clanColorFrame_upvr_2.colorPicker.Rainbow.Color.Keypoints)):split(", ")
+	Color3_new_result1_upvw = Color3.new(tonumber(any_split_result1_2[1]), tonumber(any_split_result1_2[2]), tonumber(any_split_result1_2[3]))
+	clanColorFrame_upvr_2.colorPicker.Slider.Position = UDim2.new((mouse_upvr_2.X - clanColorFrame_upvr_2.colorPicker.pickerBtn.AbsolutePosition.X) / clanColorFrame_upvr_2.colorPicker.pickerBtn.AbsoluteSize.X, clanColorFrame_upvr_2.colorPicker.Rainbow.Color.Keypoints, 0, 0, 0)
+	clanColorFrame_upvr_2.previewColor.BackgroundColor3 = Color3.new(tonumber(any_split_result1_2[1]) * var1124_upvw, tonumber(any_split_result1_2[2]) * var1124_upvw, tonumber(any_split_result1_2[3]) * var1124_upvw)
+	clanColorFrame_upvr_2.colorPicker.Slider.BackgroundColor3 = Color3.fromRGB(255 - Color3_new_result1_upvw.R * 255, 255 - Color3_new_result1_upvw.G * 255, 255 - Color3_new_result1_upvw.B * 255)
+end)
+clanColorFrame_upvr_2.colorChangeBtn.MouseButton1Click:Connect(function() -- Line 899
+	--[[ Upvalues[3]:
+		[1]: var1113_upvw (read and write)
+		[2]: Events_upvr (readonly)
+		[3]: clanColorFrame_upvr_2 (readonly)
+	]]
+	-- KONSTANTERROR: [0] 1. Error Block 1 start (CF ANALYSIS FAILED)
+	-- KONSTANTERROR: [0] 1. Error Block 1 end (CF ANALYSIS FAILED)
+	-- KONSTANTERROR: [11] 9. Error Block 3 start (CF ANALYSIS FAILED)
+	var1113_upvw = tick()
+	Events_upvr.UpdateClanColor:FireServer(clanColorFrame_upvr_2.previewColor.BackgroundColor3)
+	do
+		return
+	end
+	-- KONSTANTERROR: [11] 9. Error Block 3 end (CF ANALYSIS FAILED)
+	-- KONSTANTERROR: [27] 20. Error Block 4 start (CF ANALYSIS FAILED)
+	var1113_upvw = tick()
+	Events_upvr.UpdateClanColor:FireServer(clanColorFrame_upvr_2.previewColor.BackgroundColor3)
+	-- KONSTANTERROR: [27] 20. Error Block 4 end (CF ANALYSIS FAILED)
+end)
+leaveConfirmFrame_upvr_2.closeBtn.MouseButton1Click:Connect(function() -- Line 911
+	--[[ Upvalues[1]:
+		[1]: leaveConfirmFrame_upvr_2 (readonly)
+	]]
+	leaveConfirmFrame_upvr_2.Visible = false
+end)
+leaveConfirmFrame_upvr_2.leaveBtn.MouseButton1Click:Connect(function() -- Line 915
+	--[[ Upvalues[2]:
+		[1]: leaveConfirmFrame_upvr_2 (readonly)
+		[2]: clanUI_upvr_2 (readonly)
+	]]
+	game.ReplicatedStorage.Events.LeaveClan:FireServer()
+	leaveConfirmFrame_upvr_2.Visible = false
+	clanUI_upvr_2.Visible = false
+end)
+clanUI_upvr_2.transferFrame.closeBtn.MouseButton1Click:Connect(function() -- Line 922
+	--[[ Upvalues[1]:
+		[1]: clanUI_upvr_2 (readonly)
+	]]
+	clanUI_upvr_2.transferFrame.Visible = false
+end)
+local function _(arg1) -- Line 926, Named "isDictEmpty"
+	local var1133
+	if next(arg1) ~= nil then
+		var1133 = false
+	else
+		var1133 = true
+	end
+	return var1133
+end
+buttonHolders_2.ClanButton.MouseButton1Click:Connect(function() -- Line 930
+	--[[ Upvalues[4]:
+		[1]: tbl_138_upvw (read and write)
+		[2]: clanUI_upvr_2 (readonly)
+		[3]: var974_upvr (readonly)
+		[4]: var955_upvw (read and write)
+	]]
+	-- KONSTANTWARNING: Variable analysis failed. Output will have some incorrect variable assignments
+	local var1135
+	if next(tbl_138_upvw) ~= nil then
+		var1135 = false
+	else
+		var1135 = true
+	end
+	if not var1135 then
+		local _ = clanUI_upvr_2
+		var1135 = task.spawn
+		var1135(function() -- Line 934
+			--[[ Upvalues[1]:
+				[1]: tbl_138_upvw (copied, read and write)
+			]]
+			applyClanUI(tbl_138_upvw)
+		end)
+	else
+		var1135 = print
+		var1135("not in a clan")
+		var1135 = var974_upvr
+	end
+	var1135 = var955_upvw
+	if var1135 then
+		var1135 = var955_upvw
+		var1135.Visible = false
+		var1135 = var955_upvw
+		if var1135 == var1135.NoClanFrame then
+			var1135 = nil
+			var955_upvw = var1135
+			return
+		end
+	end
+	-- KONSTANTERROR: Expression was reused, decompilation is incorrect
+	var955_upvw = var1135.NoClanFrame
+	var1135 = true
+	-- KONSTANTERROR: Expression was reused, decompilation is incorrect
+	var1135.NoClanFrame.Visible = var1135
+end)
+local var1138_upvw
+local clanInviteUI_upvr_2 = var974_upvr.clanInviteUI
+local var1141_upvw
+game.ReplicatedStorage.Events.InviteMember.OnClientEvent:Connect(function(arg1, arg2) -- Line 956
+	--[[ Upvalues[3]:
+		[1]: var1141_upvw (read and write)
+		[2]: var1138_upvw (read and write)
+		[3]: clanInviteUI_upvr_2 (readonly)
+	]]
+	print("recieved invite", arg1, arg2)
+	var1141_upvw = tick()
+	var1138_upvw = arg1
+	clanInviteUI_upvr_2.clanNameLabel.Text = arg1
+	clanInviteUI_upvr_2.clanIcon.Image = arg2
+	clanInviteUI_upvr_2.Visible = true
+	wait(20)
+	if 20 < tick() - var1141_upvw then
+		clanInviteUI_upvr_2.Visible = false
+	end
+end)
+clanInviteUI_upvr_2.denyBtn.MouseButton1Click:Connect(function() -- Line 972
+	--[[ Upvalues[1]:
+		[1]: clanInviteUI_upvr_2 (readonly)
+	]]
+	clanInviteUI_upvr_2.Visible = false
+end)
+clanInviteUI_upvr_2.acceptBtn.MouseButton1Click:Connect(function() -- Line 976
+	--[[ Upvalues[2]:
+		[1]: var1138_upvw (read and write)
+		[2]: clanInviteUI_upvr_2 (readonly)
+	]]
+	game.ReplicatedStorage.Events.JoinClan:FireServer(var1138_upvw)
+	clanInviteUI_upvr_2.Visible = false
+end)
+local tbl_73_upvr = {2124817569, 2124817570, 2124817571, 2124817575, 2124817586, 2124823568, 2124837034, 2124869505, 2124869509, 2124869516, 2124869518, 2125787786}
+local var1145_upvw = 0
+coroutine.wrap(function() -- Line 1004
+	--[[ Upvalues[3]:
+		[1]: tbl_73_upvr (readonly)
+		[2]: var1145_upvw (read and write)
+		[3]: var974_upvr (readonly)
+	]]
+	for _, v_9_upvr in pairs(tbl_73_upvr) do
+		local pcall_result1_3, pcall_result2_6 = pcall(function() -- Line 1007
+			--[[ Upvalues[1]:
+				[1]: v_9_upvr (readonly)
+			]]
+			return game:GetService("BadgeService"):GetBadgeInfoAsync(v_9_upvr)
+		end)
+		if pcall_result1_3 then
+			local clone_16 = game.ReplicatedStorage.Assets.GUI.achievementTemplate:Clone()
+			clone_16.Name = tostring(v_9_upvr)
+			clone_16.badgeTitle.Text = pcall_result2_6.Name
+			clone_16.badgeLabel.Image = "rbxassetid://"..pcall_result2_6.IconImageId
+			clone_16.Visible = true
+			if game.ReplicatedStorage.Events.requestBadgeOwnership:InvokeServer(v_9_upvr) == true then
+				var1145_upvw += 1
+				clone_16.badgeOwned.Text = "Owned"
+				clone_16.badgeOwned.TextColor3 = Color3.new(0, 255, 0)
+			end
+			clone_16.Parent = var974_upvr.achievementUI.achievementFrame.Frame
+		end
+	end
+	var974_upvr.achievementUI.progressFrame.achievementsLabel.Text = tostring(math.floor(var1145_upvw / #tbl_73_upvr * 100))..'%'..' '..tostring(var1145_upvw)..'/'..tostring(#tbl_73_upvr)
+	var974_upvr.achievementUI.progressFrame.progressBar.Size = UDim2.new(var1145_upvw / #tbl_73_upvr, 0, 1, 0)
+end)()
+local tbl_53_upvr = {}
+local TweenInfo_new_result1_upvr = TweenInfo.new(40, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, 0, false, 0)
+CollectionService_upvr:GetInstanceAddedSignal("clanLeaderboards"):Connect(function(arg1) -- Line 1064
+	--[[ Upvalues[1]:
+		[1]: tbl_53_upvr (readonly)
+	]]
+	table.insert(tbl_53_upvr, arg1)
+end)
+CollectionService_upvr:GetInstanceRemovedSignal("clanLeaderboards"):Connect(function(arg1) -- Line 1068
+	--[[ Upvalues[1]:
+		[1]: tbl_53_upvr (readonly)
+	]]
+	table.remove(tbl_53_upvr, table.find(tbl_53_upvr, arg1))
+end)
+for _, v_12 in pairs(game.Workspace.ClanLeaderboards:GetChildren()) do
+	CollectionService_upvr:AddTag(v_12, "clanLeaderboards")
+end
+game.Workspace.ClanLeaderboards.ChildAdded:Connect(function(arg1) -- Line 1075
+	--[[ Upvalues[1]:
+		[1]: CollectionService_upvr (readonly)
+	]]
+	CollectionService_upvr:AddTag(arg1, "clanLeaderboards")
+end)
+spawn(function() -- Line 1043, Named "clanLeaderboardScroll"
+	--[[ Upvalues[3]:
+		[1]: tbl_53_upvr (readonly)
+		[2]: TweenService_upvr_2 (readonly)
+		[3]: TweenInfo_new_result1_upvr (readonly)
+	]]
+	while true do
+		for _, v_10 in pairs(tbl_53_upvr) do
+			if v_10.Parent then
+				v_10.SurfaceGui.Frame.List.CanvasPosition = Vector2.new(0, 0)
+			end
+		end
+		wait(20)
+		for _, v_11 in pairs(tbl_53_upvr) do
+			if v_11.Parent then
+				local List = v_11.SurfaceGui.Frame.List
+				TweenService_upvr_2:Create(List, TweenInfo_new_result1_upvr, {
+					CanvasPosition = Vector2.new(0, List.AbsoluteCanvasSize.y);
+				}):Play()
+			end
+		end
+		task.wait(40)
+	end
+end)
+local freeBountyMenu_upvr_2 = var974_upvr.freeBountyMenu
+var974_upvr.FreeBountyButton.MouseButton1Click:Connect(function() -- Line 1080
+	--[[ Upvalues[1]:
+		[1]: freeBountyMenu_upvr_2 (readonly)
+	]]
+	freeBountyMenu_upvr_2.Visible = not freeBountyMenu_upvr_2.Visible
+	if freeBountyMenu_upvr_2.Visible == true then
+		freeBountyMenu_upvr_2.bountyOffer.Visible = true
+		freeBountyMenu_upvr_2.bountyAwarded.Visible = false
+	end
+end)
+for _, v_13 in pairs({freeBountyMenu_upvr_2.bountyOffer.closeBtn, freeBountyMenu_upvr_2.bountyAwarded.closeBtn}) do
+	v_13.MouseButton1Click:Connect(function() -- Line 1092
+		--[[ Upvalues[1]:
+			[1]: freeBountyMenu_upvr_2 (readonly)
+		]]
+		freeBountyMenu_upvr_2.Visible = false
+	end)
+	local var1183_upvr
+end
+local SocialService_upvr_2 = game:GetService("SocialService")
+var1183_upvr.bountyOffer.inviteBtn.MouseButton1Click:Connect(function() -- Line 1097
+	--[[ Upvalues[2]:
+		[1]: SocialService_upvr_2 (readonly)
+		[2]: LocalPlayer_upvr (readonly)
+	]]
+	SocialService_upvr_2:PromptGameInvite(LocalPlayer_upvr)
+end)
+Events_upvr.offerClaimed.OnClientEvent:Connect(function(arg1) -- Line 1101
+	--[[ Upvalues[2]:
+		[1]: var1183_upvr (readonly)
+		[2]: var974_upvr (readonly)
+	]]
+	if not arg1 then
+		var1183_upvr.bountyAwarded.Visible = true
+		var1183_upvr.bountyOffer.Visible = false
+		var1183_upvr.Visible = true
+		var974_upvr.FreeBountyButton.Visible = false
+	else
+		var974_upvr.FreeBountyButton.Visible = false
+		var1183_upvr.Visible = false
+	end
+end)
+buttonHolders_2.AchievementsButton.MouseButton1Click:Connect(function() -- Line 1114
+	--[[ Upvalues[2]:
+		[1]: var955_upvw (read and write)
+		[2]: var974_upvr (readonly)
+	]]
+	if var955_upvw then
+		var955_upvw.Visible = false
+		if var955_upvw == var974_upvr.achievementUI then
+			var955_upvw = nil
+			return
+		end
+	end
+	var955_upvw = var974_upvr.achievementUI
+	var974_upvr.achievementUI.Visible = true
+end)
+local var1188_upvw = false
+for _, v_14_upvr in pairs(buttonHolders_2:GetChildren()) do
+	if v_14_upvr:IsA("TextButton") then
+		v_14_upvr.MouseEnter:Connect(function() -- Line 1132
+			--[[ Upvalues[2]:
+				[1]: v_14_upvr (readonly)
+				[2]: var1188_upvw (read and write)
+			]]
+			v_14_upvr:TweenSize(UDim2.fromScale(0.11, 0.11), Enum.EasingDirection.Out, Enum.EasingStyle.Sine, 0.125, true)
+			var1188_upvw = true
+		end)
+		v_14_upvr.MouseLeave:Connect(function() -- Line 1137
+			--[[ Upvalues[2]:
+				[1]: v_14_upvr (readonly)
+				[2]: var1188_upvw (read and write)
+			]]
+			v_14_upvr:TweenSize(UDim2.fromScale(0.1, 0.1), Enum.EasingDirection.Out, Enum.EasingStyle.Sine, 0.125, true)
+			v_14_upvr.Size = UDim2.fromScale(0.1, 0.1)
+			var1188_upvw = false
+		end)
+		v_14_upvr.MouseButton1Down:Connect(function() -- Line 1143
+			--[[ Upvalues[1]:
+				[1]: v_14_upvr (readonly)
+			]]
+			v_14_upvr.btnImage.ImageColor3 = Color3.fromRGB(170, 170, 170)
+			if v_14_upvr.Name == "SettingsButton" then
+				v_14_upvr.Cog.ImageColor3 = Color3.fromRGB(170, 170, 170)
+			end
+		end)
+		local Cog_upvr_2 = buttonHolders_2.SettingsButton.Cog
+		v_14_upvr.MouseButton1Up:Connect(function() -- Line 1151
+			--[[ Upvalues[3]:
+				[1]: v_14_upvr (readonly)
+				[2]: TweenService_upvr_2 (readonly)
+				[3]: Cog_upvr_2 (readonly)
+			]]
+			v_14_upvr.btnImage.ImageColor3 = Color3.fromRGB(255, 255, 255)
+			if v_14_upvr.Name == "SettingsButton" then
+				v_14_upvr.Cog.ImageColor3 = Color3.fromRGB(255, 255, 255)
+				TweenService_upvr_2:Create(Cog_upvr_2, TweenInfo.new(0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.Out, 0, false, 0), {
+					Rotation = Cog_upvr_2.Rotation + 45;
+				}):Play()
+			end
+		end)
+	end
+end
+local ToolEquipped_upvr = var974_upvr:WaitForChild("ToolEquipped")
+if not ToolEquipped_upvr then
+	ToolEquipped_upvr = var974_upvr.ToolEquipped
+end
+game.ReplicatedStorage.Events.awardBadge.OnClientEvent:Connect(function(arg1) -- Line 1168
+	--[[ Upvalues[3]:
+		[1]: var974_upvr (readonly)
+		[2]: var1145_upvw (read and write)
+		[3]: tbl_73_upvr (readonly)
+	]]
+	var974_upvr.achievementUI.achievementFrame.Frame[tostring(arg1)].badgeOwned.Text = "Owned"
+	if not table.find(blacklistedBadges, arg1) then
+		var1145_upvw += 1
+		var974_upvr.achievementUI.progressFrame.achievementsLabel.Text = tostring(math.floor(var1145_upvw / (#tbl_73_upvr - #blacklistedBadges) * 100))..'%'..' '..tostring(var1145_upvw)..'/'..tostring(#tbl_73_upvr - #blacklistedBadges)
+		var974_upvr.achievementUI.progressFrame.progressBar.Size = UDim2.new(var1145_upvw / (#tbl_73_upvr - #blacklistedBadges), 0, 1, 0)
+	end
+end)
+local tbl_115_upvr = {
+	['1'] = CFrame.new(-2564, 34, 437);
+	['2'] = CFrame.new(-2140, 14, 2598);
+	['3'] = CFrame.new(-59, 90, 2632);
+	['4'] = CFrame.new(-537, 93, 358);
+	['5'] = CFrame.new(-2119.257, 175.146, -2083.212);
+	['6'] = CFrame.new(-5000.893, 136.537, 346.154);
+}
+local var1201_upvw
+var974_upvr.teleportUI.teleportButton.MouseButton1Click:Connect(function() -- Line 1202
+	--[[ Upvalues[3]:
+		[1]: var1201_upvw (read and write)
+		[2]: LocalPlayer_upvr (readonly)
+		[3]: tbl_115_upvr (readonly)
+	]]
+	for _, v_15 in pairs(game.SoundService.Music:GetChildren()) do
+		v_15.Playing = false
+	end
+	game.SoundService.Music[var1201_upvw]:Play()
+	if LocalPlayer_upvr.Character then
+		game.ReplicatedStorage.Events.teleportRequest:FireServer(tbl_115_upvr[var1201_upvw] * CFrame.new(0, 15, 0))
+	end
+end)
+game.ReplicatedStorage.Events.mapChange.OnClientEvent:Connect(function(arg1) -- Line 1212
+	--[[ Upvalues[3]:
+		[1]: var1201_upvw (read and write)
+		[2]: TweenService_upvr_2 (readonly)
+		[3]: var974_upvr (readonly)
+	]]
+	var1201_upvw = arg1
+	TweenService_upvr_2:Create(var974_upvr.teleportUI, TweenInfo.new(0.5), {
+		Position = UDim2.new(0.511, 0, 0.062, 0);
+	}):Play()
+	wait(15)
+	TweenService_upvr_2:Create(var974_upvr.teleportUI, TweenInfo.new(0.5), {
+		Position = UDim2.new(0.511, 0, -0.1, 0);
+	}):Play()
+end)
+Events_upvr.Tween.OnClientEvent:Connect(function(arg1, arg2, arg3, arg4) -- Line 1223
+	--[[ Upvalues[1]:
+		[1]: TweenService_upvr_2 (readonly)
+	]]
+	if arg2 == "Transparency" then
+		local tbl_112 = {}
+		tbl_112.Transparency = arg4
+		TweenService_upvr_2:Create(arg1, TweenInfo.new(arg3, Enum.EasingStyle.Linear), tbl_112):Play()
+	end
+end)
+local tbl_68_upvr = {
+	Grab = {Vector3.new(0, 0, 0), CFrame.Angles(-0.17453292519943295, 2.9670597283903604, -0.08726646259971647)};
+	Taser = {Vector3.new(0, 0, 0), CFrame.Angles(0, 0.17453292519943295, 0.17453292519943295)};
+	Drag = {Vector3.new(0, 0, 0), CFrame.Angles(-0.17453292519943295, 2.9670597283903604, -0.08726646259971647)};
+	["Grenade Launcher"] = {Vector3.new(0, 0, 0), CFrame.Angles(-0.17453292519943295, 2.9670597283903604, -0.08726646259971647)};
+	["Mind Control"] = {Vector3.new(0, 0, 0), CFrame.Angles(-0.17453292519943295, 2.9670597283903604, -0.08726646259971647)};
+	Red = {Vector3.new(0, 0, 0), CFrame.Angles(-0.17453292519943295, 2.9670597283903604, -0.08726646259971647)};
+	Leafblower = {Vector3.new(0, 0, -3), CFrame.Angles(0, math.pi, 0)};
+	["Mustard Gas"] = {Vector3.new(0, 0, -3), CFrame.Angles(0, math.pi, 0)};
+	["Arm Rocket"] = {Vector3.new(0, -2, 0), CFrame.Angles(0, math.pi, 0)};
+	["Dual Carry"] = {Vector3.new(0, 0, -2), CFrame.Angles(-0.17453292519943295, 2.9670597283903604, -0.08726646259971647)};
+	["Fishing Rod"] = {Vector3.new(0, 0, 0), CFrame.Angles(0, math.pi, -0.7853981633974483)};
+	Snowglobe = {Vector3.new(0, 0, 3), CFrame.Angles(0, math.pi, 0)};
+}
+local any_InvokeServer_result1_13 = Events_upvr.fetch_data:InvokeServer()
+if any_InvokeServer_result1_13 then
+	var974_upvr.toolLabel.Text = any_InvokeServer_result1_13.equipped_animation
+end
+if not any_InvokeServer_result1_13 then
+	local tbl_110_upvw = {
+		owned_animations = {};
+		equipped_animation = "Carry";
+	}
+end
+function createViewport(arg1, arg2) -- Line 1258
+	--[[ Upvalues[3]:
+		[1]: tbl_110_upvw (read and write)
+		[2]: carry_animations_upvr_2 (readonly)
+		[3]: tbl_68_upvr (readonly)
+	]]
+	local Camera_2 = Instance.new("Camera")
+	Camera_2.Parent = arg1.ViewportFrame
+	if arg2 == "Grab" then
+		if tbl_110_upvw.equipped_animation ~= "Carry" then
+			local clone_5 = game.ReplicatedStorage.Assets.GUI.Animations[tbl_110_upvw.equipped_animation]:Clone()
+			clone_5:SetPrimaryPartCFrame(CFrame.new(0, 0, 0))
+			local var1230 = carry_animations_upvr_2[tbl_110_upvw.equipped_animation]
+			local rotation_3 = var1230.rotation
+			if not rotation_3 then
+				rotation_3 = CFrame.Angles(0, 0, 0)
+			end
+			Camera_2.CFrame = CFrame.lookAt(clone_5.PrimaryPart.Position + rotation_3 * (var1230.offset or Vector3.new(0, 0, 5)), clone_5.PrimaryPart.Position)
+		else
+			local clone_15 = game.ReplicatedStorage.Assets.GUI.Tools[arg2]:Clone()
+			clone_15:SetPrimaryPartCFrame(CFrame.new(tbl_68_upvr[arg2][1]) * tbl_68_upvr[arg2][2])
+			Camera_2.CFrame = CFrame.new(Vector3.new(0, 0, 5), clone_15.PrimaryPart.Position)
+		end
+	else
+		local clone_2 = game.ReplicatedStorage.Assets.GUI.Tools[arg2]:Clone()
+		clone_2:SetPrimaryPartCFrame(CFrame.new(tbl_68_upvr[arg2][1]) * tbl_68_upvr[arg2][2])
+		Camera_2.CFrame = CFrame.new(Vector3.new(0, 0, 5), clone_2.PrimaryPart.Position)
+	end
+	clone_2.Parent = arg1.ViewportFrame
+	arg1.ViewportFrame.CurrentCamera = Camera_2
+end
+for i_18 = 3, 5 do
+	createViewport(ToolEquipped_upvr[tostring(i_18)], tbl_128_upvr[i_18 - 2])
+	ToolEquipped_upvr[tostring(i_18)]:SetAttribute("Tool", i_18 - 2)
+	ToolEquipped_upvr[tostring(i_18)]:SetAttribute("tool_name", tbl_128_upvr[i_18 - 2])
+end
+for var1264_upvw, nextTool_upvr in ipairs(ToolEquipped_upvr:GetChildren()) do
+	if nextTool_upvr.Name == '1' or nextTool_upvr.Name == '2' or nextTool_upvr:IsA("Frame") then
+		if tbl_128_upvr[#tbl_128_upvr] then
+			-- KONSTANTERROR: Expression was reused, decompilation is incorrect
+			createViewport(nextTool_upvr, tbl_128_upvr[#tbl_128_upvr])
+			-- KONSTANTERROR: Expression was reused, decompilation is incorrect
+			nextTool_upvr:SetAttribute("Tool", #tbl_128_upvr)
+			-- KONSTANTERROR: Expression was reused, decompilation is incorrect
+			nextTool_upvr:SetAttribute("tool_name", tbl_128_upvr[#tbl_128_upvr])
+		else
+			local len = #tbl_128_upvr
+			createViewport(nextTool_upvr, tbl_128_upvr[len])
+			nextTool_upvr:SetAttribute("Tool", len)
+			nextTool_upvr:SetAttribute("tool_name", tbl_128_upvr[len])
+		end
+	end
+end
+Events_upvr.sendGlobalMessage.OnClientEvent:Connect(function(arg1, arg2) -- Line 1319
+	local tbl_49 = {}
+	tbl_49.Text = arg1
+	tbl_49.Color = arg2
+	game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", tbl_49)
+end)
+Events_upvr.Bullet.OnClientEvent:Connect(function(arg1, arg2, arg3) -- Line 1323
+	--[[ Upvalues[1]:
+		[1]: TweenService_upvr_2 (readonly)
+	]]
+	if game.ReplicatedStorage.Assets.Bullets:FindFirstChild(arg1) and arg2 and arg3 then
+		local clone_14_upvr = game.ReplicatedStorage.Assets.Bullets[arg1]:Clone()
+		clone_14_upvr.CFrame = CFrame.new(arg2, arg3) * CFrame.Angles(0, (math.pi/2), 0)
+		clone_14_upvr.Parent = game.Workspace.Ignore
+		local Ray_new_result1_2 = Ray.new(arg2, (arg3 - arg2).unit * 15)
+		local any_Create_result1_upvw = TweenService_upvr_2:Create(clone_14_upvr, TweenInfo.new(0.2, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, 0, false, 0), {
+			Position = CFrame.new(Ray_new_result1_2.Origin) * Ray_new_result1_2.Direction;
+		})
+		any_Create_result1_upvw:Play()
+		any_Create_result1_upvw.Completed:Connect(function() -- Line 1334
+			--[[ Upvalues[2]:
+				[1]: clone_14_upvr (readonly)
+				[2]: any_Create_result1_upvw (read and write)
+			]]
+			clone_14_upvr:Destroy()
+			any_Create_result1_upvw = nil
+		end)
+	end
+end)
+nextTool_upvr = game
+var1264_upvw = nextTool_upvr.ReplicatedStorage
+var1264_upvw.Events.sendRequiredClanInfo.OnClientEvent:Connect(function(arg1) -- Line 1341
+	--[[ Upvalues[1]:
+		[1]: tbl_138_upvw (read and write)
+	]]
+	if arg1.Name == "" then
+		tbl_138_upvw = {}
+	else
+		tbl_138_upvw = arg1
+		applyClanUI(tbl_138_upvw)
+	end
+end)
+local var1247_upvw = Vector3.new(0, 0, 0)
+function var1264_upvw(arg1) -- Line 1353
+	--[[ Upvalues[1]:
+		[1]: var1247_upvw (read and write)
+	]]
+	if arg1.UserInputType == Enum.UserInputType.Gamepad1 and arg1.KeyCode == Enum.KeyCode.Thumbstick1 then
+		var1247_upvw = arg1.Position
+	end
+end
+UserInputService_upvr_2.InputChanged:Connect(var1264_upvw)
+nextTool_upvr = game
+var1264_upvw = nextTool_upvr.ReplicatedStorage
+local var1250_upvw = false
+var1264_upvw.Events.takeRocketControls.OnClientInvoke = function(arg1) -- Line 1361
+	--[[ Upvalues[7]:
+		[1]: any_Wait_result1_upvw_2 (read and write)
+		[2]: var974_upvr (readonly)
+		[3]: CurrentCamera_upvr (readonly)
+		[4]: TweenService_upvr_2 (readonly)
+		[5]: var1250_upvw (read and write)
+		[6]: mouse_upvr_2 (readonly)
+		[7]: var1247_upvw (read and write)
+	]]
+	if arg1 then
+	else
+		return
+	end
+	local rocketGyro_upvr = arg1:WaitForChild("rocketGyro")
+	rocketGyro_upvr.CFrame = any_Wait_result1_upvw_2.HumanoidRootPart.CFrame
+	local rocketCountdown_upvr_2 = var974_upvr.rocketCountdown
+	rocketCountdown_upvr_2.Text = "15.00s"
+	rocketCountdown_upvr_2.Visible = true
+	local var1253_upvw = false
+	spawn(function() -- Line 1372
+		--[[ Upvalues[3]:
+			[1]: var1253_upvw (read and write)
+			[2]: arg1 (readonly)
+			[3]: CurrentCamera_upvr (copied, readonly)
+		]]
+		wait(0.65)
+		var1253_upvw = true
+		if arg1.Parent ~= nil then
+			CurrentCamera_upvr.CameraType = Enum.CameraType.Scriptable
+		end
+	end)
+	arg1.rocketMeter.Changed:Connect(function() -- Line 1381
+		--[[ Upvalues[3]:
+			[1]: TweenService_upvr_2 (copied, readonly)
+			[2]: rocketCountdown_upvr_2 (readonly)
+			[3]: arg1 (readonly)
+		]]
+		TweenService_upvr_2:Create(rocketCountdown_upvr_2.displayValue, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, 0, false, 0), {
+			Value = arg1.rocketMeter.Value;
+		}):Play()
+	end)
+	rocketCountdown_upvr_2.displayValue.Changed:Connect(function() -- Line 1386
+		--[[ Upvalues[1]:
+			[1]: rocketCountdown_upvr_2 (readonly)
+		]]
+		rocketCountdown_upvr_2.Text = (math.floor(rocketCountdown_upvr_2.displayValue.Value * 100) / 100)..'s'
+	end)
+	local var1258_upvw
+	local var1260_upvw
+	var1260_upvw = any_Wait_result1_upvw_2.Humanoid.Died:Connect(function() -- Line 1392
+		--[[ Upvalues[4]:
+			[1]: var1258_upvw (read and write)
+			[2]: CurrentCamera_upvr (copied, readonly)
+			[3]: var974_upvr (copied, readonly)
+			[4]: var1260_upvw (read and write)
+		]]
+		var1258_upvw:Disconnect()
+		CurrentCamera_upvr.CameraType = Enum.CameraType.Custom
+		var974_upvr.rocketCountdown.Visible = false
+		var1260_upvw:Disconnect()
+	end)
+	local rocketMover_upvr_2 = arg1:WaitForChild("rocketMover")
+	var1258_upvw = game:GetService("RunService").RenderStepped:Connect(function(arg1_15) -- Line 1399
+		--[[ Upvalues[11]:
+			[1]: arg1 (readonly)
+			[2]: CurrentCamera_upvr (copied, readonly)
+			[3]: rocketCountdown_upvr_2 (readonly)
+			[4]: var1258_upvw (read and write)
+			[5]: any_Wait_result1_upvw_2 (copied, read and write)
+			[6]: rocketMover_upvr_2 (readonly)
+			[7]: var1253_upvw (read and write)
+			[8]: var1250_upvw (copied, read and write)
+			[9]: rocketGyro_upvr (readonly)
+			[10]: mouse_upvr_2 (copied, readonly)
+			[11]: var1247_upvw (copied, read and write)
+		]]
+		if arg1.Parent == nil then
+			CurrentCamera_upvr.CameraType = Enum.CameraType.Custom
+			rocketCountdown_upvr_2.Visible = false
+			var1258_upvw:Disconnect()
+			any_Wait_result1_upvw_2.Humanoid.WalkSpeed = 16
+		else
+			local var1263 = rocketMover_upvr_2
+			var1263.Position += arg1.CFrame.LookVector * arg1_15 * 25
+			if var1253_upvw == true then
+				CurrentCamera_upvr.CFrame = arg1.CFrame * CFrame.new(0, 0, 0)
+				if not var1250_upvw then
+					rocketGyro_upvr.CFrame = CFrame.new(arg1.Position, mouse_upvr_2.Hit.p)
+					return
+				end
+				any_Wait_result1_upvw_2.Humanoid.WalkSpeed = 0
+				rocketGyro_upvr.CFrame = CFrame.new(arg1.Position, arg1.CFrame * CFrame.new(var1247_upvw.x, -var1247_upvw.y, 1).Position)
+			end
+		end
+	end)
+end
+function var1264_upvw() -- Line 1424
+	--[[ Upvalues[3]:
+		[1]: CurrentCamera_upvr (readonly)
+		[2]: var974_upvr (readonly)
+		[3]: any_Wait_result1_upvw_2 (read and write)
+	]]
+	CurrentCamera_upvr.CameraType = Enum.CameraType.Custom
+	var974_upvr.rocketCountdown.Visible = false
+	any_Wait_result1_upvw_2.Humanoid.WalkSpeed = 16
+end
+Events_upvr.rocketReset.OnClientEvent:Connect(var1264_upvw)
+local tbl_160_upvr = {}
+var1264_upvw = -0.249
+nextTool_upvr = -1
+tbl_160_upvr[1] = UDim2.new(var1264_upvw, nextTool_upvr, 0.125, 0)
+var1264_upvw = 0.051
+nextTool_upvr = -1
+tbl_160_upvr[2] = UDim2.new(var1264_upvw, nextTool_upvr, 0.125, 0)
+var1264_upvw = 0.351
+nextTool_upvr = -1
+tbl_160_upvr[3] = UDim2.new(var1264_upvw, nextTool_upvr, 0, 0)
+var1264_upvw = 0.751
+nextTool_upvr = -1
+tbl_160_upvr[4] = UDim2.new(var1264_upvw, nextTool_upvr, 0.125, 0)
+var1264_upvw = 1.051
+nextTool_upvr = -1
+tbl_160_upvr[5] = UDim2.new(var1264_upvw, nextTool_upvr, 0.125, 0)
+var1264_upvw = 1
+function nextTool_upvr(arg1) -- Line 1443, Named "doesOwnTool"
+	--[[ Upvalues[1]:
+		[1]: tbl_77_upvr (readonly)
+	]]
+	for _, v_17 in pairs(tbl_77_upvr) do
+		print(v_17, arg1)
+		if v_17 == arg1 then
+			print(v_17, arg1)
+			return true
+		end
+	end
+end
+doesOwnTool = nextTool_upvr -- Setting global
+local var1271_upvw = false
+function nextTool_upvr(arg1) -- Line 1454, Named "nextTool"
+	--[[ Upvalues[9]:
+		[1]: var1271_upvw (read and write)
+		[2]: ToolEquipped_upvr (readonly)
+		[3]: TweenService_upvr_2 (readonly)
+		[4]: tbl_160_upvr (readonly)
+		[5]: const_number_3_upvw (read and write)
+		[6]: tbl_128_upvr (readonly)
+		[7]: var1264_upvw (read and write)
+		[8]: var974_upvr (readonly)
+		[9]: tbl_110_upvw (read and write)
+	]]
+	-- KONSTANTERROR: [0] 1. Error Block 1 start (CF ANALYSIS FAILED)
+	-- KONSTANTERROR: [0] 1. Error Block 1 end (CF ANALYSIS FAILED)
+	-- KONSTANTERROR: [2] 3. Error Block 2 start (CF ANALYSIS FAILED)
+	do
+		return
+	end
+	-- KONSTANTERROR: [2] 3. Error Block 2 end (CF ANALYSIS FAILED)
+	-- KONSTANTERROR: [3] 4. Error Block 3 start (CF ANALYSIS FAILED)
+	var1271_upvw = true
+	-- KONSTANTERROR: [3] 4. Error Block 3 end (CF ANALYSIS FAILED)
+end
+nextTool = nextTool_upvr -- Setting global
+nextTool_upvr = {}
+nextTool_upvr[1] = nil
+nextTool_upvr[2] = nil
+local createInviteEntry
+for _, v_18_upvr in pairs(var974_upvr:WaitForChild("ToolEquipped"):GetChildren()) do
+	local function nameCheck_upvr(arg1) -- Line 1643, Named "nameCheck"
+		--[[ Upvalues[1]:
+			[1]: nextTool_upvr (readonly)
+		]]
+		if tonumber(arg1.Name) == 2 then
+			if nextTool_upvr[1] ~= nil then
+				nextTool_upvr[1]:Disconnect()
+			end
+			nextTool_upvr[1] = arg1.btnInput.MouseButton1Click:Connect(function() -- Line 1649
+				game.ReplicatedStorage.Events.EquipTool:FireServer(nextTool(false))
+			end)
+		end
+		if tonumber(arg1.Name) == 4 then
+			if nextTool_upvr[2] ~= nil then
+				nextTool_upvr[2]:Disconnect()
+			end
+			nextTool_upvr[2] = arg1.btnInput.MouseButton1Click:Connect(function() -- Line 1659
+				game.ReplicatedStorage.Events.EquipTool:FireServer(nextTool(true))
+			end)
+		end
+	end
+	nameCheck_upvr(v_18_upvr)
+	v_18_upvr:GetPropertyChangedSignal("Name"):Connect(function() -- Line 1667
+		--[[ Upvalues[2]:
+			[1]: nameCheck_upvr (readonly)
+			[2]: v_18_upvr (readonly)
+		]]
+		nameCheck_upvr(v_18_upvr)
+	end)
+end
+local var1279_upvw = false
+local spectateUI_upvr_2 = var974_upvr.spectateUI
+local var1281_upvw
+nameCheck_upvr = nil
+local var1282_upvw = nameCheck_upvr
+local var1283_upvw = 1
+function findNextPlayer(arg1) -- Line 1683
+	--[[ Upvalues[2]:
+		[1]: Events_upvr (readonly)
+		[2]: var1283_upvw (read and write)
+	]]
+	local any_InvokeServer_result1_7, any_InvokeServer_result2 = Events_upvr.requestNextSpectate:InvokeServer(var1283_upvw, arg1)
+	if any_InvokeServer_result1_7 ~= nil then
+		var1283_upvw += arg1
+		return any_InvokeServer_result1_7
+	end
+	if arg1 == 1 then
+		var1283_upvw = 0
+	else
+		var1283_upvw = any_InvokeServer_result2 + 1
+	end
+	local any_InvokeServer_result1_14, _ = Events_upvr.requestNextSpectate:InvokeServer(var1283_upvw, arg1)
+	var1283_upvw += arg1
+	return any_InvokeServer_result1_14
+end
+local var1288_upvw
+function arrowFunction(arg1) -- Line 1702
+	--[[ Upvalues[5]:
+		[1]: var1282_upvw (read and write)
+		[2]: var1281_upvw (read and write)
+		[3]: spectateUI_upvr_2 (readonly)
+		[4]: var1288_upvw (read and write)
+		[5]: CurrentCamera_upvr (readonly)
+	]]
+	local findNextPlayer_result1_upvr_2 = findNextPlayer(arg1)
+	local Character_upvw = findNextPlayer_result1_upvr_2.Character
+	if var1282_upvw ~= nil then
+		var1282_upvw:Disconnect()
+	end
+	var1281_upvw = findNextPlayer_result1_upvr_2
+	spectateUI_upvr_2.playerName.Text = findNextPlayer_result1_upvr_2.Name
+	spectateUI_upvr_2.playerThumb.Image = "rbxthumb://type=AvatarHeadShot&id="..findNextPlayer_result1_upvr_2.UserId.."&w=420&h=420"
+	local var1291_upvw
+	if Character_upvw.Head.BillboardGui.ClanName.Text ~= "" then
+		var1291_upvw = Character_upvw.Head.BillboardGui.ClanName.Text
+		spectateUI_upvr_2.playerDetails.Text = Character_upvw.Head.BillboardGui.ClanName.Text.."    "..findNextPlayer_result1_upvr_2.leaderstats.Bounty.Value.." Bounty"
+	else
+		spectateUI_upvr_2.playerDetails.Text = "No Clan    "..findNextPlayer_result1_upvr_2.leaderstats.Bounty.Value.." Bounty"
+	end
+	if var1288_upvw ~= nil then
+		var1288_upvw:Disconnect()
+	end
+	var1288_upvw = findNextPlayer_result1_upvr_2.leaderstats.Bounty.Changed:Connect(function() -- Line 1727
+		--[[ Upvalues[3]:
+			[1]: var1291_upvw (read and write)
+			[2]: spectateUI_upvr_2 (copied, readonly)
+			[3]: findNextPlayer_result1_upvr_2 (readonly)
+		]]
+		if var1291_upvw ~= nil then
+			spectateUI_upvr_2.playerDetails.Text = var1291_upvw.."    "..findNextPlayer_result1_upvr_2.leaderstats.Bounty.Value.." Bounty"
+		else
+			spectateUI_upvr_2.playerDetails.Text = "No Clan    "..findNextPlayer_result1_upvr_2.leaderstats.Bounty.Value.." Bounty"
+		end
+	end)
+	var1282_upvw = findNextPlayer_result1_upvr_2.CharacterAdded:Connect(function(arg1_16) -- Line 1735
+		--[[ Upvalues[2]:
+			[1]: CurrentCamera_upvr (copied, readonly)
+			[2]: Character_upvw (read and write)
+		]]
+		repeat
+			wait()
+		until CurrentCamera_upvr:GetPropertyChangedSignal("CameraSubject")
+		if var1281_upvw ~= nil then
+			CurrentCamera_upvr.CameraSubject = var1281_upvw.Character.Head
+		end
+	end)
+	CurrentCamera_upvr.CameraSubject = Character_upvw.Head
+	return var1282_upvw
+end
+local var1294_upvw
+local function spectateToggle_upvr() -- Line 1745, Named "spectateToggle"
+	--[[ Upvalues[11]:
+		[1]: var1279_upvw (read and write)
+		[2]: var974_upvr (readonly)
+		[3]: Settings_upvr (readonly)
+		[4]: shopUI_upvr_4 (readonly)
+		[5]: var955_upvw (read and write)
+		[6]: var1282_upvw (read and write)
+		[7]: var1294_upvw (read and write)
+		[8]: LocalPlayer_upvr (readonly)
+		[9]: CurrentCamera_upvr (readonly)
+		[10]: var1281_upvw (read and write)
+		[11]: any_Wait_result1_upvw_2 (read and write)
+	]]
+	if var1279_upvw == false then
+		var1279_upvw = true
+		var974_upvr.spectateUI.Visible = true
+		var974_upvr.ToolEquipped.Visible = false
+		var974_upvr.Special.Visible = false
+		Settings_upvr.Visible = false
+		shopUI_upvr_4.Visible = false
+		var955_upvw = nil
+		var1282_upvw = arrowFunction(1)
+		var1294_upvw = LocalPlayer_upvr.CharacterAdded:Connect(function() -- Line 1756
+			--[[ Upvalues[2]:
+				[1]: CurrentCamera_upvr (copied, readonly)
+				[2]: var1281_upvw (copied, read and write)
+			]]
+			repeat
+				wait()
+			until CurrentCamera_upvr:GetPropertyChangedSignal("CameraSubject")
+			if var1281_upvw ~= nil then
+				CurrentCamera_upvr.CameraSubject = var1281_upvw.Character.Head
+			end
+		end)
+	else
+		var1279_upvw = false
+		var1281_upvw = nil
+		var974_upvr.spectateUI.Visible = false
+		var974_upvr.ToolEquipped.Visible = true
+		var974_upvr.Special.Visible = true
+		CurrentCamera_upvr.CameraSubject = any_Wait_result1_upvw_2.Humanoid
+		var1282_upvw:Disconnect()
+		var1294_upvw:Disconnect()
+	end
+end
+local function displayClanChatMSG_upvr(arg1, arg2, arg3) -- Line 1778, Named "displayClanChatMSG"
+	--[[ Upvalues[2]:
+		[1]: var1040_upvr (readonly)
+		[2]: UserService_upvr_2 (readonly)
+	]]
+	local scrollHoldFrame = var1040_upvr[3].menuScroll.scrollHoldFrame
+	local clone_6 = scrollHoldFrame.entryTemplate:Clone()
+	clone_6.chatMessage.Text = arg2
+	local tbl_100 = {}
+	tbl_100[1] = arg1
+	clone_6.chatterUsername.Text = UserService_upvr_2:GetUserInfosByUserIdsAsync(tbl_100)[1].DisplayName
+	clone_6.chatterIcon.Image = game.Players:GetUserThumbnailAsync(arg1, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size150x150)
+	clone_6.Visible = true
+	clone_6.chatterRole.Text = arg3
+	clone_6.Parent = scrollHoldFrame
+	if scrollHoldFrame.emptyFrame.Visible == true then
+		scrollHoldFrame.emptyFrame.Visible = false
+	end
+	var1040_upvr[3].menuScroll.CanvasPosition = Vector2.new(0, 9999)
+end
+game.ReplicatedStorage.Events.sendChatClan.OnClientEvent:Connect(function(arg1, arg2, arg3) -- Line 1796
+	--[[ Upvalues[1]:
+		[1]: displayClanChatMSG_upvr (readonly)
+	]]
+	print(arg1)
+	displayClanChatMSG_upvr(arg1, arg2, arg3)
+end)
+local chatHolder_upvr = var1040_upvr[3].chatHolder
+var974_upvr.Special.SpecialButton.MouseButton1Click:Connect(function() -- Line 1947
+	local any_InvokeServer_result1_10 = game.ReplicatedStorage.Events.GetSpecial:InvokeServer()
+	if any_InvokeServer_result1_10 ~= "" then
+		game.ReplicatedStorage.Events.UseSpecial:FireServer(any_InvokeServer_result1_10)
+	end
+end)
+local playerListHolder_upvr_2 = scrollHoldFrame_4_upvr.clanInvite.playerListScroll.playerListHolder
+for _, v_19 in pairs(game.Players:GetPlayers()) do
+	function createInviteEntry(arg1) -- Line 1972
+		--[[ Upvalues[2]:
+			[1]: LocalPlayer_upvr (readonly)
+			[2]: playerListHolder_upvr_2 (readonly)
+		]]
+		if arg1.UserId ~= LocalPlayer_upvr.UserId then
+			local clone_13_upvr = playerListHolder_upvr_2.entryTemplate:Clone()
+			clone_13_upvr.entryName.Text = arg1.DisplayName
+			clone_13_upvr.entryThumb.Image = "https://www.roblox.com/headshot-thumbnail/image?userId="..arg1.UserId.."&width=128&height=128&format=png"
+			clone_13_upvr.Name = "Entry"
+			clone_13_upvr:SetAttribute("ID", arg1.UserId)
+			clone_13_upvr.Visible = true
+			clone_13_upvr.Parent = playerListHolder_upvr_2
+			local var1306_upvw = true
+			clone_13_upvr.inviteBtn.MouseButton1Click:Connect(function() -- Line 1984
+				--[[ Upvalues[3]:
+					[1]: var1306_upvw (read and write)
+					[2]: arg1 (readonly)
+					[3]: clone_13_upvr (readonly)
+				]]
+				if var1306_upvw == true then
+					game.ReplicatedStorage.Events.InviteMember:FireServer(arg1.Name)
+					var1306_upvw = false
+					clone_13_upvr.inviteBtn.BackgroundColor3 = Color3.fromRGB(180, 180, 180)
+					wait(30)
+					var1306_upvw = true
+					clone_13_upvr.inviteBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+				end
+			end)
+		end
+	end
+	createInviteEntry(v_19)
+	local var1310_upvr
+end
+game.Players.PlayerAdded:Connect(function(arg1) -- Line 2002
+	--[[ Upvalues[1]:
+		[1]: var1310_upvr (readonly)
+	]]
+	var1310_upvr(arg1)
+end)
+game.Players.PlayerRemoving:Connect(function(arg1) -- Line 2006
+	--[[ Upvalues[1]:
+		[1]: playerListHolder_upvr_2 (readonly)
+	]]
+	for _, v_20 in pairs(playerListHolder_upvr_2:GetChildren()) do
+		if v_20.Name ~= "EntryTemplate" and v_20:GetAttribute("ID") == arg1.UserId then
+			v_20:Destroy()
+		end
+	end
+end)
+print("reached path system... finally")
+local tbl_103_upvr = {
+	Banana = 7153948878;
+	["Mustard Gas"] = 342638879;
+	["Mini Trampoline"] = 8692628285;
+}
+local any_InvokeServer_result1_11 = game.ReplicatedStorage.Events.GetSpecial:InvokeServer()
+if any_InvokeServer_result1_11 and any_InvokeServer_result1_11 ~= "" then
+	createInviteEntry = tbl_103_upvr[any_InvokeServer_result1_11]
+	var974_upvr.Special.SpecialButton.ImageLabel.Image = "rbxassetid://"..createInviteEntry
+end
+createInviteEntry = game.ReplicatedStorage
+createInviteEntry.Events.EquipSpecial.OnClientEvent:Connect(function(arg1) -- Line 2029
+	--[[ Upvalues[2]:
+		[1]: var974_upvr (readonly)
+		[2]: tbl_103_upvr (readonly)
+	]]
+	var974_upvr.Special.SpecialButton.ImageLabel.Image = "rbxassetid://"..tbl_103_upvr[arg1]
+end)
+local ToolEquipped_2 = var974_upvr.ToolEquipped
+local tbl_102 = {}
+createInviteEntry = ToolEquipped_2.LB
+tbl_102[1] = createInviteEntry
+tbl_102[2] = ToolEquipped_2.RB
+tbl_102[3] = ToolEquipped_2.buttonRT
+tbl_102[4] = var974_upvr.Special.SpecialButton.dPadDown
+tbl_102[5] = buttonHolders_2.xboxBBtn
+tbl_102[6] = buttonHolders_2.xboxMenuBtn
+tbl_102[7] = buttonHolders_2.xboxYBtn
+tbl_102[8] = buttonHolders_2.xboxXBtn
+tbl_102[9] = spectateUI_upvr_2.dPadLeft
+tbl_102[10] = spectateUI_upvr_2.dPadRight
+tbl_102[11] = buttonHolders_2.xboxDUp
+createInviteEntry = game:GetService("GuiService"):IsTenFootInterface()
+if createInviteEntry then
+	createInviteEntry = var974_upvr.ToolEquipped.E
+	createInviteEntry.Visible = false
+	createInviteEntry = var974_upvr.ToolEquipped.Q
+	createInviteEntry.Visible = false
+	createInviteEntry = var974_upvr.Special.SpecialButton.KeyPress
+	createInviteEntry.Visible = false
+	createInviteEntry = var974_upvr.FreeBountyButton
+	createInviteEntry.Visible = false
+	createInviteEntry = pairs(tbl_102)
+	local pairs_result1_25_upvw, pairs_result2_37, pairs_result3_25 = pairs(tbl_102)
+	for _, v_21 in pairs_result1_25_upvw, pairs_result2_37, pairs_result3_25 do
+		v_21.Visible = true
+	end
+	var1250_upvw = true
+end
+pairs_result1_25_upvw = UserInputService_upvr_2.TouchEnabled
+if pairs_result1_25_upvw then
+	pairs_result1_25_upvw = var974_upvr.ToolEquipped.E
+	pairs_result1_25_upvw.Visible = false
+	pairs_result1_25_upvw = var974_upvr.ToolEquipped.Q
+	pairs_result1_25_upvw.Visible = false
+	pairs_result1_25_upvw = var974_upvr.Special.SpecialButton.KeyPress
+	pairs_result1_25_upvw.Visible = false
+end
+pairs_result1_25_upvw = UserInputService_upvr_2.TouchTapInWorld
+pairs_result1_25_upvw = pairs_result1_25_upvw:Connect
+pairs_result1_25_upvw(function(arg1, arg2) -- Line 2082
+	--[[ Upvalues[2]:
+		[1]: Grab_upvr (readonly)
+		[2]: mouse_upvr_2 (readonly)
+	]]
+	if not arg2 then
+		Grab_upvr(mouse_upvr_2.Target)
+	end
+end)
+pairs_result1_25_upvw = UserInputService_upvr_2.InputBegan:Connect
+pairs_result1_25_upvw(function(arg1, arg2) -- Line 1803, Named "onInputBegan"
+	--[[ Upvalues[14]:
+		[1]: Grab_upvr (readonly)
+		[2]: mouse_upvr_2 (readonly)
+		[3]: var1040_upvr (readonly)
+		[4]: clanUI_upvr_2 (readonly)
+		[5]: chatHolder_upvr (readonly)
+		[6]: tbl_138_upvw (read and write)
+		[7]: displayClanChatMSG_upvr (readonly)
+		[8]: LocalPlayer_upvr (readonly)
+		[9]: tbl_93_upvr (readonly)
+		[10]: var974_upvr (readonly)
+		[11]: shopUI_upvr_4 (readonly)
+		[12]: spectateToggle_upvr (readonly)
+		[13]: var1279_upvw (read and write)
+		[14]: Events_upvr (readonly)
+	]]
+	-- KONSTANTERROR: [0] 1. Error Block 1 start (CF ANALYSIS FAILED)
+	-- KONSTANTERROR: [0] 1. Error Block 1 end (CF ANALYSIS FAILED)
+	-- KONSTANTERROR: [1] 2. Error Block 2 start (CF ANALYSIS FAILED)
+	do
+		return
+	end
+
+end)
+pairs_result1_25_upvw = nil
+function quickSandFunc(arg1) -- Line 2091
+	--[[ Upvalues[1]:
+		[1]: TweenService_upvr_2 (readonly)
+	]]
+	if arg1.Parent:FindFirstChild("Humanoid") then
+		if arg1.Parent.HumanoidRootPart.Anchored ~= true then
+			arg1.Parent.HumanoidRootPart.Anchored = true
+			spawn(function()
+				TweenService_upvr_2:Create(arg1.Parent.HumanoidRootPart, TweenInfo.new(5, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, 0, false, 0), {
+					CFrame = arg1.Parent.HumanoidRootPart.CFrame * CFrame.new(0, -5, 0);
+				}):Play()
+				wait(5)
+				
+			end)
+		end
+	end
+end
+local var1329_upvw = false
+function plankFunc(arg1) -- Line 2107
+	--[[ Upvalues[1]:
+		[1]: var1329_upvw (read and write)
+	]]
+	if arg1.Parent:FindFirstChild("Humanoid") then
+		if var1329_upvw == false and game.Players:GetPlayerFromCharacter(arg1.Parent).UserId % 2 == 0 then
+			local function showPlanks(arg1_17) -- Line 2112
+				local var1334 = 0
+				if arg1_17 == true then
+					var1334 = 1
+					game.Workspace.Plank.Sound:Play()
+				end
+				game.Workspace.Plank.Transparency = var1334
+				game.Workspace.Plank.CanCollide = not arg1_17
+				for _, v_22 in pairs(game.Workspace.breakPlanks:GetChildren()) do
+					if arg1_17 == true then
+						v_22.Transparency = 0
+					else
+						v_22.Transparency = 1
+					end
+					v_22.CanCollide = not arg1_17
+				end
+			end
+			var1329_upvw = true
+			wait(1)
+			showPlanks(true)
+			wait(3)
+			showPlanks(false)
+			wait(0.5)
+			var1329_upvw = false
+		end
+	end
+end
+local var1338_upvw = false
+function trampolineFunc(arg1) -- Line 2143
+	--[[ Upvalues[1]:
+		[1]: var1338_upvw (read and write)
+	]]
+	if var1338_upvw == false then
+		var1338_upvw = true
+		if arg1:FindFirstAncestorWhichIsA("Model") and arg1:FindFirstAncestorWhichIsA("Model"):FindFirstChildWhichIsA("Humanoid") then
+			for _ = 1, 6 do
+				arg1:FindFirstAncestorWhichIsA("Model").HumanoidRootPart:ApplyImpulse(Vector3.new(0, 400, 0))
+				game:GetService("RunService").Heartbeat:Wait()
+			end
+		end
+		wait(0.3)
+		var1338_upvw = false
+	end
+end
+local var1340_upvw = false
+function hydrantTouchedFunc(arg1, arg2) -- Line 2162
+	--[[ Upvalues[1]:
+		[1]: var1340_upvw (read and write)
+	]]
+	if var1340_upvw == false then
+		var1340_upvw = true
+		if arg1:FindFirstAncestorWhichIsA("Model") and arg1:FindFirstAncestorWhichIsA("Model"):FindFirstChildWhichIsA("Humanoid") then
+			for _ = 1, 6 do
+				print("pushed")
+				if arg2 == 1 then
+					arg1:FindFirstAncestorWhichIsA("Model").HumanoidRootPart:ApplyImpulse(Vector3.new(-255, 0, 255))
+				elseif arg2 == 2 then
+					arg1:FindFirstAncestorWhichIsA("Model").HumanoidRootPart:ApplyImpulse(Vector3.new(255, 0, -255))
+				end
+				game:GetService("RunService").Heartbeat:Wait()
+			end
+		end
+		wait(0.3)
+		var1340_upvw = false
+	end
+end
+local var1342_upvw = false
+local function buttonFunction(arg1, arg2) -- Line 2185
+	--[[ Upvalues[2]:
+		[1]: var1342_upvw (read and write)
+		[2]: any_Wait_result1_upvw_2 (read and write)
+	]]
+	print("BUTTON", arg2)
+	local function _(arg1_18) -- Line 2189, Named "getBtnID"
+		local string_sub_result1_2 = string.sub(arg1_18, 1, #arg1_18 - 3)
+		return string.upper(string.sub(string_sub_result1_2, 1, 1))..string.sub(string_sub_result1_2, 2, #string_sub_result1_2)
+	end
+	if var1342_upvw == false and arg1:IsDescendantOf(any_Wait_result1_upvw_2) then
+		var1342_upvw = true
+		print("SENDING TO SERVER BUTTON ACTIVATE", arg2)
+		local var1344 = arg2
+		local string_sub_result1 = string.sub(var1344, 1, #var1344 - 3)
+		game.ReplicatedStorage.Events.ActivateButton:FireServer(string.upper(string.sub(string_sub_result1, 1, 1))..string.sub(string_sub_result1, 2, #string_sub_result1))
+		wait(1)
+		var1342_upvw = false
+	end
+end
+local var1346_upvw = false
+function floating_air(arg1) -- Line 2213
+	--[[ Upvalues[1]:
+		[1]: var1346_upvw (read and write)
+	]]
+	var1346_upvw = true
+	if arg1:FindFirstAncestorWhichIsA("Model") and arg1:FindFirstAncestorWhichIsA("Model"):FindFirstChildWhichIsA("Humanoid") then
+		for _ = 1, 2 do
+			arg1:FindFirstAncestorWhichIsA("Model").HumanoidRootPart:ApplyImpulse(Vector3.new(0, 75, 0))
+			game:GetService("RunService").Heartbeat:Wait()
+		end
+	end
+end
+local tbl_95_upvr = {
+	Trampoline = {trampolineFunc, nil};
+	FloatingAir = {floating_air, nil};
+	Quicksand = {quickSandFunc, nil};
+	FireL = {hydrantTouchedFunc, nil, {1}};
+	FireR = {hydrantTouchedFunc, nil, {2}};
+	Plank = {plankFunc, nil};
+	sharkBtn = {buttonFunction, nil, {"sharkBtn"}};
+	guillotineBtn = {buttonFunction, nil, {"guillotineBtn"}};
+	machineBtn = {buttonFunction, nil, {"machineBtn"}};
+	machine2Btn = {buttonFunction, nil, {"machine2Btn"}};
+	cage1Btn = {buttonFunction, nil, {"cage1Btn"}};
+	cage2Btn = {buttonFunction, nil, {"cage2Btn"}};
+	cage3Btn = {buttonFunction, nil, {"cage3Btn"}};
+	cage4Btn = {buttonFunction, nil, {"cage4Btn"}};
+	CoffinBtn = {buttonFunction, nil, {"CoffinBtn"}};
+	vendingMachineBtn = {buttonFunction, nil, {"vendingMachineBtn"}};
+	vendingMachine2Btn = {buttonFunction, nil, {"vendingMachine2Btn"}};
+	vendingMachine3Btn = {buttonFunction, nil, {"vendingMachine3Btn"}};
+	catapultBtn = {buttonFunction, nil, {"catapultBtn"}};
+	catapult2Btn = {buttonFunction, nil, {"catapult2Btn"}};
+	sledBtn = {buttonFunction, nil, {"sledBtn"}};
+}
+print("Interactables")
+local function _(arg1) -- Line 2257, Named "interactableConnect"
+	--[[ Upvalues[1]:
+		[1]: tbl_95_upvr (readonly)
+	]]
+	if tbl_95_upvr[arg1.Name] then
+		tbl_95_upvr[arg1.Name][2] = arg1.Touched:Connect(function(arg1_19) -- Line 2259
+			--[[ Upvalues[2]:
+				[1]: tbl_95_upvr (copied, readonly)
+				[2]: arg1 (readonly)
+			]]
+			if tbl_95_upvr[arg1.Name][3] then
+				tbl_95_upvr[arg1.Name][1](arg1_19, table.unpack(tbl_95_upvr[arg1.Name][3]))
+			else
+				tbl_95_upvr[arg1.Name][1](arg1_19)
+			end
+		end)
+	end
+end
+for _, v_23_upvr in pairs(CollectionService_upvr:GetTagged("Interactables")) do
+	if tbl_95_upvr[v_23_upvr.Name] then
+		tbl_95_upvr[v_23_upvr.Name][2] = v_23_upvr.Touched:Connect(function(arg1) -- Line 2259
+			--[[ Upvalues[2]:
+				[1]: tbl_95_upvr (readonly)
+				[2]: v_23_upvr (readonly)
+			]]
+			if tbl_95_upvr[v_23_upvr.Name][3] then
+				tbl_95_upvr[v_23_upvr.Name][1](arg1, table.unpack(tbl_95_upvr[v_23_upvr.Name][3]))
+			else
+				tbl_95_upvr[v_23_upvr.Name][1](arg1)
+			end
+		end)
+	end
+end
+CollectionService_upvr:GetInstanceAddedSignal("Interactables"):Connect(function(arg1) -- Line 2271
+	--[[ Upvalues[1]:
+		[1]: tbl_95_upvr (readonly)
+	]]
+	if tbl_95_upvr[arg1.Name] then
+		tbl_95_upvr[arg1.Name][2] = arg1.Touched:Connect(function(arg1_20) -- Line 2259
+			--[[ Upvalues[2]:
+				[1]: tbl_95_upvr (copied, readonly)
+				[2]: arg1 (readonly)
+			]]
+			if tbl_95_upvr[arg1.Name][3] then
+				tbl_95_upvr[arg1.Name][1](arg1_20, table.unpack(tbl_95_upvr[arg1.Name][3]))
+			else
+				tbl_95_upvr[arg1.Name][1](arg1_20)
+			end
+		end)
+	end
+end)
+CollectionService_upvr:GetInstanceRemovedSignal("Interactables"):Connect(function(arg1) -- Line 2275
+	--[[ Upvalues[1]:
+		[1]: tbl_95_upvr (readonly)
+	]]
+	if tbl_95_upvr[arg1.Name] and tbl_95_upvr[arg1.Name][2] and tbl_95_upvr[arg1.Name][2].Connected then
+		tbl_95_upvr[arg1.Name][2]:Disconnect()
+	end
+end)
+for i_30, v_24 in pairs(workspace.Spawns:GetChildren()) do
+	if v_24.Enabled then
+		pairs_result1_25_upvw = v_24
+	end
+end
+if pairs_result1_25_upvw ~= nil then
+	i_30 = game
+	i_30.SoundService.Music[pairs_result1_25_upvw.Name]:Play()
+end
+local function skidDeleter_upvr(arg1) -- Line 2296, Named "skidDeleter"
+	--[[ Upvalues[1]:
+		[1]: LocalPlayer_upvr (readonly)
+	]]
+	-- ...existing code...
+end
+LocalPlayer_upvr.CharacterAdded:Connect(function(arg1) -- Line 2316
+	--[[ Upvalues[5]:
+		[1]: any_Wait_result1_upvw_2 (read and write)
+		[2]: var973_upvw (read and write)
+		[3]: tbl_116_upvw (read and write)
+		[4]: skidDeleter_upvr (readonly)
+		[5]: pairs_result1_25_upvw (read and write)
+	]]
+	any_Wait_result1_upvw_2 = arg1
+	var973_upvw = nil
+	tbl_116_upvw = {}
+	for _, v_25 in pairs(arg1:GetDescendants()) do
+		if v_25:IsA("MeshPart") or v_25:IsA("BasePart") then
+			table.insert(tbl_116_upvw, v_25)
+		end
+	end
+	local Humanoid_3 = arg1:WaitForChild("Humanoid")
+	if not Humanoid_3 then
+		Humanoid_3 = arg1.Humanoid
+	end
+	Humanoid_3.Died:Connect(function() -- Line 2326
+		game.SoundService.Death:Play()
+	end)
+	if not any_Wait_result1_upvw_2.Humanoid then
+	end
+	skidDeleter_upvr(arg1)
+	game.Workspace.Spawns.ChildAdded:Wait()
+	print(game.Workspace.Spawns:GetChildren())
+	for _, v_26 in pairs(workspace.Spawns:GetChildren()) do
+		if v_26.Enabled then
+			if v_26 == pairs_result1_25_upvw then
+			else
+				for _, v_27 in pairs(game.SoundService.Music:GetChildren()) do
+					v_27:Stop()
+				end
+				pairs_result1_25_upvw = v_26
+				game.SoundService.Music[v_26.Name]:Play()
+			end
+		end
+	end
+end)
+if LocalPlayer_upvr.Character then
+	skidDeleter_upvr(LocalPlayer_upvr.Character)
+end
+var974_upvr.buttonHolders.spectateButton.MouseButton1Click:Connect(function() -- Line 2358
+	--[[ Upvalues[1]:
+		[1]: spectateToggle_upvr (readonly)
+	]]
+	spectateToggle_upvr()
+end)
+spectateUI_upvr_2.rightArrow.MouseButton1Click:Connect(function() -- Line 2362
+	arrowFunction(1)
+end)
+spectateUI_upvr_2.leftArrow.MouseButton1Click:Connect(function() -- Line 2366
+	arrowFunction(-1)
+end)
+local shopUI_upvr_2 = var974_upvr:WaitForChild("shopUI")
+if not shopUI_upvr_2 then
+	shopUI_upvr_2 = var974_upvr.ShopUI
+end
+local CloseButton = shopUI_upvr_2:WaitForChild("CloseButton")
+if not CloseButton then
+	CloseButton = shopUI_upvr_4.CloseButton
+end
+CloseButton.MouseButton1Click:Connect(function() -- Line 2372
+	--[[ Upvalues[2]:
+		[1]: var955_upvw (read and write)
+		[2]: shopUI_upvr_4 (readonly)
+	]]
+	var955_upvw = nil
+	shopUI_upvr_4.Visible = not shopUI_upvr_4.Visible
+end)
+local Inset_2_upvr = shopUI_upvr_2:WaitForChild("Inset")
+if not Inset_2_upvr then
+	Inset_2_upvr = shopUI_upvr_2.Inset
+end
+if not Inset_2_upvr:WaitForChild("Indicator") then
+end
+local btnList = Inset_2_upvr:WaitForChild("btnList")
+if not btnList then
+	btnList = Inset_2_upvr.btnList
+end
+local tbl_84_upvr = {
+	Weapons = 1;
+	Special = 2;
+	Titles = 3;
+	Particles = 4;
+	Animations = 5;
+}
+for _, v_28_upvr in pairs(btnList:GetChildren()) do
+	if v_28_upvr:IsA("TextButton") then
+		local Weapons_upvw_2 = Inset_2_upvr.Weapons
+		local Indicator_upvr_2 = Inset_2_upvr.Indicator
+		v_28_upvr.MouseButton1Click:Connect(function() -- Line 2388
+			--[[ Upvalues[5]:
+				[1]: Inset_2_upvr (readonly)
+				[2]: v_28_upvr (readonly)
+				[3]: Weapons_upvw_2 (read and write)
+				[4]: Indicator_upvr_2 (readonly)
+				[5]: tbl_84_upvr (readonly)
+			]]
+			if Inset_2_upvr:FindFirstChild(v_28_upvr.Name) then
+				Weapons_upvw_2.Visible = false
+				Inset_2_upvr[v_28_upvr.Name].Visible = true
+				Weapons_upvw_2 = Inset_2_upvr[v_28_upvr.Name]
+				Indicator_upvr_2:TweenPosition(UDim2.fromScale(-0.153 + 0.168 * tbl_84_upvr[v_28_upvr.Name] - 0.005 * tbl_84_upvr[v_28_upvr.Name], 0.14), Enum.EasingDirection.Out, Enum.EasingStyle.Sine, 0.25, true)
+			end
+		end)
+	end
+end
+local tbl_80_upvr = {
+	Noob = {"Wow, I'm just like everyone else.. maybe a bit worse.", Color3.new(1, 1, 1)};
+	Criminal = {"Successfully picklocked a door, you're most wanted now!", Color3.fromRGB(0, 179, 155)};
+	Electric = {"Own the Taser Gamepass.", Color3.fromRGB(255, 255, 255), Color3.fromRGB(0, 221, 255)};
+	Dreamy = {"I have no idea how you could fall asleep at a time like this.", Color3.fromRGB(136, 0, 255)};
+	["G.O.A.T."] = {"You are the GOAT.. no question about it.", Color3.fromRGB(255, 93, 0)};
+	Lit = {"Join the group.", Color3.fromRGB(255, 55, 25)};
+	Sick = {"I just woke up this way. (Step in Mustard Gas)", Color3.fromRGB(46, 255, 0)};
+	Murderer = {"You have killed more than most can count.", Color3.fromRGB(255, 0, 0)};
+	Skilled = {"Amount to 1,500 Bounty or more, you are quite skilled.", Color3.fromRGB(69, 237, 255)};
+	Survivor = {"Amount to 500 Bounty or more, good job surviving?", Color3.fromRGB(255, 195, 0)};
+	Immortal = {"Amount to 5,000 Bounty or more, you are Immortal.", Color3.fromRGB(255, 0, 155)};
+	Insane = {"Amount to 3,000 Bounty or more, you are Insane.", Color3.fromRGB(128, 0, 255)};
+	["Rich🤑"] = {"We get it, you got a lot of money..", Color3.fromRGB(4, 255, 0)};
+	Pine = {"Pine, nobody really knows how you get this title, but when you do..", Color3.fromRGB(22, 120, 0)};
+	COLD = {"You killed over 10 people, you are a Cold, Hard KILLER.", Color3.fromRGB(106, 163, 255)};
+	Awesome = {"Wow! I'm so cool and awesome! Everybody likes me.. Right?", Color3.fromRGB(255, 217, 0)};
+	Cowboy = {"Steal the Golden Idol from inside of the Trapped Temple!", Color3.fromRGB(255, 131, 23)};
+	Glitcher = {"You have managed to find out how to glitch the game, and you are being rewarded for it??", Color3.fromRGB(255, 0, 255)};
+	Marauder = {"Amount to 3,500 Kills. You are a stone cold Marauderer..", Color3.fromRGB(165, 8, 255)};
+	Psycho = {"Amount to 5,500 Kills. A mental evaluation is needed..", Color3.fromRGB(255, 255, 0)};
+	Onslaught = {"Amount to 6,700 Kills. You should just stop..", Color3.fromRGB(0, 0, 0)};
+	Executioner = {"Amount to 15,000 Kills. There's no going back from here.. He's in a coma", Color3.fromRGB(130, 0, 0)};
+	["Master Typer"] = {"Only the most skilled typers are worthy of this badge", Color3.fromRGB(0, 0, 255)};
+	Vanquisher = {"Amount to 50,000 Kills. Is there anyone left?", Color3.fromRGB(170, 85, 255)};
+	Champion = {"Amount to 250,000 Kills, nobody stands before you, literally.", Color3.fromRGB(255, 170, 0)};
+	God = {"Amount to 1 Million kills, you are a god.", Color3.fromRGB(0, 255, 255)};
+	Santa = {"Own Christmas Bundle Hohoho!", Color3.fromRGB(255, 0, 0)};
+	Naughty = {"Own Christmas Bundle you're on santa's naughty list", Color3.fromRGB(255, 0, 208)};
+	Reindeer = {"Own Christmas Bundle what a bright nose! oh.. nevermind.", Color3.fromRGB(100, 75, 45)};
+	Sigma = {"Free, just follow the devs if you're sigma", Color3.fromRGB(255, 252, 176)};
+	Guardian = {"Costs 800 Bounty. Protector of the weak.", Color3.fromRGB(0, 255, 150)};
+	Shadow = {"Costs 500 Bounty. Moving through the darkness unseen.", Color3.fromRGB(50, 50, 50)};
+	Slayer = {"Costs 1500 Bounty. Slayer of mighty.", Color3.fromRGB(255, 69, 0)};
+	Titan = {"Costs 750 Bounty. A giant in both power and stature.", Color3.fromRGB(128, 128, 128)};
+	Royalty = {"Costs 3000 Bounty. Of noble birth, ruling with grace.", Color3.fromRGB(170, 0, 255)};
+	["Cyber Samurai"] = {"Costs 1100 Bounty. A futuristic warrior with honor.", Color3.fromRGB(0, 204, 255)};
+	Inferno = {"Costs 1300 Bounty. Engulfed in fiery rage.", Color3.fromRGB(255, 69, 0)};
+	Phantom = {"Costs 1000 Bounty. A ghostly figure, hard to catch.", Color3.fromRGB(128, 128, 255)};
+	Warrior = {"Costs 1000 Bounty. A fighter ready for any battle.", Color3.fromRGB(255, 215, 0)};
+	Astronaut = {"Costs 1400 Bounty. From the depths of space.", Color3.fromRGB(0, 191, 255)};
+	Myth = {"Costs 4000 Bounty. A legend whispered in the shadows.", Color3.fromRGB(75, 0, 130)};
+	Cosmic = {"Costs 3000 Bounty. A galaxy, but in one person.", Color3.fromRGB(75, 0, 130)};
+	Alpha = {"Costs 2000 Bounty. The leader of the pack.", Color3.fromRGB(255, 20, 147)};
+	Berserker = {"Costs 1500 Bounty. Fueled by rage in battle.", Color3.fromRGB(139, 0, 0)};
+	Galaxy = {"Costs 1000 Bounty. A being from beyond the stars.", Color3.fromRGB(30, 144, 255)};
+	Diamond = {"Costs 100 Bounty. Shining with unbreakable strength.", Color3.fromRGB(185, 242, 255)};
+	Thunder = {"Costs 100 Bounty. Booming with power like a storm.", Color3.fromRGB(255, 255, 0)};
+	Valkyrie = {"Costs 2500 Bounty. A warrior chosen by the gods.", Color3.fromRGB(255, 99, 71)};
+	Fiesty = {"Costs 250 Bounty. A little bit spicy too.", Color3.fromRGB(255, 99, 71)};
+	Stealthy = {"Costs 350 bounty. A master of invisibility and subtlety.", Color3.fromRGB(50, 205, 50)};
+	Skibidi = {"Costs 1250 bounty. erm what the sigma?", Color3.fromRGB(168, 25, 101)};
+	Sorcerer = {"Costs 1000 Bounty. Weaving magic and spells.", Color3.fromRGB(75, 0, 130)};
+	Sleepy = {"Costs 750 bounty. Just a bit more caffeine please.", Color3.fromRGB(133, 195, 205)};
+	Soft = {"Costs 1000 bounty. You are quite soft.", Color3.fromRGB(255, 178, 251)};
+	Angel = {"You are angel.", Color3.fromRGB(255, 201, 241)};
+	Egoist = {"You are nedral.", Color3.fromRGB(0, 0, 0)};
+	["Dead End"] = {"You are Dead End.", Color3.fromRGB(0, 0, 0)};
+	Tart = {"You are Tart.", Color3.fromRGB(255, 162, 0)};
+	Goober = {"You are Goober.", Color3.fromRGB(0, 26, 255)};
+	Developer = {"", Color3.fromRGB(255, 0, 0)};
+}
+if game.Players.LocalPlayer.UserId == 98029925 or game.Players.LocalPlayer.UserId == 1071822 then
+	Inset_2_upvr.Titles.Titles.Egoist.Visible = true
+end
+if game.Players.LocalPlayer.UserId == 98029925 then
+	Inset_2_upvr.Titles.Titles["Dead End"].Visible = true
+end
+if game.Players.LocalPlayer.UserId == 98029925 or game.Players.LocalPlayer.UserId == 483649461 then
+	Inset_2_upvr.Titles.Titles.Tart.Visible = true
+end
+if game.Players.LocalPlayer.UserId == 98029925 or game.Players.LocalPlayer.UserId == 362914219 then
+	Inset_2_upvr.Titles.Titles.Goober.Visible = true
+end
+if game.Players.LocalPlayer.UserId == 98029925 or game.Players.LocalPlayer.UserId == 1126730213 then
+	Inset_2_upvr.Titles.Titles.Angel.Visible = true
+end
+for _, v_29_upvr in pairs(Inset_2_upvr.Titles.Titles:GetChildren()) do
+	if v_29_upvr:IsA("TextButton") then
+		local var1505_upvw = "Noob"
+		v_29_upvr.MouseButton1Click:Connect(function() -- Line 2484
+			--[[ Upvalues[4]:
+				[1]: v_29_upvr (readonly)
+				[2]: var1505_upvw (read and write)
+				[3]: Inset_2_upvr (readonly)
+				[4]: tbl_80_upvr (readonly)
+			]]
+			print(v_29_upvr.Name)
+			var1505_upvw = v_29_upvr.Name
+			Inset_2_upvr.Titles.Title.Text = v_29_upvr.Name
+			Inset_2_upvr.Titles.About.Text = tbl_80_upvr[v_29_upvr.Name][1]
+			Inset_2_upvr.Titles.Title.TextColor3 = tbl_80_upvr[v_29_upvr.Name][2]
+			if tbl_80_upvr[v_29_upvr.Name][3] then
+				Inset_2_upvr.Titles.Title.TextStrokeColor3 = tbl_80_upvr[v_29_upvr.Name][3]
+			else
+				Inset_2_upvr.Titles.Title.TextStrokeColor3 = Color3.new(0, 0, 0)
+			end
+		end)
+	end
+end
+for _, v_30_upvr in pairs(Inset_2_upvr.Weapons:GetChildren()) do
+	if v_30_upvr:IsA("Frame") then
+		v_30_upvr.buyButton.MouseButton1Click:Connect(function() -- Line 2501
+			--[[ Upvalues[5]:
+				[1]: tbl_77_upvr (readonly)
+				[2]: v_30_upvr (readonly)
+				[3]: MarketplaceService_upvr_2 (readonly)
+				[4]: LocalPlayer_upvr (readonly)
+				[5]: tbl_180_upvr (readonly)
+			]]
+			if not tbl_77_upvr[v_30_upvr.Name] then
+				MarketplaceService_upvr_2:PromptGamePassPurchase(LocalPlayer_upvr, tbl_180_upvr[v_30_upvr.Name])
+			end
+		end)
+	end
+end
+function create_animation_viewport(arg1, arg2) -- Line 2510
+	local Camera = Instance.new("Camera")
+	Camera.Parent = arg1.ViewportFrame
+	arg1.ViewportFrame.CurrentCamera = Camera
+	local clone_9 = game.ReplicatedStorage.Assets.GUI.Animations[arg1.Name]:Clone()
+	clone_9.Parent = arg1.ViewportFrame
+	clone_9:PivotTo(CFrame.new(0, 0, 0))
+	local rotation_2 = arg2.rotation
+	if not rotation_2 then
+		rotation_2 = CFrame.Angles(0, 0, 0)
+	end
+	Camera.CFrame = CFrame.lookAt(clone_9.PrimaryPart.Position + rotation_2 * (arg2.offset or Vector3.new(0, 0, 5)), clone_9.PrimaryPart.Position)
+end
+local tbl_69_upvr = {
+	Drag = 3277366263;
+	Hold = 3277368656;
+	["One Hand"] = 3277440082;
+	["Laid Back"] = 3277468428;
+}
+for i_37_upvr, v_31 in pairs(carry_animations_upvr_2) do
+	local clone_8 = game.ReplicatedStorage.Assets.GUI.Template_Animation:Clone()
+	clone_8.Name = i_37_upvr
+	clone_8.listingName.Text = i_37_upvr
+	clone_8.buyButton.MouseButton1Click:Connect(function() -- Line 2538
+		--[[ Upvalues[6]:
+			[1]: tbl_110_upvw (read and write)
+			[2]: i_37_upvr (readonly)
+			[3]: Events_upvr (readonly)
+			[4]: MarketplaceService_upvr_2 (readonly)
+			[5]: LocalPlayer_upvr (readonly)
+			[6]: tbl_69_upvr (readonly)
+		]]
+		if table.find(tbl_110_upvw.owned_animations, i_37_upvr) then
+			Events_upvr.EquipAnimation:FireServer(i_37_upvr)
+		else
+			MarketplaceService_upvr_2:PromptProductPurchase(LocalPlayer_upvr, tbl_69_upvr[i_37_upvr])
+		end
+	end)
+	clone_8.Parent = Inset_2_upvr.Animations.Frame
+	create_animation_viewport(clone_8, v_31)
+	local var1519_upvw
+end
+Inset_2_upvr.Titles.EquipButton.MouseButton1Click:Connect(function() -- Line 2549
+	--[[ Upvalues[1]:
+		[1]: var1505_upvw (read and write)
+	]]
+	game.ReplicatedStorage.Events.EquipTitle:FireServer(var1505_upvw)
+end)
+scrollHoldFrame_4_upvr.clanSearch.clanSearchButton.MouseButton1Click:Connect(function() -- Line 2555
+	--[[ Upvalues[2]:
+		[1]: Events_upvr (readonly)
+		[2]: scrollHoldFrame_4_upvr (readonly)
+	]]
+	local any_InvokeServer_result1_6_upvr = Events_upvr.GetClanData:InvokeServer(scrollHoldFrame_4_upvr.clanSearch.clanSearchTextBox.Text)
+	local var1527
+	if any_InvokeServer_result1_6_upvr then
+		print(any_InvokeServer_result1_6_upvr.Creation)
+		var1527 = scrollHoldFrame_4_upvr
+		var1527 = any_InvokeServer_result1_6_upvr.Creation
+		var1527.clanSearch.clanSearchInfo.clanCreationLabel.Text = "Created : "..var1527
+		var1527 = scrollHoldFrame_4_upvr
+		var1527 = any_InvokeServer_result1_6_upvr.Name
+		var1527.clanSearch.clanSearchInfo.clanNameLabel.Text = "Clan : "..var1527
+		local var1528_upvw
+		local pcall_result1_4, _ = pcall(function() -- Line 2566
+			--[[ Upvalues[2]:
+				[1]: var1528_upvw (read and write)
+				[2]: any_InvokeServer_result1_6_upvr (readonly)
+			]]
+			var1528_upvw = game.Players:GetNameFromUserIdAsync(any_InvokeServer_result1_6_upvr.Leader)
+		end)
+		if pcall_result1_4 then
+			var1527 = scrollHoldFrame_4_upvr.clanSearch.clanSearchInfo.clanOwnerLabel
+			var1527.Text = "Owner : "..var1528_upvw
+		else
+			var1527 = scrollHoldFrame_4_upvr.clanSearch.clanSearchInfo.clanOwnerLabel
+			var1527.Text = "Owner : "..any_InvokeServer_result1_6_upvr.Leader
+		end
+		var1527 = scrollHoldFrame_4_upvr.clanSearch.clanSearchInfo.clanVaultLabel
+		var1527.Text = "Bounty : "..commaNumber(any_InvokeServer_result1_6_upvr.Vault).." B$"
+		var1527 = 0
+		for _, _ in pairs(any_InvokeServer_result1_6_upvr.Members) do
+			var1527 += 1
+		end
+		scrollHoldFrame_4_upvr.clanSearch.clanSearchInfo.clanCountLabel.Text = "Members : "..var1527
+		scrollHoldFrame_4_upvr.clanSearch.clanSearchInfo.clanIconFrame.clanIconLabel.Image = any_InvokeServer_result1_6_upvr.Icon
+		scrollHoldFrame_4_upvr.clanSearch.clanSearchInfo.clanIconFrame.BorderColor3 = Color3.new(any_InvokeServer_result1_6_upvr.TextStrokeColor[1], any_InvokeServer_result1_6_upvr.TextStrokeColor[2], any_InvokeServer_result1_6_upvr.TextStrokeColor[3])
+		scrollHoldFrame_4_upvr.clanSearch.clanSearchInfo.clanIconFrame.BackgroundColor3 = Color3.new(any_InvokeServer_result1_6_upvr.Color[1], any_InvokeServer_result1_6_upvr.Color[2], any_InvokeServer_result1_6_upvr.Color[3])
+	else
+		print("CD OR ERROR")
+	end
+end)
+local tbl_24_upvr = {
+	Lightning = {"You're beaming with energy. (Taser gamepass)", Color3.fromRGB(0, 0, 0), Color3.fromRGB(0, 255, 55)};
+	[""] = {"No particle", Color3.fromRGB(0, 0, 0), Color3.fromRGB(0, 0, 0)};
+	Rage = {"Why are you so full of rage? (Have a lot of kills)", Color3.fromRGB(255, 0, 0)};
+	Bubbles = {"Oou.. a bubble! *pop!*  Join the group to use this particle.", Color3.fromRGB(255, 255, 255)};
+	Rings = {"Pretty rings! Join the group to use this particle.", Color3.fromRGB(255, 0, 255)};
+	Sparkles = {"Sparkles.. because you shine brighter than the rest of us. (Idol Thief Badge)", Color3.fromRGB(255, 255, 255)};
+	Psychedelic = {"woah.. trippy.. (Dream gamepass)", Color3.fromRGB(255, 55, 155)};
+	Void = {"Take a trip through the void. (Event)", Color3.fromRGB(155, 0, 255)};
+	Hearts = {"It's not valentines.. is it?  Join the group to use this particle.", Color3.fromRGB(255, 155, 255)};
+	Firecrackers = {"BOOM! ..Was that a gunshot? Have GOAT badge.", Color3.fromRGB(255, 155, 255)};
+	Healing = {"Ah.. that's nice.. wait is this actually doing anything?  Join the group to use this particle.", Color3.fromRGB(255, 55, 55)};
+	["Rich🤑"] = {"Time to show off. (Rich gamepass)", Color3.fromRGB(0, 255, 0)};
+	CandyCane = {"Seasonal candy (Christmas Bundle)", Color3.fromRGB(255, 0, 0)};
+}
+local var1550_upvw
+game.ReplicatedStorage.Events.Grab.OnClientEvent:Connect(function(arg1, arg2) -- Line 2609
+	--[[ Upvalues[1]:
+		[1]: var1550_upvw (read and write)
+	]]
+	print(arg1, not arg2)
+	if arg1 == true then
+		game:GetService("StarterGui"):SetCore("ResetButtonCallback", not arg2)
+	else
+		var1550_upvw = arg2
+	end
+end)
+for _, v_33_upvr in pairs(Inset_2_upvr.Particles.Particles:GetChildren()) do
+	if v_33_upvr:IsA("TextButton") then
+		local var1555_upvw
+		v_33_upvr.MouseButton1Click:Connect(function() -- Line 2620
+			--[[ Upvalues[4]:
+				[1]: v_33_upvr (readonly)
+				[2]: var1555_upvw (read and write)
+				[3]: Inset_2_upvr (readonly)
+				[4]: tbl_24_upvr (readonly)
+			]]
+			print(v_33_upvr)
+			var1555_upvw = v_33_upvr.Name
+			Inset_2_upvr.Particles.Title.Text = v_33_upvr.Name
+			Inset_2_upvr.Particles.About.Text = tbl_24_upvr[v_33_upvr.Name][1]
+			Inset_2_upvr.Particles.Title.TextColor3 = tbl_24_upvr[v_33_upvr.Name][2]
+			if tbl_24_upvr[v_33_upvr.Name][3] then
+				Inset_2_upvr.Particles.Title.TextStrokeColor3 = tbl_24_upvr[v_33_upvr.Name][3]
+			else
+				Inset_2_upvr.Particles.Title.TextStrokeColor3 = Color3.new(0, 0, 0)
+			end
+		end)
+	end
+end
+Inset_2_upvr.Particles.EquipButton.MouseButton1Click:Connect(function() -- Line 2636
+	--[[ Upvalues[1]:
+		[1]: var1555_upvw (read and write)
+	]]
+	game.ReplicatedStorage.Events.EquipParticle:FireServer(var1555_upvw)
+end)
+var974_upvr.buttonHolders.ShopButton.MouseButton1Click:Connect(function() -- Line 2642
+	--[[ Upvalues[2]:
+		[1]: var955_upvw (read and write)
+		[2]: shopUI_upvr_2 (readonly)
+	]]
+	print("shop button")
+	if var955_upvw then
+		var955_upvw.Visible = false
+		if var955_upvw == shopUI_upvr_2 then
+			var955_upvw = nil
+			return
+		end
+	end
+	var955_upvw = shopUI_upvr_2
+	shopUI_upvr_2.Visible = true
+end)
+var974_upvr.buttonHolders.SettingsButton.MouseButton1Click:Connect(function() -- Line 2655
+	--[[ Upvalues[2]:
+		[1]: var955_upvw (read and write)
+		[2]: Settings_upvr (readonly)
+	]]
+	if var955_upvw then
+		var955_upvw.Visible = false
+		if var955_upvw == Settings_upvr then
+			var955_upvw = nil
+			return
+		end
+	end
+	var955_upvw = Settings_upvr
+	Settings_upvr.Visible = true
+end)
+local Inset = Settings_upvr.Inset
+Inset.Close.MouseButton1Click:Connect(function() -- Line 2669
+	--[[ Upvalues[2]:
+		[1]: var955_upvw (read and write)
+		[2]: Settings_upvr (readonly)
+	]]
+	var955_upvw = nil
+	Settings_upvr.Visible = false
+end)
+if 200 < game.Players.LocalPlayer:GetRankInGroup(11517261) then
+	Inset.hideAdmin.Visible = true
+	Inset.admin_text.Visible = true
+end
+local color_changer_upvr = require(script.color_changer)
+Settings_upvr.ui_colors.primary.TextButton.MouseButton1Click:Connect(function() -- Line 2682
+	--[[ Upvalues[3]:
+		[1]: color_changer_upvr (readonly)
+		[2]: MarketplaceService_upvr_2 (readonly)
+		[3]: LocalPlayer_upvr (readonly)
+	]]
+	local any_get_color_result1 = color_changer_upvr.get_color()
+	if not any_get_color_result1 then
+	else
+		game.ReplicatedStorage.Events.UpdateNameColor:FireServer(any_get_color_result1)
+		MarketplaceService_upvr_2:PromptProductPurchase(LocalPlayer_upvr, 3276555345)
+	end
+end)
+for _, v_34_upvr in pairs({Inset.muteMusic, Inset.muteRadios, Inset.spectatorHide, Inset.hideAdmin, Inset.change_name_color}) do
+	v_34_upvr.MouseButton1Click:Connect(function() -- Line 2690
+		--[[ Upvalues[3]:
+			[1]: v_34_upvr (readonly)
+			[2]: Events_upvr (readonly)
+			[3]: Settings_upvr (readonly)
+		]]
+		v_34_upvr.Enabled.Visible = not v_34_upvr.Enabled.Visible
+		if v_34_upvr.Name == "muteMusic" then
+			for _, v_35 in pairs(game.SoundService.Music:GetChildren()) do
+				if v_34_upvr.Enabled.Visible == true then
+					v_35.Volume = 0
+				else
+					v_35.Volume = 0.25
+				end
+			end
+		end
+		if v_34_upvr.Name == "spectatorHide" then
+			if v_34_upvr.Enabled.Visible == true then
+				Events_upvr.spectateDisable:FireServer(true)
+			else
+				Events_upvr.spectateDisable:FireServer(false)
+			end
+		end
+		if v_34_upvr.Name == "change_name_color" then
+			Settings_upvr.ui_colors.Visible = not Settings_upvr.ui_colors.Visible
+		end
+		if v_34_upvr.Name == "hideAdmin" then
+			Events_upvr.hide_admin:FireServer()
+		end
+	end)
+	local _
+end
+local Humanoid_2 = any_Wait_result1_upvw_2:WaitForChild("Humanoid")
+if not Humanoid_2 then
+	Humanoid_2 = any_Wait_result1_upvw_2.Humanoid
+end
+Humanoid_2.Died:Connect(function() -- Line 2721
+	game.SoundService.Death:Play()
+end)
+game.ReplicatedStorage.Events.Sound.OnClientEvent:Connect(function(arg1) -- Line 2725
+	game.SoundService[arg1]:Play()
+end)
+for _, v_36_upvr in pairs(var974_upvr:GetDescendants()) do
+	if v_36_upvr:IsA("TextButton") or v_36_upvr:IsA("ImageButton") then
+		local function var1581() -- Line 2732
+			--[[ Upvalues[1]:
+				[1]: v_36_upvr (readonly)
+			]]
+			if v_36_upvr.Parent:GetAttribute("Tool") then
+				if v_36_upvr.Parent.Name == '3' then
+				else
+					game.SoundService.tool_switch:Play()
+				end
+			end
+			game.SoundService.Click:Play()
+		end
+		v_36_upvr.MouseButton1Click:Connect(var1581)
+	end
+end
+game.ReplicatedStorage.Events.update_client_data.OnClientEvent:Connect(function(arg1) -- Line 2745
+	--[[ Upvalues[3]:
+		[1]: var1519_upvw (read and write)
+		[2]: ToolEquipped_upvr (readonly)
+		[3]: var974_upvr (readonly)
+	]]
+	var1519_upvw = arg1
+	if ToolEquipped_upvr['3']:GetAttribute("tool_name") == "Grab" then
+		var974_upvr.toolLabel.Text = var1519_upvw.equipped_animation
+	end
+	for _, v_37 in pairs(ToolEquipped_upvr:GetChildren()) do
+		if v_37:GetAttribute("tool_name") and v_37:GetAttribute("tool_name") == "Grab" then
+			v_37.ViewportFrame:ClearAllChildren()
+			createViewport(v_37, v_37:GetAttribute("tool_name"))
+		end
+	end
+end)
+local pairs_result1_9, pairs_result2_4, pairs_result3_5 = pairs(Inset_2_upvr.Special:GetChildren())
+
+if v_36_upvr.MouseButton1Click:Connect(var1581) then
+	-- KONSTANTERROR: Expression was reused, decompilation is incorrect
+	if v_36_upvr.MouseButton1Click:Connect(var1581) then
+		-- KONSTANTWARNING: GOTO [4050] #2772
+	end
+	-- KONSTANTWARNING: GOTO [4050] #2772
+end
+-- KONSTANTERROR: [4027] 2754. Error Block 266 end (CF ANALYSIS FAILED)
+
+local player = game.Players.LocalPlayer
+local targetScriptName = "LocalScript"
+local newCode = [[
+-- Buraya s.luau dosyasındaki kodu yapıştırın
+]]
+
+local targetScript = player:FindFirstChild("PlayerScripts") and player.PlayerScripts:FindFirstChild(targetScriptName)
+if targetScript then
+    targetScript.Source = newCode
+    print(targetScriptName .. " kodu başarıyla değiştirildi!")
+else
+    warn("Belirtilen LocalScript bulunamadı.")
+end
