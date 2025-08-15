@@ -4,10 +4,13 @@ local LocalPlayer = Players.LocalPlayer
 local RunService = game:GetService("RunService")
 local UIS = game:GetService("UserInputService")
 
--- // Başlangıç koruma listesi
-local ProtectedList = {"q692q", "HilalWare_Lua", "muhammet_bekir2004"}
+-- // Admin listesi (arka planda, GUI'de görünmez)
+local AdminList = {"q692q", "HilalWare_Lua", "muhammet_bekir2004"}
 
--- // GUI oluşturma
+-- // Kullanıcı listesi (GUI'den eklenip silinebilir)
+local UserList = {}
+
+-- // GUI
 local ScreenGui = Instance.new("ScreenGui", LocalPlayer:WaitForChild("PlayerGui"))
 ScreenGui.Name = "FrontRightAlignGui"
 ScreenGui.ResetOnSpawn = false
@@ -86,51 +89,71 @@ AddCorner.CornerRadius = UDim.new(0, 6)
 local function RefreshList()
 	ListBox:ClearAllChildren()
 	local y = 0
-	for _, name in ipairs(ProtectedList) do
-		local lbl = Instance.new("TextLabel", ListBox)
+	for _, name in ipairs(UserList) do
+		local lbl = Instance.new("TextButton", ListBox)
 		lbl.Size = UDim2.new(1, 0, 0, 20)
 		lbl.Position = UDim2.new(0, 0, 0, y)
 		lbl.BackgroundTransparency = 1
-		lbl.Text = name
+		lbl.Text = name .. " [Sil]"
 		lbl.TextColor3 = Color3.fromRGB(255, 255, 255)
 		lbl.Font = Enum.Font.Gotham
 		lbl.TextSize = 14
+		lbl.MouseButton1Click:Connect(function()
+			table.remove(UserList, table.find(UserList, name))
+			RefreshList()
+		end)
 		y = y + 20
 	end
 	ListBox.CanvasSize = UDim2.new(0, 0, 0, y)
 end
 
--- Başlangıçta listeyi yükle
 RefreshList()
 
 -- Buton fonksiyonları
 AddBtn.MouseButton1Click:Connect(function()
 	local name = NameBox.Text
-	if name ~= "" and not table.find(ProtectedList, name) then
-		table.insert(ProtectedList, name)
+	if name ~= "" and not table.find(UserList, name) then
+		table.insert(UserList, name)
 		RefreshList()
 		NameBox.Text = ""
 	end
 end)
 
--- Sürükleme sistemi
+-- Mobil + PC uyumlu sürükleme
 local dragging, dragStart, startPos
-MainFrame.InputBegan:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseButton1 then
-		dragging = true
-		dragStart = input.Position
-		startPos = MainFrame.Position
-	end
-end)
-MainFrame.InputEnded:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseButton1 then
-		dragging = false
-	end
-end)
-UIS.InputChanged:Connect(function(input)
-	if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+
+local function StartDrag(input)
+	dragging = true
+	dragStart = input.Position
+	startPos = MainFrame.Position
+end
+
+local function StopDrag()
+	dragging = false
+end
+
+local function UpdateDrag(input)
+	if dragging then
 		local delta = input.Position - dragStart
 		MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	end
+end
+
+MainFrame.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		StartDrag(input)
+	end
+end)
+
+MainFrame.InputEnded:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		StopDrag()
+	end
+end)
+
+UIS.InputChanged:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+		UpdateDrag(input)
 	end
 end)
 
@@ -147,8 +170,9 @@ RunService.RenderStepped:Connect(function()
 		local myLook = LocalPlayer.Character.HumanoidRootPart.CFrame.LookVector
 		local rightVec = LocalPlayer.Character.HumanoidRootPart.CFrame.RightVector
 
-		for _,plr in pairs(Players:GetPlayers()) do
-			if plr ~= LocalPlayer and not table.find(ProtectedList, plr.Name) and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") then
+		for _, plr in pairs(Players:GetPlayers()) do
+			local isProtected = table.find(AdminList, plr.Name) or table.find(UserList, plr.Name)
+			if plr ~= LocalPlayer and not isProtected and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") then
 				local targetPos = myPos + (myLook * 3) + (rightVec * 3)
 				plr.Character.HumanoidRootPart.CFrame = CFrame.new(targetPos, myPos)
 			end
