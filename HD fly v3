@@ -738,7 +738,12 @@ local function bindFlightLoop()
 		local tiltFactor = (flySpeed > 0) and (moveDirection.Magnitude / flySpeed) or 0
 		local camCF = workspace.CurrentCamera and workspace.CurrentCamera.CFrame or CFrame.new()
 		local tiltCFrame = CFrame.Angles(math.rad(tiltAngle) * tiltFactor * tiltDirection, 0, 0)
-		local targetCFrame = CFrame.new(hrp.Position, hrp.Position + camLookVector) * tiltCFrame
+		        local targetLookVector = camLookVector
+        if moveDirection.Magnitude > 0.1 then -- Sadece hareket varsa yönü güncelle
+            targetLookVector = moveDirection.Unit
+        end
+
+		local targetCFrame = CFrame.new(hrp.Position, hrp.Position + targetLookVector) * tiltCFrame
 		bodyGyro.CFrame = bodyGyro.CFrame:Lerp(targetCFrame, 0.2)
 	end)
 end
