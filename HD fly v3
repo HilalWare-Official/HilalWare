@@ -1,6 +1,4 @@
--- Birleştirilmiş Roblox Uçma ve GUI Scripti
--- Bu scripti Roblox Studio'da StarterPlayer > StarterPlayerScripts altına veya
--- GUI'nin kendisiyle aynı hiyerarşide bir LocalScript olarak yerleştirin.
+--v2
 
 local CoreGui = game:GetService("CoreGui")
 local Players = game:GetService("Players")
