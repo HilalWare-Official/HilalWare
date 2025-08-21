@@ -1,4 +1,6 @@
---v2
+-- Birleştirilmiş Roblox Uçma ve GUI Scripti
+-- Bu scripti Roblox Studio'da StarterPlayer > StarterPlayerScripts altına veya
+-- GUI'nin kendisiyle aynı hiyerarşide bir LocalScript olarak yerleştirin.
 
 local CoreGui = game:GetService("CoreGui")
 local Players = game:GetService("Players")
@@ -735,18 +737,9 @@ local function bindFlightLoop()
 		local tiltAngle = 40
 		local tiltFactor = (flySpeed > 0) and (moveDirection.Magnitude / flySpeed) or 0
 		local camCF = workspace.CurrentCamera and workspace.CurrentCamera.CFrame or CFrame.new()
-		local tiltCFrame = CFrame.Angles(math.rad(tiltAngle) * tiltFactor * tiltDirection, 0, 0)
-		        local targetLookVector = camLookVector
-        if moveDirection.Magnitude > 0.1 then -- Sadece hareket varsa yönü güncelle
-            targetLookVector = moveDirection.Unit
-        end
+		local targetCFrame = CFrame.new(hrp.Position, hrp.Position + camLookVector) * tiltCFrame
 
-		local targetCFrame = CFrame.new(hrp.Position, hrp.Position + targetLookVector) * tiltCFrame
-		bodyGyro.CFrame = bodyGyro.CFrame:Lerp(targetCFrame, 0.2)
-	end)
-end
-
-local function startFlying()
+		
 	if flying then return end
 	local char = player.Character or player.CharacterAdded:Wait()
 	local hrp = char:WaitForChild("HumanoidRootPart")
@@ -889,3 +882,5 @@ end)
 -- Bitti
 
 
+
+		local targetCFrame = CFrame.new(hrp.Position, hrp.Position + camLookVector) * tiltCFrame
