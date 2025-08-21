@@ -1,0 +1,888 @@
+-- Birleştirilmiş Roblox Uçma ve GUI Scripti
+-- Bu scripti Roblox Studio'da StarterPlayer > StarterPlayerScripts altına veya
+-- GUI'nin kendisiyle aynı hiyerarşide bir LocalScript olarak yerleştirin.
+
+local CoreGui = game:GetService("CoreGui")
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+-- Uçuş durum değişkenleri
+local flySpeed = 50 -- Varsayılan hız, GUI'den güncellenecek
+local flying = false
+local bodyVelocity: BodyVelocity? = nil
+local bodyGyro: BodyGyro? = nil
+local flightConnection: RBXScriptConnection? = nil
+local respawnConn: RBXScriptConnection? = nil
+
+-- Klavye durumları (R/F dikey, E toggle)
+local keyR = false
+local keyF = false
+
+-- GUI Oluşturma (Kullanıcının sağladığı GUI kodundan)
+local G2L = {};
+
+G2L["1"] = Instance.new("ScreenGui");
+G2L["1"]["DisplayOrder"] = 100;
+G2L["1"]["AutoLocalize"] = false;
+G2L["1"]["Name"] = [[Fly]];
+G2L["1"]["ResetOnSpawn"] = false;
+
+G2L["2"] = Instance.new("Frame");
+G2L["2"]["ZIndex"] = 0;
+G2L["2"]["BorderSizePixel"] = 0;
+G2L["2"]["BackgroundColor3"] = Color3.fromRGB(21, 21, 21);
+G2L["2"]["ClipsDescendants"] = true;
+G2L["2"]["Size"] = UDim2.new(0, 250, 0, 150);
+G2L["2"]["Position"] = UDim2.new(1, -255, 1, -155);
+G2L["2"]["BorderColor3"] = Color3.fromRGB(66, 66, 66);
+G2L["2"]["Name"] = [[CommandMenufly]];
+G2L["2"]["BackgroundTransparency"] = 1;
+
+G2L["3"] = Instance.new("Frame");
+G2L["3"]["ZIndex"] = -989;
+G2L["3"]["BorderSizePixel"] = 0;
+G2L["3"]["BackgroundColor3"] = Color3.fromRGB(0, 101, 151);
+G2L["3"]["Size"] = UDim2.new(1, 0, 0.19, 0);
+G2L["3"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["3"]["Name"] = [[DragBar]];
+
+G2L["4"] = Instance.new("TextLabel");
+G2L["4"]["TextWrapped"] = true;
+G2L["4"]["ZIndex"] = -988;
+G2L["4"]["BorderSizePixel"] = 0;
+G2L["4"]["TextSize"] = 18;
+G2L["4"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["4"]["TextScaled"] = true;
+G2L["4"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["4"]["FontFace"] = Font.new([[rbxasset://fonts/families/HighwayGothic.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["4"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["4"]["BackgroundTransparency"] = 1;
+G2L["4"]["Size"] = UDim2.new(0.6, 0, 0.8, 0);
+G2L["4"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["4"]["Text"] = [[FLY]];
+G2L["4"]["Name"] = [[Title]];
+G2L["4"]["Position"] = UDim2.new(0.045, 0, 0.1, 0);
+
+G2L["5"] = Instance.new("IntValue");
+G2L["5"]["Name"] = [[OriginalZIndex]];
+G2L["5"]["Value"] = 12;
+
+G2L["6"] = Instance.new("TextButton");
+G2L["6"]["BorderSizePixel"] = 0;
+G2L["6"]["TextSize"] = 16;
+G2L["6"]["AutoButtonColor"] = false;
+G2L["6"]["TextColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["6"]["BackgroundColor3"] = Color3.fromRGB(201, 201, 201);
+G2L["6"]["FontFace"] = Font.new([[rbxasset://fonts/families/Zekton.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["6"]["ZIndex"] = -988;
+G2L["6"]["BackgroundTransparency"] = 1;
+G2L["6"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["6"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["6"]["Text"] = [[]];
+G2L["6"]["Name"] = [[Drag]];
+
+G2L["7"] = Instance.new("IntValue");
+G2L["7"]["Name"] = [[OriginalZIndex]];
+G2L["7"]["Value"] = 12;
+
+G2L["8"] = Instance.new("TextButton");
+G2L["8"]["BorderSizePixel"] = 0;
+G2L["8"]["TextSize"] = 16;
+G2L["8"]["AutoButtonColor"] = false;
+G2L["8"]["TextColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["8"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["8"]["FontFace"] = Font.new([[rbxasset://fonts/families/Zekton.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["8"]["ZIndex"] = -987;
+G2L["8"]["BackgroundTransparency"] = 0.5;
+G2L["8"]["Size"] = UDim2.new(-0.1, 0, 0.9, 0);
+G2L["8"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["8"]["Text"] = [[]];
+G2L["8"]["Name"] = [[Close]];
+G2L["8"]["Position"] = UDim2.new(0.995, 0, 0.05, 0);
+
+G2L["9"] = Instance.new("TextLabel");
+G2L["9"]["ZIndex"] = -986;
+G2L["9"]["TextSize"] = 14;
+G2L["9"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["9"]["FontFace"] = Font.new([[rbxasset://fonts/families/Arial.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["9"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["9"]["BackgroundTransparency"] = 1;
+G2L["9"]["Size"] = UDim2.new(0.7, 0, 0.7, 0);
+G2L["9"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["9"]["Text"] = [[X]];
+G2L["9"]["Position"] = UDim2.new(0.15, 0, 0.15, 0);
+
+G2L["a"] = Instance.new("IntValue");
+G2L["a"]["Name"] = [[OriginalZIndex]];
+G2L["a"]["Value"] = 14;
+
+G2L["b"] = Instance.new("IntValue");
+G2L["b"]["Name"] = [[OriginalZIndex]];
+G2L["b"]["Value"] = 13;
+
+G2L["c"] = Instance.new("TextButton");
+G2L["c"]["BorderSizePixel"] = 0;
+G2L["c"]["TextSize"] = 16;
+G2L["c"]["AutoButtonColor"] = false;
+G2L["c"]["TextColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["c"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["c"]["FontFace"] = Font.new([[rbxasset://fonts/families/Zekton.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["c"]["ZIndex"] = -987;
+G2L["c"]["BackgroundTransparency"] = 0.5;
+G2L["c"]["Size"] = UDim2.new(-0.1, 0, 0.9, 0);
+G2L["c"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["c"]["Text"] = [[]];
+G2L["c"]["Name"] = [[Minimise]];
+G2L["c"]["Position"] = UDim2.new(0.88, 0, 0.05, 0);
+
+G2L["d"] = Instance.new("TextLabel");
+G2L["d"]["ZIndex"] = -986;
+G2L["d"]["TextSize"] = 14;
+G2L["d"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["d"]["FontFace"] = Font.new([[rbxasset://fonts/families/Arial.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["d"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["d"]["BackgroundTransparency"] = 1;
+G2L["d"]["Size"] = UDim2.new(0.7, 0, 0.7, 0);
+G2L["d"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["d"]["Text"] = [[-]];
+G2L["d"]["Position"] = UDim2.new(0.15, 0, 0.15, 0);
+
+G2L["e"] = Instance.new("IntValue");
+G2L["e"]["Name"] = [[OriginalZIndex]];
+G2L["e"]["Value"] = 14;
+
+G2L["f"] = Instance.new("IntValue");
+G2L["f"]["Name"] = [[OriginalZIndex]];
+G2L["f"]["Value"] = 13;
+
+G2L["10"] = Instance.new("BoolValue");
+G2L["10"]["Name"] = [[Theme]];
+
+G2L["11"] = Instance.new("IntValue");
+G2L["11"]["Name"] = [[OriginalZIndex]];
+G2L["11"]["Value"] = 11;
+
+G2L["12"] = Instance.new("Frame");
+G2L["12"]["ZIndex"] = -999;
+G2L["12"]["BorderSizePixel"] = 0;
+G2L["12"]["BackgroundColor3"] = Color3.fromRGB(21, 21, 21);
+G2L["12"]["Size"] = UDim2.new(1, 0, 1.03333, 0);
+G2L["12"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["12"]["Name"] = [[MainFrame]];
+G2L["12"]["BackgroundTransparency"] = 0.15;
+
+G2L["13"] = Instance.new("TextButton");
+G2L["13"]["BorderSizePixel"] = 0;
+G2L["13"]["TextSize"] = 16;
+G2L["13"]["AutoButtonColor"] = false;
+G2L["13"]["TextColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["13"]["BackgroundColor3"] = Color3.fromRGB(0, 136, 203);
+G2L["13"]["FontFace"] = Font.new([[rbxasset://fonts/families/Zekton.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["13"]["ZIndex"] = -996;
+G2L["13"]["Size"] = UDim2.new(0.9, 0, 0.25, 0);
+G2L["13"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["13"]["Text"] = [[]];
+G2L["13"]["Name"] = [[Loading]];
+G2L["13"]["Visible"] = false;
+G2L["13"]["Position"] = UDim2.new(0.05, 0, 0.4, 0);
+
+G2L["14"] = Instance.new("TextLabel");
+G2L["14"]["TextWrapped"] = true;
+G2L["14"]["ZIndex"] = -995;
+G2L["14"]["TextSize"] = 14;
+G2L["14"]["TextScaled"] = true;
+G2L["14"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["14"]["FontFace"] = Font.new([[rbxasset://fonts/families/HighwayGothic.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["14"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["14"]["BackgroundTransparency"] = 1;
+G2L["14"]["Size"] = UDim2.new(0.7, 0, 0.5, 0);
+G2L["14"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["14"]["Text"] = [[Loading...]];
+G2L["14"]["Position"] = UDim2.new(0.15, 0, 0.25, 0);
+
+G2L["15"] = Instance.new("IntValue");
+G2L["15"]["Name"] = [[OriginalZIndex]];
+G2L["15"]["Value"] = 5;
+
+G2L["16"] = Instance.new("BoolValue");
+G2L["16"]["Name"] = [[Theme]];
+G2L["16"]["Value"] = true;
+
+G2L["17"] = Instance.new("IntValue");
+G2L["17"]["Name"] = [[OriginalZIndex]];
+G2L["17"]["Value"] = 4;
+
+G2L["18"] = Instance.new("TextLabel");
+G2L["18"]["TextWrapped"] = true;
+G2L["18"]["ZIndex"] = -998;
+G2L["18"]["BorderSizePixel"] = 0;
+G2L["18"]["TextSize"] = 14;
+G2L["18"]["TextXAlignment"] = Enum.TextXAlignment.Right;
+G2L["18"]["TextScaled"] = true;
+G2L["18"]["BackgroundColor3"] = Color3.fromRGB(120, 202, 255);
+G2L["18"]["FontFace"] = Font.new([[rbxasset://fonts/families/HighwayGothic.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["18"]["TextColor3"] = Color3.fromRGB(221, 221, 221);
+G2L["18"]["BackgroundTransparency"] = 1;
+G2L["18"]["Size"] = UDim2.new(0.495, 0, 0.14, 0);
+G2L["18"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["18"]["Text"] = [[Status:]];
+G2L["18"]["Name"] = [[Status]];
+G2L["18"]["Position"] = UDim2.new(0, 0, 0.24, 0);
+
+G2L["19"] = Instance.new("TextLabel");
+G2L["19"]["TextWrapped"] = true;
+G2L["19"]["ZIndex"] = -997;
+G2L["19"]["BorderSizePixel"] = 0;
+G2L["19"]["TextSize"] = 14;
+G2L["19"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["19"]["TextScaled"] = true;
+G2L["19"]["BackgroundColor3"] = Color3.fromRGB(0, 171, 0);
+G2L["19"]["FontFace"] = Font.new([[rbxasset://fonts/families/HighwayGothic.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["19"]["TextColor3"] = Color3.fromRGB(0, 226, 0);
+G2L["19"]["BackgroundTransparency"] = 1;
+G2L["19"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["19"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["19"]["Text"] = [[On]];
+G2L["19"]["Position"] = UDim2.new(1.05, 0, 0, 0);
+
+G2L["1a"] = Instance.new("IntValue");
+G2L["1a"]["Name"] = [[OriginalZIndex]];
+G2L["1a"]["Value"] = 3;
+
+G2L["1b"] = Instance.new("IntValue");
+G2L["1b"]["Name"] = [[OriginalZIndex]];
+G2L["1b"]["Value"] = 2;
+
+G2L["1c"] = Instance.new("TextLabel");
+G2L["1c"]["TextWrapped"] = true;
+G2L["1c"]["ZIndex"] = -998;
+G2L["1c"]["TextSize"] = 15;
+G2L["1c"]["TextStrokeColor3"] = Color3.fromRGB(11, 11, 11);
+G2L["1c"]["TextScaled"] = true;
+G2L["1c"]["BackgroundColor3"] = Color3.fromRGB(76, 76, 76);
+G2L["1c"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["1c"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["1c"]["BackgroundTransparency"] = 0.5;
+G2L["1c"]["Size"] = UDim2.new(0.9, 0, 0.25, 0);
+G2L["1c"]["Visible"] = false;
+G2L["1c"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["1c"]["Text"] = [[Command description]];
+G2L["1c"]["Name"] = [[Desc]];
+G2L["1c"]["Position"] = UDim2.new(0.05, 0, 0.675, 0);
+
+G2L["1d"] = Instance.new("UITextSizeConstraint");
+G2L["1d"]["MaxTextSize"] = 17;
+G2L["1d"]["MinTextSize"] = 14;
+
+G2L["1e"] = Instance.new("IntValue");
+G2L["1e"]["Name"] = [[OriginalZIndex]];
+G2L["1e"]["Value"] = 2;
+
+G2L["1f"] = Instance.new("TextButton");
+G2L["1f"]["BorderSizePixel"] = 0;
+G2L["1f"]["TextSize"] = 16;
+G2L["1f"]["TextColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["1f"]["BackgroundColor3"] = Color3.fromRGB(0, 136, 203);
+G2L["1f"]["FontFace"] = Font.new([[rbxasset://fonts/families/Zekton.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["1f"]["ZIndex"] = -998;
+G2L["1f"]["BackgroundTransparency"] = 0.1;
+G2L["1f"]["Size"] = UDim2.new(0.9, 0, 0.25, 0);
+G2L["1f"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["1f"]["Text"] = [[]];
+G2L["1f"]["Name"] = [[ChangeStatus]];
+G2L["1f"]["Position"] = UDim2.new(0.05, 0, 0.4, 0);
+
+G2L["20"] = Instance.new("TextLabel");
+G2L["20"]["TextWrapped"] = true;
+G2L["20"]["ZIndex"] = -997;
+G2L["20"]["TextSize"] = 14;
+G2L["20"]["TextScaled"] = true;
+G2L["20"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["20"]["FontFace"] = Font.new([[rbxasset://fonts/families/HighwayGothic.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["20"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["20"]["BackgroundTransparency"] = 1;
+G2L["20"]["Size"] = UDim2.new(0.7, 0, 0.6, 0);
+G2L["20"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["20"]["Text"] = [[DISABLE]];
+G2L["20"]["Position"] = UDim2.new(0.15, 0, 0.2, 0);
+
+G2L["21"] = Instance.new("IntValue");
+G2L["21"]["Name"] = [[OriginalZIndex]];
+G2L["21"]["Value"] = 3;
+
+G2L["22"] = Instance.new("BoolValue");
+G2L["22"]["Name"] = [[Theme]];
+G2L["22"]["Value"] = true;
+
+G2L["23"] = Instance.new("IntValue");
+G2L["23"]["Name"] = [[OriginalZIndex]];
+G2L["23"]["Value"] = 2;
+
+G2L["24"] = Instance.new("Frame");
+G2L["24"]["ZIndex"] = -998;
+G2L["24"]["BackgroundColor3"] = Color3.fromRGB(76, 76, 76);
+G2L["24"]["Size"] = UDim2.new(0.9, 0, 0.25, 0);
+G2L["24"]["Position"] = UDim2.new(0.05, 0, 0.675, 0);
+G2L["24"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["24"]["Name"] = [[InputFrame]];
+G2L["24"]["BackgroundTransparency"] = 0.5;
+
+G2L["25"] = Instance.new("Frame");
+G2L["25"]["ZIndex"] = -997;
+G2L["25"]["BorderSizePixel"] = 0;
+G2L["25"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["25"]["Size"] = UDim2.new(0.45, 0, 0.8, 0);
+G2L["25"]["Position"] = UDim2.new(0.51, 0, 0.1, 0);
+G2L["25"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["25"]["BackgroundTransparency"] = 0.5;
+
+G2L["26"] = Instance.new("TextBox");
+G2L["26"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["26"]["PlaceholderColor3"] = Color3.fromRGB(126, 126, 126);
+G2L["26"]["ZIndex"] = -996;
+G2L["26"]["TextWrapped"] = true;
+G2L["26"]["TextSize"] = 14;
+G2L["26"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["26"]["TextScaled"] = true;
+G2L["26"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["26"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["26"]["PlaceholderText"] = [[Enter speed]];
+G2L["26"]["Size"] = UDim2.new(0.9, 0, 0.8, 0);
+G2L["26"]["Position"] = UDim2.new(0.05, 0, 0.1, 0);
+G2L["26"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["26"]["Text"] = [[50]];
+G2L["26"]["BackgroundTransparency"] = 1;
+
+G2L["27"] = Instance.new("IntValue");
+G2L["27"]["Name"] = [[OriginalZIndex]];
+G2L["27"]["Value"] = 4;
+
+G2L["28"] = Instance.new("TextLabel");
+G2L["28"]["TextWrapped"] = true;
+G2L["28"]["ZIndex"] = -998;
+G2L["28"]["BorderSizePixel"] = 0;
+G2L["28"]["TextSize"] = 14;
+G2L["28"]["TextXAlignment"] = Enum.TextXAlignment.Right;
+G2L["28"]["TextScaled"] = true;
+G2L["28"]["BackgroundColor3"] = Color3.fromRGB(120, 202, 255);
+G2L["28"]["FontFace"] = Font.new([[rbxasset://fonts/families/HighwayGothic.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["28"]["TextColor3"] = Color3.fromRGB(221, 221, 221);
+G2L["28"]["BackgroundTransparency"] = 1;
+G2L["28"]["Size"] = UDim2.new(0.495, 0, 0.18, 0);
+G2L["28"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["28"]["Text"] = [[Speed:]];
+G2L["28"]["Name"] = [[Info1]];
+G2L["28"]["Position"] = UDim2.new(0, 0, 0.05, 0);
+
+G2L["29"] = Instance.new("TextLabel");
+G2L["29"]["TextWrapped"] = true;
+G2L["29"]["ZIndex"] = -998;
+G2L["29"]["BorderSizePixel"] = 0;
+G2L["29"]["TextSize"] = 14;
+G2L["29"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["29"]["TextScaled"] = true;
+G2L["29"]["BackgroundColor3"] = Color3.fromRGB(0, 171, 0);
+G2L["29"]["FontFace"] = Font.new([[rbxasset://fonts/families/HighwayGothic.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["29"]["TextColor3"] = Color3.fromRGB(255, 255, 128);
+G2L["29"]["BackgroundTransparency"] = 1;
+G2L["29"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["29"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["29"]["Text"] = [[WASD]];
+G2L["29"]["Position"] = UDim2.new(1.05, 0, 0.1, 0);
+
+G2L["2a"] = Instance.new("IntValue");
+G2L["2a"]["Name"] = [[OriginalZIndex]];
+G2L["2a"]["Value"] = 8;
+
+G2L["2b"] = Instance.new("IntValue");
+G2L["2b"]["Name"] = [[OriginalZIndex]];
+G2L["2b"]["Value"] = 8;
+
+G2L["2c"] = Instance.new("Frame");
+G2L["2c"]["ZIndex"] = -998;
+G2L["2c"]["BackgroundColor3"] = Color3.fromRGB(76, 76, 76);
+G2L["2c"]["Size"] = UDim2.new(0.9, 0, 0.6, 0);
+G2L["2c"]["Position"] = UDim2.new(0.05, 0, 0.375, 0);
+G2L["2c"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["2c"]["Name"] = [[InfoFrame]];
+G2L["2c"]["BackgroundTransparency"] = 0.5;
+G2L["2c"]["Visible"] = false;
+
+G2L["2d"] = Instance.new("TextLabel");
+G2L["2d"]["TextWrapped"] = true;
+G2L["2d"]["ZIndex"] = -992;
+G2L["2d"]["BorderSizePixel"] = 0;
+G2L["2d"]["TextSize"] = 14;
+G2L["2d"]["TextXAlignment"] = Enum.TextXAlignment.Right;
+G2L["2d"]["TextScaled"] = true;
+G2L["2d"]["BackgroundColor3"] = Color3.fromRGB(120, 202, 255);
+G2L["2d"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["2d"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["2d"]["BackgroundTransparency"] = 1;
+G2L["2d"]["Size"] = UDim2.new(0.495, 0, 0.18, 0);
+G2L["2d"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["2d"]["Text"] = [[Speed:]];
+G2L["2d"]["Name"] = [[Info1]];
+G2L["2d"]["Position"] = UDim2.new(0, 0, 0.05, 0);
+
+G2L["2e"] = Instance.new("TextLabel");
+G2L["2e"]["TextWrapped"] = true;
+G2L["2e"]["ZIndex"] = -992;
+G2L["2e"]["BorderSizePixel"] = 0;
+G2L["2e"]["TextSize"] = 14;
+G2L["2e"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["2e"]["TextScaled"] = true;
+G2L["2e"]["BackgroundColor3"] = Color3.fromRGB(0, 171, 0);
+G2L["2e"]["FontFace"] = Font.new([[rbxasset://fonts/families/HighwayGothic.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["2e"]["TextColor3"] = Color3.fromRGB(255, 255, 128);
+G2L["2e"]["BackgroundTransparency"] = 1;
+G2L["2e"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["2e"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["2e"]["Text"] = [[WASD]];
+G2L["2e"]["Position"] = UDim2.new(1.05, 0, 0.1, 0);
+
+G2L["2f"] = Instance.new("IntValue");
+G2L["2f"]["Name"] = [[OriginalZIndex]];
+G2L["2f"]["Value"] = 8;
+
+G2L["30"] = Instance.new("IntValue");
+G2L["30"]["Name"] = [[OriginalZIndex]];
+G2L["30"]["Value"] = 8;
+
+G2L["31"] = Instance.new("TextLabel");
+G2L["31"]["TextWrapped"] = true;
+G2L["31"]["ZIndex"] = -992;
+G2L["31"]["BorderSizePixel"] = 0;
+G2L["31"]["TextSize"] = 14;
+G2L["31"]["TextXAlignment"] = Enum.TextXAlignment.Right;
+G2L["31"]["TextScaled"] = true;
+G2L["31"]["BackgroundColor3"] = Color3.fromRGB(120, 202, 255);
+G2L["31"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["31"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["31"]["BackgroundTransparency"] = 1;
+G2L["31"]["Size"] = UDim2.new(0.495, 0, 0.18, 0);
+G2L["31"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["31"]["Text"] = [[Toggle flight:]];
+G2L["31"]["Name"] = [[Info2]];
+G2L["31"]["Position"] = UDim2.new(0, 0, 0.25, 0);
+
+G2L["32"] = Instance.new("TextLabel");
+G2L["32"]["TextWrapped"] = true;
+G2L["32"]["ZIndex"] = -992;
+G2L["32"]["BorderSizePixel"] = 0;
+G2L["32"]["TextSize"] = 14;
+G2L["32"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["32"]["TextScaled"] = true;
+G2L["32"]["BackgroundColor3"] = Color3.fromRGB(0, 171, 0);
+G2L["32"]["FontFace"] = Font.new([[rbxasset://fonts/families/HighwayGothic.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["32"]["TextColor3"] = Color3.fromRGB(255, 255, 128);
+G2L["32"]["BackgroundTransparency"] = 1;
+G2L["32"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["32"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["32"]["Text"] = [[E]];
+G2L["32"]["Position"] = UDim2.new(1.05, 0, 0.1, 0);
+
+G2L["33"] = Instance.new("IntValue");
+G2L["33"]["Name"] = [[OriginalZIndex]];
+G2L["33"]["Value"] = 8;
+
+G2L["34"] = Instance.new("IntValue");
+G2L["34"]["Name"] = [[OriginalZIndex]];
+G2L["34"]["Value"] = 8;
+
+G2L["35"] = Instance.new("TextLabel");
+G2L["35"]["TextWrapped"] = true;
+G2L["35"]["ZIndex"] = -992;
+G2L["35"]["BorderSizePixel"] = 0;
+G2L["35"]["TextSize"] = 14;
+G2L["35"]["TextXAlignment"] = Enum.TextXAlignment.Right;
+G2L["35"]["TextScaled"] = true;
+G2L["35"]["BackgroundColor3"] = Color3.fromRGB(120, 202, 255);
+G2L["35"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["35"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["35"]["BackgroundTransparency"] = 1;
+G2L["35"]["Size"] = UDim2.new(0.495, 0, 0.18, 0);
+G2L["35"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["35"]["Text"] = [[Up & Down:]];
+G2L["35"]["Name"] = [[Info3]];
+G2L["35"]["Position"] = UDim2.new(0, 0, 0.45, 0);
+
+G2L["36"] = Instance.new("TextLabel");
+G2L["36"]["TextWrapped"] = true;
+G2L["36"]["ZIndex"] = -992;
+G2L["36"]["BorderSizePixel"] = 0;
+G2L["36"]["TextSize"] = 14;
+G2L["36"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["36"]["TextScaled"] = true;
+G2L["36"]["BackgroundColor3"] = Color3.fromRGB(0, 171, 0);
+G2L["36"]["FontFace"] = Font.new([[rbxasset://fonts/families/HighwayGothic.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["36"]["TextColor3"] = Color3.fromRGB(255, 255, 128);
+G2L["36"]["BackgroundTransparency"] = 1;
+G2L["36"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["36"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["36"]["Text"] = [[R & F]];
+G2L["36"]["Position"] = UDim2.new(1.05, 0, 0.1, 0);
+
+G2L["37"] = Instance.new("IntValue");
+G2L["37"]["Name"] = [[OriginalZIndex]];
+G2L["37"]["Value"] = 8;
+
+G2L["38"] = Instance.new("IntValue");
+G2L["38"]["Name"] = [[OriginalZIndex]];
+G2L["38"]["Value"] = 8;
+
+G2L["39"] = Instance.new("TextButton");
+G2L["39"]["BorderSizePixel"] = 0;
+G2L["39"]["TextSize"] = 16;
+G2L["39"]["TextColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["39"]["BackgroundColor3"] = Color3.fromRGB(0, 136, 203);
+G2L["39"]["FontFace"] = Font.new([[rbxasset://fonts/families/Zekton.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["39"]["ZIndex"] = -991;
+G2L["39"]["BackgroundTransparency"] = 0.1;
+G2L["39"]["Size"] = UDim2.new(0.9, 0, 0.225, 0);
+G2L["39"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["39"]["Text"] = [[]];
+G2L["39"]["Name"] = [[Okay]];
+G2L["39"]["Position"] = UDim2.new(0.05, 0, 0.7, 0);
+
+G2L["3a"] = Instance.new("TextLabel");
+G2L["3a"]["TextWrapped"] = true;
+G2L["3a"]["ZIndex"] = -990;
+G2L["3a"]["TextSize"] = 14;
+G2L["3a"]["TextScaled"] = true;
+G2L["3a"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["3a"]["FontFace"] = Font.new([[rbxasset://fonts/families/HighwayGothic.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["3a"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["3a"]["BackgroundTransparency"] = 1;
+G2L["3a"]["Size"] = UDim2.new(0.7, 0, 0.8, 0);
+G2L["3a"]["BorderColor3"] = Color3.fromRGB(28, 43, 54);
+G2L["3a"]["Text"] = [[OKAY]];
+G2L["3a"]["Position"] = UDim2.new(0.15, 0, 0.1, 0);
+
+G2L["3b"] = Instance.new("IntValue");
+G2L["3b"]["Name"] = [[OriginalZIndex]];
+G2L["3b"]["Value"] = 10;
+
+G2L["3c"] = Instance.new("BoolValue");
+G2L["3c"]["Name"] = [[Theme]];
+G2L["3c"]["Value"] = true;
+
+G2L["3d"] = Instance.new("IntValue");
+G2L["3d"]["Name"] = [[OriginalZIndex]];
+G2L["3d"]["Value"] = 9;
+
+G2L["3e"] = Instance.new("LocalScript");
+G2L["3e"]["Name"] = [[HideInfoFrameOnOkay]];
+
+G2L["3f"] = Instance.new("IntValue");
+G2L["3f"]["Name"] = [[OriginalZIndex]];
+G2L["3f"]["Value"] = 7;
+
+G2L["40"] = Instance.new("IntValue");
+G2L["40"]["Name"] = [[OriginalZIndex]];
+G2L["40"]["Value"] = 1;
+
+-- Parentleme
+G2L["2"].Parent = G2L["1"];
+G2L["3"].Parent = G2L["2"];
+G2L["4"].Parent = G2L["3"];
+G2L["5"].Parent = G2L["4"];
+G2L["6"].Parent = G2L["3"];
+G2L["7"].Parent = G2L["6"];
+G2L["8"].Parent = G2L["3"];
+G2L["9"].Parent = G2L["8"];
+G2L["a"].Parent = G2L["9"];
+G2L["b"].Parent = G2L["8"];
+G2L["c"].Parent = G2L["3"];
+G2L["d"].Parent = G2L["c"];
+G2L["e"].Parent = G2L["d"];
+G2L["f"].Parent = G2L["c"];
+G2L["10"].Parent = G2L["3"];
+G2L["11"].Parent = G2L["3"];
+G2L["12"].Parent = G2L["2"];
+G2L["13"].Parent = G2L["12"];
+G2L["14"].Parent = G2L["13"];
+G2L["15"].Parent = G2L["14"];
+G2L["16"].Parent = G2L["13"];
+G2L["17"].Parent = G2L["13"];
+G2L["18"].Parent = G2L["12"];
+G2L["19"].Parent = G2L["18"];
+G2L["1a"].Parent = G2L["19"];
+G2L["1b"].Parent = G2L["18"];
+G2L["1c"].Parent = G2L["12"];
+G2L["1d"].Parent = G2L["1c"];
+G2L["1e"].Parent = G2L["1c"];
+G2L["1f"].Parent = G2L["12"];
+G2L["20"].Parent = G2L["1f"];
+G2L["21"].Parent = G2L["20"];
+G2L["22"].Parent = G2L["1f"];
+G2L["23"].Parent = G2L["1f"];
+G2L["24"].Parent = G2L["12"];
+G2L["25"].Parent = G2L["24"];
+G2L["26"].Parent = G2L["25"];
+G2L["27"].Parent = G2L["26"];
+G2L["28"].Parent = G2L["24"];
+G2L["29"].Parent = G2L["28"];
+G2L["2a"].Parent = G2L["29"];
+G2L["2b"].Parent = G2L["28"];
+G2L["2c"].Parent = G2L["12"];
+G2L["2d"].Parent = G2L["2c"];
+G2L["2e"].Parent = G2L["2d"];
+G2L["2f"].Parent = G2L["2e"];
+G2L["30"].Parent = G2L["2d"];
+G2L["31"].Parent = G2L["2c"];
+G2L["32"].Parent = G2L["31"];
+G2L["33"].Parent = G2L["32"];
+G2L["34"].Parent = G2L["31"];
+G2L["35"].Parent = G2L["2c"];
+G2L["36"].Parent = G2L["35"];
+G2L["37"].Parent = G2L["36"];
+G2L["38"].Parent = G2L["35"];
+G2L["39"].Parent = G2L["2c"];
+G2L["3a"].Parent = G2L["39"];
+G2L["3b"].Parent = G2L["3a"];
+G2L["3c"].Parent = G2L["39"];
+G2L["3d"].Parent = G2L["39"];
+G2L["3e"].Parent = G2L["39"];
+G2L["3f"].Parent = G2L["2c"];
+G2L["40"].Parent = G2L["12"];
+
+-- GUI'yi PlayerGui'ye ekle
+G2L["1"].Parent = player:WaitForChild("PlayerGui");
+
+-- GUI referansları
+local flyGui = G2L["1"]
+local commandMenu = G2L["2"]
+local dragBar = G2L["3"]
+local mainFrame = G2L["12"]
+local loadingBtn = G2L["13"]
+local changeBtn = G2L["1f"]
+local changeBtnLabel = G2L["20"]
+local statusHolder = G2L["18"]
+local statusLabel = G2L["19"]
+local inputFrame = G2L["24"]
+local speedBox = G2L["26"]
+local closeBtn = G2L["8"]
+local minimiseBtn = G2L["c"]
+local dragBtn = G2L["6"]
+local infoFrame = G2L["2c"]
+local okayBtn = G2L["39"]
+
+-- Yardımcılar
+local function setStatus(on: boolean)
+	statusLabel.Text = on and "On" or "Off"
+	statusLabel.TextColor3 = on and Color3.fromRGB(0,226,0) or Color3.fromRGB(226,0,0)
+	changeBtnLabel.Text = on and "DISABLE" or "ENABLE"
+end
+
+local function parseSpeed()
+	local n = tonumber(speedBox.Text)
+	if n and n > 0 then
+		flySpeed = math.clamp(n, 1, 1000)
+	else
+		-- sayısal değilse mevcut hızı tekrar yaz
+		if speedBox.Text ~= tostring(flySpeed) then
+			speedBox.Text = tostring(flySpeed)
+		end
+	end
+end
+
+-- Uçuş mantığı (Kullanıcının sağladığı uçuş kodundan)
+local function initialRise()
+	if not bodyVelocity then return end
+	local riseSpeed = 10
+	local startTime = tick()
+	local riseTime = 0.1
+	while tick() - startTime < riseTime do
+		bodyVelocity.Velocity = Vector3.new(0, riseSpeed, 0)
+		RunService.RenderStepped:Wait()
+	end
+end
+
+local function bindFlightLoop()
+	if flightConnection then flightConnection:Disconnect() end
+	flightConnection = RunService.RenderStepped:Connect(function()
+		if not flying then return end
+		local char = player.Character
+		if not char or not char:FindFirstChild("HumanoidRootPart") then return end
+		local hrp = char.HumanoidRootPart
+		local hum = char:FindFirstChildOfClass("Humanoid")
+		if not hum then return end
+
+		local moveDirection = hum.MoveDirection * flySpeed
+		local camLookVector = workspace.CurrentCamera and workspace.CurrentCamera.CFrame.LookVector or Vector3.new(0,0,-1)
+
+		-- Dikey kontrol (R/F), mevcut modele ekleme (uçuş şeklini bozmadan)
+		local vertical = (keyR and 1 or 0) + (keyF and -1 or 0)
+		if vertical ~= 0 then
+			moveDirection += Vector3.new(0, vertical * flySpeed, 0)
+		end
+
+		if moveDirection.Magnitude > 0 then
+			if math.abs(camLookVector.Y) > 0.2 then
+				moveDirection += Vector3.new(0, camLookVector.Y * flySpeed, 0)
+			end
+		else
+			moveDirection = bodyVelocity.Velocity:Lerp(Vector3.new(0, 0, 0), 0.085)
+		end
+
+		bodyVelocity.Velocity = moveDirection
+
+		-- Eğim/tilt efekti (orijinal davranış korunur)
+		local tiltAngle = 40
+		local tiltFactor = (flySpeed > 0) and (moveDirection.Magnitude / flySpeed) or 0
+		local camCF = workspace.CurrentCamera and workspace.CurrentCamera.CFrame or CFrame.new()
+		local tiltCFrame = CFrame.Angles(math.rad(tiltAngle) * tiltFactor * tiltDirection, 0, 0)
+		local targetCFrame = CFrame.new(hrp.Position, hrp.Position + camLookVector) * tiltCFrame
+		bodyGyro.CFrame = bodyGyro.CFrame:Lerp(targetCFrame, 0.2)
+	end)
+end
+
+local function startFlying()
+	if flying then return end
+	local char = player.Character or player.CharacterAdded:Wait()
+	local hrp = char:WaitForChild("HumanoidRootPart")
+	humanoid = char:WaitForChild("Humanoid")
+	flying = true
+	humanoid.PlatformStand = true
+
+	bodyVelocity = Instance.new("BodyVelocity")
+	bodyVelocity.MaxForce = Vector3.new(100000, 100000, 100000)
+	bodyVelocity.Velocity = Vector3.new(0, 0, 0)
+	bodyVelocity.Parent = hrp
+
+	bodyGyro = Instance.new("BodyGyro")
+	bodyGyro.MaxTorque = Vector3.new(100000, 100000, 100000)
+	bodyGyro.CFrame = hrp.CFrame
+	bodyGyro.Parent = hrp
+
+	initialRise()
+	bindFlightLoop()
+	setStatus(true)
+	if loadingBtn and loadingBtn:IsA("TextButton") then
+		loadingBtn.Visible = true
+		task.delay(0.4, function()
+			if loadingBtn then loadingBtn.Visible = false end
+		end)
+	end
+end
+
+local function stopFlying()
+	if not flying then return end
+	flying = false
+	if humanoid and humanoid.Parent then
+		humanoid.PlatformStand = false
+	end
+	if flightConnection then flightConnection:Disconnect() flightConnection = nil end
+	if bodyVelocity then bodyVelocity:Destroy() bodyVelocity = nil end
+	if bodyGyro then bodyGyro:Destroy() bodyGyro = nil end
+	setStatus(false)
+end
+
+-- Karakter respawn desteği (uçuş açıksa yeniden kur)
+if respawnConn then respawnConn:Disconnect() end
+respawnConn = player.CharacterAdded:Connect(function(newChar)
+	character = newChar
+	humanoid = character:WaitForChild("Humanoid")
+	if flying then
+		-- kısa gecikme, sonra tekrar başlat
+		task.defer(function()
+			stopFlying()
+			startFlying()
+		end)
+	end
+end)
+
+-- GUI olayları
+-- Başlangıç durumlarını ayarla
+setStatus(false)
+if speedBox then
+	local n = tonumber(speedBox.Text)
+	if n and n > 0 then flySpeed = n end
+	speedBox.FocusLost:Connect(function(enterPressed)
+		parseSpeed()
+	end)
+end
+
+changeBtn.MouseButton1Click:Connect(function()
+	parseSpeed()
+	if flying then
+		stopFlying()
+	else
+		startFlying()
+	end
+end)
+
+closeBtn.MouseButton1Click:Connect(function()
+	stopFlying()
+	flyGui:Destroy()
+end)
+
+minimiseBtn.MouseButton1Click:Connect(function()
+	mainFrame.Visible = not mainFrame.Visible
+	if infoFrame then infoFrame.Visible = false end -- InfoFrame'i de gizle/göster
+end)
+
+okayBtn.MouseButton1Click:Connect(function()
+	infoFrame.Visible = false
+end)
+
+-- Sürükle (DragBar.Drag bölgesi)
+if dragBtn and dragBtn:IsA("TextButton") then
+	local dragging = false
+	local dragStart: Vector2? = nil
+	local startPos: UDim2? = nil
+	
+	dragBtn.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = commandMenu.Position
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+
+	dragBtn.InputChanged:Connect(function(input)
+		if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+			local delta = input.Position - dragStart
+			commandMenu.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+		end
+	end)
+end
+
+-- Klavye kısayolları: E (toggle), R (yukarı), F (aşağı)
+UserInputService.InputBegan:Connect(function(input, gp)
+	if gp then return end
+	if input.KeyCode == Enum.KeyCode.E then
+		if flying then stopFlying() else startFlying() end
+	elseif input.KeyCode == Enum.KeyCode.R then
+		keyR = true
+	elseif input.KeyCode == Enum.KeyCode.F then
+		keyF = true
+	end
+end)
+
+UserInputService.InputEnded:Connect(function(input, gp)
+	if gp then return end
+	if input.KeyCode == Enum.KeyCode.R then
+		keyR = false
+	elseif input.KeyCode == Enum.KeyCode.F then
+		keyF = false
+	end
+end)
+
+-- GUI'nin başlangıçta görünürlüğünü ayarla (isteğe bağlı)
+-- commandMenu.Visible = true
+
+-- Bitti
+
+
