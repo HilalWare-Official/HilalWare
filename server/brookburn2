@@ -1,7 +1,10 @@
---v1+1
+--v2+2
 local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
 local player = Players.LocalPlayer
+local workspace = game:GetService("Workspace")
+
+-- CatchFire parçalarını liste
+local catchFires = {}
 
 -- Karakterin root'unu almak için fonksiyon
 local function getRoot()
@@ -11,18 +14,35 @@ end
 
 local root = getRoot()
 
--- Karakter resetlenirse root'u güncelle
+-- Karakter resetlendiğinde root'u tekrar al
 player.CharacterAdded:Connect(function(char)
     root = char:WaitForChild("HumanoidRootPart")
 end)
 
--- Sürekli ışınlama
+-- CatchFire ekleme fonksiyonu
+local function addCatchFire(part)
+    if part:IsA("BasePart") and part.Name == "CatchFire" then
+        part.CanCollide = false
+        table.insert(catchFires, part)
+    end
+end
+
+-- Başlangıçta workspace'deki mevcut CatchFire parçalarını ekle
+for _, obj in ipairs(workspace:GetDescendants()) do
+    addCatchFire(obj)
+end
+
+-- Yeni parçalar eklenirse dinle
+workspace.DescendantAdded:Connect(function(obj)
+    addCatchFire(obj)
+end)
+
+-- Sürekli listedeki CatchFire parçalarını oyuncuya ışınla
 task.spawn(function()
-    while true do
-        task.wait(0.01) -- her 0.01 saniyede bir
+    while task.wait(0.01) do
         if root and root.Parent then
-            for _, part in ipairs(workspace:GetDescendants()) do
-                if part:IsA("BasePart") and part.Name == "CatchFire" then
+            for _, part in ipairs(catchFires) do
+                if part and part.Parent then
                     part.CanCollide = false
                     part.CFrame = root.CFrame
                 end
