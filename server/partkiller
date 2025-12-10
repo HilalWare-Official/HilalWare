@@ -1,39 +1,90 @@
---v4+4
+--v6+4
 local player = game.Players.LocalPlayer
 local mouse = player:GetMouse()
-local uis = game:GetService("UserInputService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local tool = Instance.new("Tool")
-tool.Name = "Fırlatma Telekinezi"
-tool.RequiresHandle = false
-tool.Parent = player.Backpack
-
-local target
-
-local function launchTarget(part, direction)
-	if part and part.Parent and not part.Anchored then
-		local bv = Instance.new("BodyVelocity")
-		bv.MaxForce = Vector3.new(1e9,1e9,1e9)
-		bv.Velocity = direction * 1000000 -- direkt fırlatma hızı
-		bv.Parent = part
-		game:GetService("Debris"):AddItem(bv, 0.2) -- kısa süre sonra kaldır
-	end
+-- Çekiç kontrol fonksiyonu
+local function checkAndGetHammer()
+    local hasHammer = false
+    
+    -- Backpack'te çekiç var mı kontrol et
+    for _, item in ipairs(player.Backpack:GetChildren()) do
+        if item.Name == "Hammer" then
+            hasHammer = true
+            break
+        end
+    end
+    
+    -- Karakterde çekiç var mı kontrol et
+    if player.Character then
+        local toolInHand = player.Character:FindFirstChildWhichIsA("Tool")
+        if toolInHand and toolInHand.Name == "Hammer" then
+            hasHammer = true
+        end
+    end
+    
+    -- Çekiç alma işlemi
+    local args = {
+        "PickingTools",
+        "Hammer"
+    }
+    ReplicatedStorage:WaitForChild("RE"):WaitForChild("1Too1l"):InvokeServer(unpack(args))
+    
+    -- Eğer zaten çekiç varsa 2. kez çalıştır
+    if hasHammer then
+        ReplicatedStorage:WaitForChild("RE"):WaitForChild("1Too1l"):InvokeServer(unpack(args))
+    end
+    
+    return hasHammer
 end
 
-tool.Equipped:Connect(function()
-	mouse.Button1Down:Connect(function()
-		local part = mouse.Target
-		if part and not part.Anchored then
-			target = part
-			local lookVector = (mouse.Hit.Position - part.Position).Unit
-			launchTarget(part, lookVector)
-		end
-	end)
+-- İlk çekiç alma işlemi
+checkAndGetHammer()
+
+-- Oyuncunun elinde çekiç olup olmadığını kontrol et
+local function hasHammerEquipped()
+    local character = player.Character
+    if not character then return false end
+    
+    local toolInHand = character:FindFirstChildWhichIsA("Tool")
+    if toolInHand and toolInHand.Name == "Hammer" then
+        return true
+    end
+    return false
+end
+
+-- Telekinezi fonksiyonu
+local function launchTarget(part)
+    if part and part.Parent and not part.Anchored then
+        -- Mouse pozisyonuna göre yön hesapla
+        local direction = (mouse.Hit.Position - part.Position).Unit
+        
+        -- Parçayı 21312351243 birim uzağa fırlat
+        local targetPosition = part.Position + (direction * 21312351243)
+        
+        local bv = Instance.new("BodyVelocity")
+        bv.MaxForce = Vector3.new(1e9, 1e9, 1e9)
+        bv.Velocity = direction * 1000000 -- Yüksek hız
+        bv.Parent = part
+        
+        -- Kısa süre sonra kaldır
+        game:GetService("Debris"):AddItem(bv, 0.1)
+        
+        print("Parça telekinezi ile fırlatıldı!")
+    end
+end
+
+-- Mouse tıklama event'ini dinle
+mouse.Button1Down:Connect(function()
+    if hasHammerEquipped() then
+        local part = mouse.Target
+        if part and not part.Anchored then
+            launchTarget(part)
+        end
+    end
 end)
 
 -- RGB Outline + CanCollide kapalı (oyuncular hariç)
--- ServerScriptService = herkese görünür, StarterPlayerScripts = sadece sende
-
 local RunService = game:GetService("RunService")
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
@@ -53,109 +104,126 @@ local conns = {}
 
 -- Bir parça oyuncu karakterine mi ait?
 local function isCharacterPart(part)
-	local model = part:FindFirstAncestorOfClass("Model")
-	if model and Players:GetPlayerFromCharacter(model) then
-		return true
-	end
-	return false
+    local model = part:FindFirstAncestorOfClass("Model")
+    if model and Players:GetPlayerFromCharacter(model) then
+        return true
+    end
+    return false
 end
 
 local function makeColor()
-	local t = tick() * HUE_SPEED
-	local hue = t - math.floor(t)
-	return Color3.fromHSV(hue, 1, 1)
+    local t = tick() * HUE_SPEED
+    local hue = t - math.floor(t)
+    return Color3.fromHSV(hue, 1, 1)
 end
 
 local function removeOutline(part)
-	local sb = partToSB[part]
-	if sb and sb.Parent then sb:Destroy() end
-	partToSB[part] = nil
+    local sb = partToSB[part]
+    if sb and sb.Parent then sb:Destroy() end
+    partToSB[part] = nil
 
-	if conns[part] then
-		for _,c in ipairs(conns[part]) do
-			pcall(function() c:Disconnect() end)
-		end
-		conns[part] = nil
-	end
+    if conns[part] then
+        for _,c in ipairs(conns[part]) do
+            pcall(function() c:Disconnect() end)
+        end
+        conns[part] = nil
+    end
 end
 
 local function addOutline(part)
-	if not part or not part:IsA("BasePart") then return end
-	if part.Anchored then return end
-	if partToSB[part] then return end
-	if isCharacterPart(part) then return end -- oyuncu parçalarını atla
+    if not part or not part:IsA("BasePart") then return end
+    if part.Anchored then return end
+    if partToSB[part] then return end
+    if isCharacterPart(part) then return end -- oyuncu parçalarını atla
 
-	-- CanCollide kapat
-	part.CanCollide = false
+    -- CanCollide kapat
+    part.CanCollide = false
 
-	local sb = Instance.new("SelectionBox")
-	sb.Name = "_RGB_SB"
-	sb.LineThickness = LINE_THICKNESS
-	sb.SurfaceTransparency = ONLY_EDGES and 1 or 0
-	sb.Adornee = part
-	sb.Parent = outlinesFolder
-	partToSB[part] = sb
+    local sb = Instance.new("SelectionBox")
+    sb.Name = "_RGB_SB"
+    sb.LineThickness = LINE_THICKNESS
+    sb.SurfaceTransparency = ONLY_EDGES and 1 or 0
+    sb.Adornee = part
+    sb.Parent = outlinesFolder
+    partToSB[part] = sb
 
-	conns[part] = conns[part] or {}
-	table.insert(conns[part], part:GetPropertyChangedSignal("Anchored"):Connect(function()
-		if part.Anchored then
-			removeOutline(part)
-		else
-			if not partToSB[part] then addOutline(part) end
-		end
-	end))
-	table.insert(conns[part], part.AncestryChanged:Connect(function(_, parent)
-		if not parent then
-			removeOutline(part)
-		end
-	end))
-	-- CanCollide tekrar açılırsa yine kapat
-	table.insert(conns[part], part:GetPropertyChangedSignal("CanCollide"):Connect(function()
-		if not part.Anchored and not isCharacterPart(part) then
-			part.CanCollide = false
-		end
-	end))
+    conns[part] = conns[part] or {}
+    table.insert(conns[part], part:GetPropertyChangedSignal("Anchored"):Connect(function()
+        if part.Anchored then
+            removeOutline(part)
+        else
+            if not partToSB[part] then addOutline(part) end
+        end
+    end))
+    table.insert(conns[part], part.AncestryChanged:Connect(function(_, parent)
+        if not parent then
+            removeOutline(part)
+        end
+    end))
+    -- CanCollide tekrar açılırsa yine kapat
+    table.insert(conns[part], part:GetPropertyChangedSignal("CanCollide"):Connect(function()
+        if not part.Anchored and not isCharacterPart(part) then
+            part.CanCollide = false
+        end
+    end))
 end
 
 -- Başlangıç taraması
 for _, inst in ipairs(Workspace:GetDescendants()) do
-	if inst:IsA("BasePart") and not inst.Anchored and not isCharacterPart(inst) then
-		addOutline(inst)
-	end
+    if inst:IsA("BasePart") and not inst.Anchored and not isCharacterPart(inst) then
+        addOutline(inst)
+    end
 end
 
 -- Yeni gelen parçalar
 Workspace.DescendantAdded:Connect(function(inst)
-	if inst:IsA("BasePart") then
-		if not inst.Anchored and not isCharacterPart(inst) then
-			addOutline(inst)
-		end
-		if not conns[inst] then
-			conns[inst] = {}
-			table.insert(conns[inst], inst:GetPropertyChangedSignal("Anchored"):Connect(function()
-				if inst.Anchored then
-					removeOutline(inst)
-				else
-					if not isCharacterPart(inst) then
-						addOutline(inst)
-					end
-				end
-			end))
-			table.insert(conns[inst], inst.AncestryChanged:Connect(function(_, parent)
-				if not parent then
-					removeOutline(inst)
-				end
-			end))
-		end
-	end
+    if inst:IsA("BasePart") then
+        if not inst.Anchored and not isCharacterPart(inst) then
+            addOutline(inst)
+        end
+        if not conns[inst] then
+            conns[inst] = {}
+            table.insert(conns[inst], inst:GetPropertyChangedSignal("Anchored"):Connect(function()
+                if inst.Anchored then
+                    removeOutline(inst)
+                else
+                    if not isCharacterPart(inst) then
+                        addOutline(inst)
+                    end
+                end
+            end))
+            table.insert(conns[inst], inst.AncestryChanged:Connect(function(_, parent)
+                if not parent then
+                    removeOutline(inst)
+                end
+            end))
+        end
+    end
 end)
 
 -- Renk güncellemesi
 RunService.RenderStepped:Connect(function()
-	local col = makeColor()
-	for _, sb in pairs(partToSB) do
-		if sb and sb.Parent then
-			sb.Color3 = col
-		end
-	end
+    local col = makeColor()
+    for _, sb in pairs(partToSB) do
+        if sb and sb.Parent then
+            sb.Color3 = col
+        end
+    end
 end)
+
+-- Karakter değiştiğinde kontrol
+player.CharacterAdded:Connect(function(character)
+    character:WaitForChild("Humanoid")
+    
+    -- Çekiç kaybolduysa yeniden al
+    wait(2)
+    if not hasHammerEquipped() then
+        local args = {
+            "PickingTools",
+            "Hammer"
+        }
+        ReplicatedStorage:WaitForChild("RE"):WaitForChild("1Too1l"):InvokeServer(unpack(args))
+    end
+end)
+
+print("Telekinezi sistemi aktif! Çekiç ile herhangi bir parçaya tıklayarak fırlatabilirsiniz.")
